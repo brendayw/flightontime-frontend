@@ -29,7 +29,7 @@ const AEROPUERTOS = [
   { code: "COR", name: "Aeropuerto Córdoba" },
 ];
 
-function PredictionForm() {
+const PredictionForm = ({ onPredict }) => {
   const [aerolinea, setAerolinea] = useState("");
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
@@ -38,7 +38,7 @@ function PredictionForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     const data = {
       aerolinea,
       origen,
@@ -47,6 +47,7 @@ function PredictionForm() {
       distancia,
     };
 
+    onPredict();
     console.log("Datos del vuelo:", data);
   };
 
@@ -58,10 +59,10 @@ function PredictionForm() {
         overflow: "hidden",
         background: '#F9F3F3',
         width: { xs: "90%", sm: 950 },
-        heihght: 500,
+        heihght: 425,
         maxWidth: 1122,
         mx: "auto",
-        my: 4,
+        my: 2,
         boxShadow: 3,
         borderRadius: 10,
         p: 4,
@@ -81,7 +82,7 @@ function PredictionForm() {
     
       <img src={Maleta} alt="Maleta" className="absolute top-6 right-1 w-[100px]" />
       
-      <Grid container columnSpacing={4} rowSpacing={4} justifyContent="center" marginBottom={5}>
+      <Grid container columnSpacing={4} rowSpacing={4} justifyContent="center" marginBottom={3}>
         {/* Fila 1 */}
         <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%' }}>
           <FormControl fullWidth>

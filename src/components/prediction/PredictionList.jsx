@@ -1,13 +1,14 @@
 import PredictionCard from "./PredictionCard";
+import PredictionResults from "./PredictionResults";
 
 function PredictionList({ predictions }) {
   return (
-    <section>
-      <h3>Predicciones | Total {predictions.length} resultados</h3>
+    <section className='flex flex-col gap-4'>
+      <PredictionResults />
 
-      {predictions.map((p, index) => (
-        <PredictionCard key={index} prediction={p} />
-      ))}
+      {/* {predictions.map((p, index) => ( */}
+        <PredictionCard  />
+      {/* ))} */}
     </section>
   );
 }
