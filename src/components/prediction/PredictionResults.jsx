@@ -10,6 +10,7 @@ const PredictionResults = () => {
     return (
         <Card sx={{
             borderRadius: "25px",
+
             backgroundColor: "#F9F3F3",
             boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
             width: 600,

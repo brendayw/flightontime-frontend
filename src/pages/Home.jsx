@@ -7,32 +7,27 @@ import PredictionList from '../components/prediction/PredictionList';
 
 const Home = () => {
     const [predicted, setPredicted] = useState(false);
+    
 
     return (
         <section id="home" className='min-h-screen bg-[#ffffff] scroll-smooth'>
             <Header predicted={predicted} />
             <Menu />
             
-            <div className='flex justify-center mt-24'>
-                <AnimatePresence mode="wait">
-                    {!predicted && (
-                        <motion.div
-                            key="form"
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -40 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex items-center justify-center ml-28"
-                        >
-                            <PredictionForm onPredict={() => setPredicted(true)} />
-                        </motion.div>
-                    )}
+            <div className='flex flex-col items-center mt-24 gap-6'>
 
+                {/* FORM (siempre presente) */}
+                <PredictionForm
+                    variant={predicted ? "compact" : "default"}
+                    onPredict={() => setPredicted(true)}
+                />
+
+                <AnimatePresence mode="wait">
                     {predicted && (
                         <motion.div
                             key="results"
                             initial={{ opacity: 0, y: 60 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            animate={{ opacity: 1, y: -110, x: -210}}
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
                             <PredictionList />

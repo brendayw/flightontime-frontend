@@ -29,12 +29,16 @@ const AEROPUERTOS = [
   { code: "COR", name: "Aeropuerto Córdoba" },
 ];
 
-const PredictionForm = ({ onPredict }) => {
+const PredictionForm = ({ onPredict, variant = "default" }) => {
+  const isCompact = variant === "compact";
+
   const [aerolinea, setAerolinea] = useState("");
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
   const [fechaHora, setFechaHora] = useState("");
   const [distancia, setDistancia] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +51,10 @@ const PredictionForm = ({ onPredict }) => {
       distancia,
     };
 
+    if (!isCompact) {
+      setSubmitted(true);
+    }
+
     onPredict();
     console.log("Datos del vuelo:", data);
   };
@@ -54,37 +62,47 @@ const PredictionForm = ({ onPredict }) => {
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit}
+      transition={{
+        duration: 0.6,
+        ease: "easeInOut",
+      }}
       sx={{
-        position: "relative",
-        overflow: "hidden",
+        position: 'relative',
+        top: isCompact ? -100 : 'auto',
+        left: isCompact ? 90 : 50,
         background: '#F9F3F3',
-        width: { xs: "90%", sm: 950 },
-        heihght: 425,
-        maxWidth: 1122,
-        mx: "auto",
-        my: 2,
+        width: isCompact ? '1200px' : '100%',
+        maxWidth: isCompact ? '1200px' : 950,
+        height: isCompact ? 90 : 350,
+        overflow: isCompact ? "visible" : "hidden",
+        mx: 'auto',
+        my: isCompact ? 1 : 2,
         boxShadow: 3,
         borderRadius: 10,
         p: 4,
+        transition: "all 0.6s ease-in-out",
       }}
-      onSubmit={handleSubmit}
     >
-      <div className="flex justify-center mb-8">
-        <div className="inline-flex items-center">
-          <Title 
-            titulo="¿Tu vuelo va a salir a tiempo?" 
-            className="text-[#251A79] text-xl"
-          />
-          <img src={Avion} alt="Avión" className="w-8 h-8 ml-2" />
+      {!isCompact && ( 
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex items-center">
+            <Title 
+              titulo="¿Tu vuelo va a salir a tiempo?" 
+              className="text-[#251A79] text-xl"
+            />
+            <img src={Avion} alt="Avión" className="w-8 h-8 ml-2" />
+          </div>
         </div>
-      </div>
+      )}
 
-    
-      <img src={Maleta} alt="Maleta" className="absolute top-6 right-1 w-[100px]" />
+      {!isCompact && (
+        <img src={Maleta} alt="Maleta" className="absolute top-6 right-1 w-[100px]" />
+      )}
       
-      <Grid container columnSpacing={4} rowSpacing={4} justifyContent="center" marginBottom={3}>
+      <Grid container wrap={isCompact ? "nowrap" : "wrap"}  columnSpacing={4} rowSpacing={ isCompact ? 0 : 4} justifyContent={ isCompact ? 'flex-start' : 'center'} marginBottom={3}>
         {/* Fila 1 */}
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%' }}>
+         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -102,7 +120,7 @@ const PredictionForm = ({ onPredict }) => {
               onChange={(e) => setAerolinea(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
-                height: '45px',
+                height: isCompact ? '30px' : '45px',
                 color: "#5c5555",
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
@@ -116,7 +134,7 @@ const PredictionForm = ({ onPredict }) => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%' }}>
+        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px': '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -137,7 +155,7 @@ const PredictionForm = ({ onPredict }) => {
               sx={{ 
                 backgroundColor: '#F5E6E6', 
                 color: "#5c5555",
-                height: '45px', 
+                height: isCompact ? '30px' : '45px', 
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
                 },  }}
@@ -150,7 +168,7 @@ const PredictionForm = ({ onPredict }) => {
         </Grid>
 
         {/* Fila 2 */}
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%' }}>
+        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -170,7 +188,7 @@ const PredictionForm = ({ onPredict }) => {
               onChange={(e) => setOrigen(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
-                height: '45px', 
+                height: isCompact ? '30px' : '45px', 
                 color: "#5c5555",
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
@@ -184,7 +202,7 @@ const PredictionForm = ({ onPredict }) => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%' }}>
+        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <TextField
             label="Fecha y hora"
             type="datetime-local"
@@ -204,11 +222,12 @@ const PredictionForm = ({ onPredict }) => {
             sx={{
               backgroundColor: '#F5E6E6',
               "& .MuiInputBase-root": {
-                height: "45px",
+                height: isCompact ? '30px' :  '45px',
               },
               "& input": {
                 padding: "10.5px 14px",
                 color: "#5c5555",
+                fontSize: isCompact ? 11 : 12,
               },
               "& input::-webkit-calendar-picker-indicator": {
                 filter: "invert(55%) sepia(8%) saturate(300%) hue-rotate(350deg)",
@@ -222,7 +241,7 @@ const PredictionForm = ({ onPredict }) => {
         </Grid>
 
         {/* Fila 3 */}
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%', zIndex: 10 }}>
+        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <TextField
             label="Distancia (km)"
             type="number"
@@ -242,7 +261,7 @@ const PredictionForm = ({ onPredict }) => {
             sx={{
               backgroundColor: '#F5E6E6',
               "& .MuiInputBase-root": {
-                height: "45px",
+                height: isCompact ? '30px' :  '45px',
               },
               "& input": {
                 padding: "10.5px 14px",
@@ -256,17 +275,24 @@ const PredictionForm = ({ onPredict }) => {
           />
         </Grid>
 
-        <Grid item xs={6} sx={{ minWidth: '45%', maxWidth: '50%', zIndex: 10 }} display="flex" alignItems="center">
-          <Button type="submit" variant="contained" fullWidth sx={{ height: "45px", backgroundColor: '#FF854C', fontWeight: 600 }}>
-            Predecir vuelo
+        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1, zIndex: 10 }} display="flex" alignItems="center">
+          <Button type="submit" variant="contained" fullWidth sx={{ height: isCompact ? '30px' :  '45px', backgroundColor: '#FF854C', fontWeight: 600 }}>
+            {isCompact ? 'Predecir' : 'Predecir vuelo'}
           </Button>
         </Grid>
       </Grid>
 
+      {!isCompact && (
+        <img src={AvionDePapel} alt="Avion de Papel" className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
+      )}
       
-      <img src={AvionDePapel} alt="Avion de Papel" className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
-      <img src={Nube} alt="Nube" className="absolute bottom-0 right-0 w-[225px] h-[132px] opacity-60"/>
-      <img src={LineaNube} alt="Nube" className="absolute bottom-0 right-0 w-[140px] h-[105px]"/>
+      {!isCompact && (
+        <img src={Nube} alt="Nube" className="absolute bottom-0 right-0 w-[225px] h-[132px] opacity-60"/>
+      )}
+
+      {!isCompact && (
+        <img src={LineaNube} alt="Nube" className="absolute bottom-0 right-0 w-[140px] h-[105px]"/>
+      )}
     </Box>
   );
 }
