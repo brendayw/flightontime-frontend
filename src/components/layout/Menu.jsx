@@ -17,7 +17,7 @@ const Menu = () => {
             </Link>
 
             <Link to="/" className='flex items-center gap-2'>
-                <img src={NotificationIcon} alt="Perfil" className='w-7 h-7' />
+                <img src={NotificationIcon} alt="Perfil" className='w-6 h-6' />
             </Link>
 
             <Link to="/" className='flex items-center gap-2'>
@@ -25,7 +25,7 @@ const Menu = () => {
             </Link>
 
             <Link to="/" className='flex items-center gap-2'>
-                <img src={WeatherIcon} alt="Perfil" className='w-6 h-6' />
+                <img src={WeatherIcon} alt="Perfil" className='w-7 h-7' />
             </Link>
 
             <Link to="/" className='flex items-center gap-2'>

@@ -40,29 +40,21 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
   const [submitted, setSubmitted] = useState(false);
   
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    
-    const data = {
-      aerolinea,
-      origen,
-      destino,
-      fechaHora,
-      distancia,
-    };
+    const data = { aerolinea, origen, destino, fechaHora, distancia };
+    onPredict(data); 
 
     if (!isCompact) {
       setSubmitted(true);
     }
-
-    onPredict();
     console.log("Datos del vuelo:", data);
   };
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       transition={{
         duration: 0.6,
         ease: "easeInOut",

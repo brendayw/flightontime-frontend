@@ -2,8 +2,13 @@ import {  Card, CardContent, Typography, Box, LinearProgress, Divider } from "@m
 import AvionIcon from '../../assets/icons/avion.png';
 import RelojIcon from '../../assets/icons/reloj.png';
 import DistanciaIcon from '../../assets/icons/distance.png';
+import { formatPrediction } from "../../utils/formatPrediction.jsx";
 
 function PredictionCard({ prediction }) {
+  const data = formatPrediction(prediction);
+  if (!data) return null;
+
+  const { aerolinea, origen, destino, distancia, status, probability, isDelayed, formattedDate } = data;
   // const isDelayed = prediction.status === "Retrasado";
 
   return (
@@ -31,7 +36,7 @@ function PredictionCard({ prediction }) {
         >
           <img src={AvionIcon} alt='Icono de avión' className='w-7 h-7 flex items-start ml-4'/>
           <Typography fontWeight={600} color="#FFFFFF">
-            AEROLINEA | ORIGEN → DESTINO
+            {data.aerolinea} | {data.origen} → {data.destino}
           </Typography>
         </Box>
 
@@ -39,7 +44,7 @@ function PredictionCard({ prediction }) {
         <Box display="flex" alignItems="center" gap={2} mt={2} pl={2} >
           <img src={RelojIcon} alt="Icono de reloj" className='w-7 h-7'/>
           <Typography variant="body2" fontSize={15}>
-            <strong>11/11/2025 - 14:30 hs</strong>
+            <strong>{data.formattedDate}</strong>
           </Typography>
         </Box>
 
@@ -47,7 +52,7 @@ function PredictionCard({ prediction }) {
         <Box display="flex" alignItems="center" gap={2} mt={2} pl={2}>
           <img src={DistanciaIcon} alt="Icono de distancia" className='w-7 h-7' />
           <Typography variant="body2" fontSize={15}>
-            <strong>3000 km </strong>de distancia
+            <strong>{data.distancia}</strong>de distancia
           </Typography>
         </Box>
 
@@ -56,20 +61,20 @@ function PredictionCard({ prediction }) {
 
         {/* Estado */}
         <Typography mt={2} pl={2}>
-          Estado del vuelo: <strong style={{ color: '#d32f2f', fontSize: '16px'}}>Retrasado</strong>
-          {/* <strong style={{ color: isDelayed ? "#d32f2f" : "#2e7d32" }}>
-            {p´-]}
-          </strong> */}
+          Estado del vuelo: {' '} 
+          <strong style={{ color: '#d32f2f', fontSize: '16px'}}>
+            {data.status}
+          </strong>
         </Typography>
 
         {/* Probabilidad */}
         <Typography variant="body2" mt={2} pl={2} fontSize={16}>
-          Probabilidad de retraso: <strong>68%</strong>
+          Probabilidad de retraso: <strong>{data.probability}%</strong>
         </Typography>
 
         <LinearProgress
           variant="determinate"
-          value={68}
+          value={data.probability}
           sx={{
             height: 4,
             borderRadius: 5,
@@ -79,7 +84,7 @@ function PredictionCard({ prediction }) {
             padding: 1.5,
             backgroundColor: "#e0e0e0ff",
             "& .MuiLinearProgress-bar": {
-              backgroundColor: "#d32f2f",
+              backgroundColor: data.isDelayed ? "#d32f2f" : "#2e7d32",
             },
           }}
         />
