@@ -12,7 +12,7 @@ const Menu = () => {
         <ul className='flex flex-col gap-8 items-center mt-6'>
             <img src={MenuIcon} alt="Inicio" className='w-6 h-6' />
 
-            <Link to="/" className='flex items-center gap-2 mt-12'>
+            <Link to="/" className='flex items-center gap-2 mt-12' onClick={() => window.location.reload()}>
                 <img src={HomeIcon} alt="Inicio" className='w-6 h-6' />
             </Link>
 

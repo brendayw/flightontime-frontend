@@ -11,6 +11,7 @@ const Header = ({ predicted }) => {
                 <Title titulo='Bienvenido a' className='text-[#ffffff] text-lg italic'></Title>
             </div> 
             
+            {/* Logo */}
             <motion.div 
                 className="flex justify-center"
                 initial={{ y: 24 }}

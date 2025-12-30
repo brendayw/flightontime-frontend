@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Grid, Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import useAerolineas from "../../hooks/useAerolineas";
+import useAeropuertos from "../../hooks/useAeropuertos";
 import Title from "../ui/Title";
 import Avion from '../../assets/icons/avion.png';
 import Maleta from '../../assets/icons/maleta.png';
@@ -7,29 +9,10 @@ import AvionDePapel from '../../assets/icons/avion-papel.png';
 import Nube from '../../assets/icons/nube.png';
 import LineaNube from '../../assets/icons/linea-de-nube.png';
 
-const AEROLINEAS = [
-  { id: "AA", nombre: "American Airlines" },
-  { id: "AR", nombre: "Aerolíneas Argentinas" },
-  { id: "AV", nombre: "Avianca" },
-  { id: "DL", nombre: "Delta Air Lines" },
-  { id: "LA", nombre: "LATAM Airlines" },
-  { id: "UA", nombre: "United Airlines" },
-  { id: "IB", nombre: "Iberia" },
-  { id: "AF", nombre: "Air France" },
-  { id: "KL", nombre: "KLM" },
-  { id: "LH", nombre: "Lufthansa" },
-  { id: "EK", nombre: "Emirates" },
-  { id: "QR", nombre: "Qatar Airways" },
-];
-
-const AEROPUERTOS = [
-  { code: "EZE", name: "Aeropuerto Ezeiza" },
-  { code: "AEP", name: "Aeroparque" },
-  { code: "MDZ", name: "Aeropuerto Mendoza" },
-  { code: "COR", name: "Aeropuerto Córdoba" },
-];
-
 const PredictionForm = ({ onPredict, variant = "default" }) => {
+  const { aerolineas, loading: loadingAerolineas } = useAerolineas();
+  const { aeropuertos, loading: loadingAeropuertos } = useAeropuertos();
+
   const isCompact = variant === "compact";
 
   const [aerolinea, setAerolinea] = useState("");
@@ -39,26 +22,47 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
   const [distancia, setDistancia] = useState("");
   const [submitted, setSubmitted] = useState(false);
   
-
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const data = { aerolinea, origen, destino, fechaHora, distancia };
-    onPredict(data); 
 
-    if (!isCompact) {
-      setSubmitted(true);
+    if (!aerolinea || !origen || !destino || !fechaHora || !distancia) {
+      console.error("Faltan campos obligatorios");
+      return;
     }
-    console.log("Datos del vuelo:", data);
+
+    const distanciaInt = parseInt(distancia);
+    if (isNaN(distanciaInt) || distanciaInt <= 0) {
+      console.error("Distancia inválida");
+      return;
+    }
+
+    const fechaISO = new Date(fechaHora).toISOString();
+    const fechaFormateada = fechaISO.slice(0, 19);
+
+    const formData = {
+      aerolinea: aerolinea.trim(),
+      origen: origen.trim(),
+      destino: destino.trim(),
+      fecha_partida: fechaFormateada,
+      distancia_km: distanciaInt
+    };
+
+    if (onPredict) {
+      await onPredict(formData);
+    }
+    
+    if (!isCompact) setSubmitted(true);
   };
+
+  if (loadingAerolineas || loadingAeropuertos) {
+    return <p>Cargando datos...</p>;
+  }
 
   return (
     <Box
       component="form"
       onSubmit={handleFormSubmit}
-      transition={{
-        duration: 0.6,
-        ease: "easeInOut",
-      }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       sx={{
         position: 'relative',
         top: isCompact ? -100 : 'auto',
@@ -76,6 +80,7 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         transition: "all 0.6s ease-in-out",
       }}
     >
+      {/* Titulo del form */}
       {!isCompact && ( 
         <div className="flex justify-center mb-8">
           <div className="inline-flex items-center">
@@ -83,17 +88,18 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
               titulo="¿Tu vuelo va a salir a tiempo?" 
               className="text-[#251A79] text-xl"
             />
-            <img src={Avion} alt="Avión" className="w-8 h-8 ml-2" />
+            <img src={Avion} alt="Avión" style={{ pointerEvents: 'none' }} className="w-8 h-8 ml-2" />
           </div>
         </div>
       )}
 
       {!isCompact && (
-        <img src={Maleta} alt="Maleta" className="absolute top-6 right-1 w-[100px]" />
+        <img src={Maleta} alt="Maleta" style={{ pointerEvents: 'none' }} className="absolute top-6 right-1 w-[100px]" />
       )}
       
       <Grid container wrap={isCompact ? "nowrap" : "wrap"}  columnSpacing={4} rowSpacing={ isCompact ? 0 : 4} justifyContent={ isCompact ? 'flex-start' : 'center'} marginBottom={3}>
         {/* Fila 1 */}
+        {/* Aerolinea  */}
          <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
@@ -119,13 +125,14 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
                 },  
               }}
             >
-              {AEROLINEAS.map((a) => (
-                <MenuItem key={a.id} value={a.id}>{a.nombre}</MenuItem>
+              {aerolineas.map(a => (
+                <MenuItem key={a.id} value={a.iata}>{a.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
 
+        {/* Destino */}
         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px': '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
@@ -142,8 +149,8 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
               Destino
             </InputLabel>
             <Select 
-              value={destino} 
-              onChange={(e) => setDestino(e.target.value)} 
+              value={destino || ""}
+              onChange={(e) => setDestino(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
                 color: "#5c5555",
@@ -152,14 +159,15 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
                   border: 'none',
                 },  }}
             >
-              {AEROPUERTOS.map((a) => (
-                <MenuItem key={a.code} value={a.code}>{a.name}</MenuItem>
+              {aeropuertos.map(a => (
+                <MenuItem key={a.id} value={a.iata}>{a.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
 
         {/* Fila 2 */}
+        {/* Origen */}
         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <FormControl fullWidth>
             <InputLabel 
@@ -175,8 +183,8 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
             >
               Origen
             </InputLabel>
-            <Select 
-              value={origen}
+            <Select
+              value={origen || ""}
               onChange={(e) => setOrigen(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
@@ -187,13 +195,14 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
                 }, 
               }}
             >
-              {AEROPUERTOS.map((a) => (
-                <MenuItem key={a.code} value={a.code}>{a.name}</MenuItem>
+              {aeropuertos.map(a => (
+                <MenuItem key={a.id} value={a.iata}>{a.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
 
+        {/* Fecha de partida y hora */}
         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <TextField
             label="Fecha y hora"
@@ -233,6 +242,7 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         </Grid>
 
         {/* Fila 3 */}
+        {/* Distancia en km */}
         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
           <TextField
             label="Distancia (km)"
@@ -267,23 +277,30 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
           />
         </Grid>
 
+        {/* Boton de predecir vuelo */}
         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1, zIndex: 10 }} display="flex" alignItems="center">
-          <Button type="submit" variant="contained" fullWidth sx={{ height: isCompact ? '30px' :  '45px', backgroundColor: '#FF854C', fontWeight: 600 }}>
+          <Button 
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ height: isCompact ? '30px' :  '45px', backgroundColor: '#FF854C', fontWeight: 600 }}
+          >
             {isCompact ? 'Predecir' : 'Predecir vuelo'}
           </Button>
         </Grid>
       </Grid>
 
+      {/* Imágenes */}
       {!isCompact && (
-        <img src={AvionDePapel} alt="Avion de Papel" className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
+        <img src={AvionDePapel} alt="Avion de Papel" style={{ pointerEvents: 'none' }} className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
       )}
       
       {!isCompact && (
-        <img src={Nube} alt="Nube" className="absolute bottom-0 right-0 w-[225px] h-[132px] opacity-60"/>
+        <img src={Nube} alt="Nube" style={{ pointerEvents: 'none' }} className="absolute bottom-0 right-0 w-[225px] h-[132px] opacity-60"/>
       )}
 
       {!isCompact && (
-        <img src={LineaNube} alt="Nube" className="absolute bottom-0 right-0 w-[140px] h-[105px]"/>
+        <img src={LineaNube} alt="Nube" style={{ pointerEvents: 'none' }} className="absolute bottom-0 right-0 w-[140px] h-[105px]"/>
       )}
     </Box>
   );
