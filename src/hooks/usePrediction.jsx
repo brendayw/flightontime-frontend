@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import handleFlightSubmit from "../services/api/handleFlightSubmit";
+import handleFlightSubmit from "../services/api/prediction/handleFlightSubmit";
 
 const usePrediction = () => {
   const [result, setResult] = useState(null);

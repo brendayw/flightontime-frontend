@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../../axiosInstance";
 
 /**
  * POST → Envía datos del vuelo al backend para obtener predicción

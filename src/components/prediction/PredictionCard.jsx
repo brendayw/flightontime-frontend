@@ -1,4 +1,4 @@
-import {  Card, CardContent, Typography, Box, LinearProgress, Divider } from "@mui/material";
+import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, LinearProgress, Divider } from "@mui/material";
 import AvionIcon from '../../assets/icons/avion.png';
 import RelojIcon from '../../assets/icons/reloj.png';
 import DistanciaIcon from '../../assets/icons/distance.png';
@@ -6,6 +6,8 @@ import { formatPrediction } from "../../utils/formatPrediction.jsx";
 
 function PredictionCard({ prediction }) {
   const data = formatPrediction(prediction);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   if (!data) {
     return (
@@ -22,8 +24,9 @@ function PredictionCard({ prediction }) {
         borderRadius: "25px",
         backgroundColor: "#F9F3F3",
         boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
-        width: 600,
-        height: 300,
+        width: isMobile ? '95%' : 600,
+        height: isMobile ? 'auto' : 300,
+        mx: isMobile ? "auto" : 0,
         overflow: "hidden"
       }}
     >
@@ -32,32 +35,43 @@ function PredictionCard({ prediction }) {
         <Box
           sx={{
             backgroundColor: "#798AF4",
-            p: 2,
+            p: isMobile ? 1.5 : 2,
             display: "flex",
             alignItems: "center",
-            gap: 3,
+            gap: isMobile ? 1.5 : 3,
+            flexWrap: isMobile ? "wrap" : "nowrap",
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
           }}
         >
-          <img src={AvionIcon} alt='Icono de avión' className='w-7 h-7 flex items-start ml-4'/>
-          <Typography fontWeight={600} color="#FFFFFF">
+          <img 
+            src={AvionIcon} 
+            alt='Icono de avión' 
+            className={isMobile ? "w-6 h-6 ml-2" : "w-7 h-7 ml-4"}
+          />
+          <Typography fontWeight={600} color="#FFFFFF" fontSize={isMobile ? 14 : 16}>
             {aerolinea} | {origen} → {destino}
           </Typography>
         </Box>
 
         {/* Fecha de partida*/}
-        <Box display="flex" alignItems="center" gap={2} mt={2} pl={2} >
-          <img src={RelojIcon} alt="Icono de reloj" className='w-7 h-7'/>
-          <Typography variant="body2" fontSize={15}>
+        <Box 
+          display="flex"
+          alignItems="center" 
+          gap={2} 
+          mt={2} 
+          pl={2} 
+        >
+          <img src={RelojIcon} alt="Icono de reloj" className={isMobile ? "w-6 h-6" : "w-7 h-7"}/>
+          <Typography variant="body2" fontSize={isMobile ? 13 : 15}>
             <strong>{formattedDate}</strong>
           </Typography>
         </Box>
 
         {/* Distancia en km*/}
         <Box display="flex" alignItems="center" gap={2} mt={2} pl={2}>
-          <img src={DistanciaIcon} alt="Icono de distancia" className='w-7 h-7' />
-          <Typography variant="body2" fontSize={15}>
+          <img src={DistanciaIcon} alt="Icono de distancia" className={isMobile ? "w-6 h-6" : "w-7 h-7"} />
+          <Typography variant="body2" fontSize={isMobile ? 13 : 15}>
             <strong>{distancia}</strong>de distancia
           </Typography>
         </Box>
@@ -66,7 +80,7 @@ function PredictionCard({ prediction }) {
         <Divider sx={{ backgroundColor: "#D9D9D9", m:2, }} />
 
         {/* Estado del vuelo*/}
-        <Typography mt={2} pl={2}>
+        <Typography mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
           Estado del vuelo: {' '} 
           <strong style={{ color: '#d32f2f', fontSize: '16px'}}>
             {status}
@@ -74,7 +88,7 @@ function PredictionCard({ prediction }) {
         </Typography>
 
         {/* Probabilidad */}
-        <Typography variant="body2" mt={2} pl={2} fontSize={16}>
+        <Typography variant="body2" mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
           Probabilidad de retraso: <strong>{probability}%</strong>
         </Typography>
 
@@ -83,7 +97,7 @@ function PredictionCard({ prediction }) {
           variant="determinate"
           value={probability}
           sx={{
-            height: 4,
+            height: isMobile ? 3 : 4,
             borderRadius: 5,
             marginTop: 1,
             marginRight: 2,

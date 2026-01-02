@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchAerolineas } from "../services/api/getLocations";
+import { fetchAerolineas } from "../services/api/prediction/getLocations";
 
 const useAerolineas = () => {
   const [aerolineas, setAerolineas] = useState([]);

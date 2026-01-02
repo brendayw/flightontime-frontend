@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchAeropuertos } from "../services/api/getLocations";
+import { fetchAeropuertos } from "../services/api/prediction/getLocations";
 
 const useAeropuertos = () => {
   const [aeropuertos, setAeropuertos] = useState([]);

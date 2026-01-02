@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { useTheme, useMediaQuery, Grid, Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import useAerolineas from "../../hooks/useAerolineas";
 import useAeropuertos from "../../hooks/useAeropuertos";
 import Title from "../ui/Title";
@@ -10,11 +10,13 @@ import Nube from '../../assets/icons/nube.png';
 import LineaNube from '../../assets/icons/linea-de-nube.png';
 
 const PredictionForm = ({ onPredict, variant = "default" }) => {
+  const theme = useTheme();
+  const isCompact = variant === "compact"; //para luego de apretar predecir vuelo
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { aerolineas, loading: loadingAerolineas } = useAerolineas();
   const { aeropuertos, loading: loadingAeropuertos } = useAeropuertos();
-
-  const isCompact = variant === "compact";
-
+  
   const [aerolinea, setAerolinea] = useState("");
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
@@ -58,25 +60,37 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
     return <p>Cargando datos...</p>;
   }
 
+  if (isMobile && isCompact) {
+    return null; // el form no se renderiza
+  }
+
   return (
     <Box
       component="form"
       onSubmit={handleFormSubmit}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
       sx={{
         position: 'relative',
-        top: isCompact ? -100 : 'auto',
-        left: isCompact ? 90 : 50,
+        top: isCompact
+          ? (isMobile ? 0 : -110)
+          : 'auto',
+        left: isCompact
+          ? (isMobile ? 0 : 50)
+          : (isMobile ? 0 : 50),
         background: '#F9F3F3',
-        width: isCompact ? '1200px' : '100%',
-        maxWidth: isCompact ? '1200px' : 950,
-        height: isCompact ? 90 : 350,
-        overflow: isCompact ? "visible" : "hidden",
+        width: isMobile ? '95%' : isCompact ? '1200px' : '100%',
+        maxWidth: isMobile ? '95%' : isCompact ? '1200px' : 950,
+        height: 'auto',
+        height: isMobile
+          ? 'auto'
+          : isCompact
+            ? 90
+            : 350,
+        overflow: isCompact ? 'visible' : 'hidden',
         mx: 'auto',
-        my: isCompact ? 1 : 2,
+        my: isMobile ? 0 : 2,
         boxShadow: 3,
         borderRadius: 10,
-        p: 4,
+        p: isMobile ? 2 : 4,
         transition: "all 0.6s ease-in-out",
       }}
     >
@@ -93,14 +107,36 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         </div>
       )}
 
-      {!isCompact && (
+      {!isCompact && !isMobile && (
         <img src={Maleta} alt="Maleta" style={{ pointerEvents: 'none' }} className="absolute top-6 right-1 w-[100px]" />
       )}
       
-      <Grid container wrap={isCompact ? "nowrap" : "wrap"}  columnSpacing={4} rowSpacing={ isCompact ? 0 : 4} justifyContent={ isCompact ? 'flex-start' : 'center'} marginBottom={3}>
+      <Grid container 
+        wrap={isMobile ? "wrap" : isCompact ? "nowrap" : "wrap"}
+        columnSpacing={isMobile ? 2 : 4}
+        rowSpacing={isMobile ? 4 : isCompact ? 0 : 4}
+        justifyContent={ isCompact ? 'flex-start' : 'center'} 
+        marginBottom={3}
+      >
         {/* Fila 1 */}
         {/* Aerolinea  */}
-         <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
+         <Grid item 
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px',
+            flexGrow: isCompact ? 0 : 1
+          }}
+        >
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -133,7 +169,23 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         </Grid>
 
         {/* Destino */}
-        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px': '427px', flexGrow: isCompact ? 0 : 1}}>
+        <Grid item
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px',
+            flexGrow: isCompact ? 0 : 1
+          }} 
+        >
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -168,7 +220,23 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
 
         {/* Fila 2 */}
         {/* Origen */}
-        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
+        <Grid item
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px',
+            flexGrow: isCompact ? 0 : 1
+          }}
+        >
           <FormControl fullWidth>
             <InputLabel 
               shrink 
@@ -203,7 +271,23 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         </Grid>
 
         {/* Fecha de partida y hora */}
-        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
+        <Grid item
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px',
+            flexGrow: isCompact ? 0 : 1
+          }}  
+        >
           <TextField
             label="Fecha y hora"
             type="datetime-local"
@@ -243,7 +327,23 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
 
         {/* Fila 3 */}
         {/* Distancia en km */}
-        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1}}>
+        <Grid item 
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '90%'
+              : isCompact
+                ? '160px'
+                : '427px',
+            flexGrow: isCompact ? 0 : 1
+          }}
+        >
           <TextField
             label="Distancia (km)"
             type="number"
@@ -278,12 +378,35 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
         </Grid>
 
         {/* Boton de predecir vuelo */}
-        <Grid item xs={6} sx={{ minWidth: isCompact ? '160px' : '427px', maxWidth: isCompact ? '160px' : '427px', flexGrow: isCompact ? 0 : 1, zIndex: 10 }} display="flex" alignItems="center">
+        <Grid item 
+          xs={12} 
+          md={6}
+          sx={{ 
+            minWidth: isMobile
+              ? '80%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            maxWidth: isMobile
+              ? '80%'
+              : isCompact
+                ? '160px'
+                : '427px', 
+            flexGrow: isCompact ? 0 : 1, 
+            zIndex: 10
+          }} 
+          display="flex" 
+          alignItems="center"
+        >
           <Button 
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ height: isCompact ? '30px' :  '45px', backgroundColor: '#FF854C', fontWeight: 600 }}
+            sx={{ 
+              height: isMobile ? '45px' : isCompact ? '30px' : '45px', 
+              backgroundColor: '#FF854C', 
+              fontWeight: 600 
+            }}
           >
             {isCompact ? 'Predecir' : 'Predecir vuelo'}
           </Button>
@@ -291,15 +414,15 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
       </Grid>
 
       {/* Imágenes */}
-      {!isCompact && (
+      {!isCompact && !isMobile && (
         <img src={AvionDePapel} alt="Avion de Papel" style={{ pointerEvents: 'none' }} className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
       )}
       
-      {!isCompact && (
+      {!isCompact && !isMobile && (
         <img src={Nube} alt="Nube" style={{ pointerEvents: 'none' }} className="absolute bottom-0 right-0 w-[225px] h-[132px] opacity-60"/>
       )}
 
-      {!isCompact && (
+      {!isCompact && !isMobile && (
         <img src={LineaNube} alt="Nube" style={{ pointerEvents: 'none' }} className="absolute bottom-0 right-0 w-[140px] h-[105px]"/>
       )}
     </Box>
