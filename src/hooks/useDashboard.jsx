@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { getDashboardSummary, getGlobalHistory } from "../api/dashboardApi";
+import { getDashboardSummary, getGlobalHistory } from "../services/api/dashboard/dashboardApi";
 
 const useDashboard = () => {
     const [summary, setSummary] = useState(null);
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
     const fetchDashboard = async () => {
       try {
         const [summaryData, historyData] = await Promise.all([
           getDashboardSummary(),
-          getGlobalHistory()
+          getGlobalHistory(),
         ]);
 
         setSummary(summaryData);
         setHistory(historyData);
-      } catch (error) {
-        console.error("Error cargando dashboard", error);
+      } catch (err) {
+        console.error(err);
+        setError("Error cargando datos del dashboard");
       } finally {
         setLoading(false);
       }
@@ -26,7 +28,7 @@ const useDashboard = () => {
     fetchDashboard();
   }, []);
 
-  return { summary, history, loading };
+  return { summary, history, loading, error };
 };
 
 export default useDashboard;
