@@ -1,55 +1,30 @@
 import { LineChart } from '@mui/x-charts/LineChart';
-import useDashboard from '../../hooks/useDashboard';
 
-const PrediccionesEvolutionChart = () => {
-    const { history, loading, error } = useDashboard();
-
-    if (loading) return <p>Cargando evolución...</p>;
-    if (error) return <p>{error}</p>;
-    if (!history || history.length === 0)
+const PrediccionesEvolutionChart = ({ history }) => {
+    if (!history.length) {
         return <p>No hay datos de evolución</p>;
+    }
 
-    /**
-     * Agrupamos por vueloId
-     * {
-     *   101: [{...}, {...}],
-     *   102: [{...}]
-     * }
-     */
-    const groupedByFlight = history.reduce((acc, item) => {
-        if (!acc[item.vueloId]) acc[item.vueloId] = [];
-        acc[item.vueloId].push(item);
+    const groupedByFlight = history.reduce((acc, h) => {
+        acc[h.vueloId] ??= [];
+        acc[h.vueloId].push(h);
         return acc;
     }, {});
 
-    /**
-    * Eje X: todas las fechas únicas ordenadas
-    */
     const xAxisData = [
-        ...new Set(
-            history
-                .map((h) => new Date(h.createdAt).getTime())
-        ),
+        ...new Set(history.map((h) => h.createdAt)),
     ].sort((a, b) => a - b);
 
-    /**
-     * Series: una por vuelo
-     * Si un vuelo no tiene dato en una fecha → null
-     */
     const series = Object.entries(groupedByFlight).map(
         ([vueloId, records]) => {
-            const dataByDate = records.reduce((acc, r) => {
-                acc[new Date(r.createdAt).getTime()] = r.probabilidad;
-                return acc;
-            }, {});
+            const dataByDate = Object.fromEntries(
+                records.map((r) => [r.createdAt, r.probabilidad])
+            );
 
-            return {    
+            return {
                 label: `Vuelo ${vueloId}`,
-                data: xAxisData.map((date) =>
-                    dataByDate[date] ?? null
-                ),
-                valueFormatter: (value) =>
-                    value == null ? '—' : value.toFixed(2),
+                data: xAxisData.map((d) => dataByDate[d] ?? null),
+                valueFormatter: (v) => (v == null ? "—" : v.toFixed(2)),
             };
         }
     );

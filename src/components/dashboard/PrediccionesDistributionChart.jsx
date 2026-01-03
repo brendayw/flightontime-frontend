@@ -1,36 +1,20 @@
 import { BarChart } from '@mui/x-charts/BarChart';
-import useDashboard from '../../hooks/useDashboard';
 
-const PrediccionesDistributionChart = () => {
-  const { history, loading, error } = useDashboard();
+const PrediccionesDistributionChart = ({ history }) => {
+  if (!history.length) {
+    return <p>No hay datos de predicciones</p>;
+  }
 
-  if (loading) return <p>Cargando distribución...</p>;
-  if (error) return <p>{error}</p>;
-  if (!history || history.length === 0) return <p>No hay datos de predicciones</p>;
-
-  // Contamos por tipo de previsión
-  const counts = history.reduce((acc, item) => {
-    acc[item.prevision] = (acc[item.prevision] || 0) + 1;
+  const counts = history.reduce((acc, { prevision }) => {
+    acc[prevision] = (acc[prevision] || 0) + 1;
     return acc;
   }, {});
 
-  //Categorias
-  const orderedCategories = ['A tiempo', 'Retraso'];
-  const categories = orderedCategories.filter(cat => counts[cat] !== undefined);
-  const values = categories.map(cat => counts[cat]);
-
-  //Colores específicos
-  const colorMap = {
-    'A tiempo': '#B0B8F9',
-    'Retraso': '#FF854C' //aca hay una diferencia entre retaso y retrasado
-  };
-
-  // // Crear dataset con la categoría incluida
-  // const chartData = categories.map((cat, idx) => ({
-  //   category: cat,
-  //   value: values[idx],
-  //   color: colorMap[cat]
-  // }));
+  const categories = ["A tiempo", "Retraso"].filter(
+    (cat) => counts[cat] !== undefined
+  );
+  
+  const values = categories.map((cat) => counts[cat]);
 
   return (
     <div className="border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center">

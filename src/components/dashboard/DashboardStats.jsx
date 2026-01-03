@@ -1,4 +1,3 @@
-import React from "react";
 import useDashboard from "../../hooks/useDashboard";
 
 const DashboardStats = () => {

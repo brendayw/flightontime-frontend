@@ -1,35 +1,27 @@
 import { PieChart } from '@mui/x-charts/PieChart';
-import useDashboard from '../../hooks/useDashboard';
 
-const PrediccionesStatusChart = () => {
-    const { summary, loading, error } = useDashboard();
-    if (loading) return <p>Cargando gráfico...</p>;
-
-    if (error) {
-        return (
-        <p className="bg-[#f6e9e6] border border-red-300 rounded-md text-center text-[#FF6F59] m-4 p-4">
-            {error}
-        </p>
-        );
-    }
-
+const PrediccionesStatusChart = ({ summary }) => {
     if (!summary || summary.totalPredicciones === 0) {
-        return (
-        <p className="bg-[#f6e9e6] border border-red-300 rounded-md text-center text-[#FF6F59] m-4 p-4">
-            Aún no hay predicciones registradas
-        </p>
-        );
+        return <p>No hay predicciones registradas</p>;
     }
-
-    const puntuales =
-        (summary.totalPredicciones * summary.porcentajePuntuales) / 100;
-
-    const retrasos =
-        (summary.totalPredicciones * summary.porcentajeRetrasos) / 100;
 
     const chartData = [
-        { id: 0, value: puntuales, label: 'Puntuales' },
-        { id: 1, value: retrasos, label: 'Retrasos' },
+        {
+            id: 0,
+            value:
+                (summary.totalPredicciones *
+                summary.porcentajePuntuales) /
+                100,
+            label: "Puntuales",
+        },
+        {
+            id: 1,
+            value:
+                (summary.totalPredicciones *
+                summary.porcentajeRetrasos) /
+                100,
+            label: "Retrasos",
+        },
     ];
 
     return (

@@ -1,39 +1,47 @@
+import useDashboard from '../../hooks/useDashboard';
 import Title from '../ui/Title';
-import PrediccionesStatusChart from "./PrediccionesStatusChart";
-import PrediccionesDistributionChart from "./PrediccionesDistributionChart";
-import PrediccionesEvolutionChart from "./PrediccionesEvolutionChart";
-import PrediccionesPorVueloChart from "./PrediccionesPorVueloChart";
-import DashboardStats from "./DashboardStats";
+import PrediccionesStatusChart from './PrediccionesStatusChart';
+import PrediccionesDistributionChart from './PrediccionesDistributionChart';
+import PrediccionesEvolutionChart from './PrediccionesEvolutionChart';
+import PrediccionesPorVueloChart from './PrediccionesPorVueloChart';
+import DashboardStats from './DashboardStats';
 
-const DashboardCharts = () => (
-    <div className="w-[90%] bg-transparent p-6 space-y-6">
+const DashboardCharts = () => {
+    const { summary, history, loading, error } = useDashboard();
 
-        <DashboardStats />
+    if (loading) return <p>Cargando dashboard...</p>;
+    if (error) return <p>{error}</p>;
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-                <Title titulo='Estado de las predicciones' className='text-[#251A79] text-center text-lg p-3'/>
-                <PrediccionesStatusChart />
+    return (
+        <div className="w-[90%] bg-transparent p-6 space-y-6">
+
+            <DashboardStats />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <Title titulo='Estado de las predicciones' className='text-[#251A79] text-center text-lg p-3'/>
+                    <PrediccionesStatusChart summary={summary} />
+                </div>
+                
+                <div>
+                    <Title titulo='📊 Distribución de predicciones' className='text-[#251A79] text-center text-lg p-3'/>
+                    <PrediccionesDistributionChart history={history} />
+                </div>
+                
             </div>
+
+            <div>
+                <Title titulo='📈 Evolución global de probabilidades por vuelo' className='text-[#251A79] text-start text-lg p-3'/>
+                <PrediccionesEvolutionChart history={history} />
+            </div>
+
             
             <div>
-                <Title titulo='📊 Distribución de predicciones' className='text-[#251A79] text-center text-lg p-3'/>
-                <PrediccionesDistributionChart />
+                <Title titulo='🛫 Análisis por vuelo' className='text-[#251A79] text-start text-lg p-3'/>
+                <PrediccionesPorVueloChart history={history} />
             </div>
-            
         </div>
-
-        <div>
-            <Title titulo='📈 Evolución global de probabilidades por vuelo' className='text-[#251A79] text-start text-lg p-3'/>
-            <PrediccionesEvolutionChart />
-        </div>
-
-        
-        <div>
-            <Title titulo='🛫 Análisis por vuelo' className='text-[#251A79] text-start text-lg p-3'/>
-            <PrediccionesPorVueloChart />
-        </div>
-    </div>
-);
+    );
+};
 
 export default DashboardCharts;
