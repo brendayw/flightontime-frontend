@@ -72,7 +72,7 @@ function PredictionCard({ prediction }) {
         <Box display="flex" alignItems="center" gap={2} mt={2} pl={2}>
           <img src={DistanciaIcon} alt="Icono de distancia" className={isMobile ? "w-6 h-6" : "w-7 h-7"} />
           <Typography variant="body2" fontSize={isMobile ? 13 : 15}>
-            <strong>{distancia}</strong>de distancia
+            <strong>{distancia} </strong>de distancia
           </Typography>
         </Box>
 
