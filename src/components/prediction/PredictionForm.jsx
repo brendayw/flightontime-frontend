@@ -38,14 +38,13 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
       return;
     }
 
-    const fechaISO = new Date(fechaHora).toISOString();
-    const fechaFormateada = fechaISO.slice(0, 19);
+    const fechaFormateada = `${fechaHora}:00`;
 
     const formData = {
       aerolinea: aerolinea.trim(),
       origen: origen.trim(),
       destino: destino.trim(),
-      fecha_partida: fechaFormateada,
+      fecha_partida: fechaFormateada, 
       distancia_km: distanciaInt
     };
 
@@ -156,9 +155,20 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
                 backgroundColor: '#F5E6E6', 
                 height: isCompact ? '30px' : '45px',
                 color: "#5c5555",
+                fontSize: '14px',
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
-                },  
+                }, 
+              }}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    "& .MuiMenuItem-root": {
+                      fontSize: '14px',
+                      color: '#5c5555',
+                    },
+                  },
+                },
               }}
             >
               {aerolineas.map(a => (
@@ -205,11 +215,23 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
               onChange={(e) => setDestino(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
+                height: isCompact ? '30px' : '45px',
                 color: "#5c5555",
-                height: isCompact ? '30px' : '45px', 
+                fontSize: '14px',
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
-                },  }}
+                }, 
+              }}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    "& .MuiMenuItem-root": {
+                      fontSize: '14px',
+                      color: '#5c5555',
+                    },
+                  },
+                },
+              }}
             >
               {aeropuertos.map(a => (
                 <MenuItem key={a.id} value={a.iata}>{a.nombre}</MenuItem>
@@ -256,11 +278,22 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
               onChange={(e) => setOrigen(e.target.value)}
               sx={{ 
                 backgroundColor: '#F5E6E6', 
-                height: isCompact ? '30px' : '45px', 
+                height: isCompact ? '30px' : '45px',
                 color: "#5c5555",
+                fontSize: '14px',
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: 'none',
                 }, 
+              }}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    "& .MuiMenuItem-root": {
+                      fontSize: '14px',
+                      color: '#5c5555',
+                    },
+                  },
+                },
               }}
             >
               {aeropuertos.map(a => (
@@ -322,6 +355,7 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
                 border: 'none',
               }, 
             }}
+            
           />
         </Grid>
 
@@ -372,7 +406,7 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
               "& .MuiOutlinedInput-notchedOutline": {
                 border: "none",
               }, 
-              
+              zIndex: 10
             }}
           />
         </Grid>
@@ -415,7 +449,7 @@ const PredictionForm = ({ onPredict, variant = "default" }) => {
 
       {/* Imágenes */}
       {!isCompact && !isMobile && (
-        <img src={AvionDePapel} alt="Avion de Papel" style={{ pointerEvents: 'none' }} className="absolute left-0 bottom-0 w-[102px] h-[132px]" />
+        <img src={AvionDePapel} alt="Avion de Papel" style={{ pointerEvents: 'none' }} className="absolute left-0 bottom-0 w-[102px] h-[92px]" />
       )}
       
       {!isCompact && !isMobile && (

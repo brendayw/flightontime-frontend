@@ -30,7 +30,7 @@ const Menu = () => {
                     <img src={MenuIcon} alt="Menu" className="w-6 h-6" />
                 )}
 
-                <Link to="/" className='flex items-center gap-2 md:mt-12' onClick={() => window.location.reload()}>
+                <Link to="/" className='flex items-center gap-2 md:mt-12'>
                     <img src={HomeIcon} alt="Inicio" className='w-6 h-6' />
                 </Link>
 

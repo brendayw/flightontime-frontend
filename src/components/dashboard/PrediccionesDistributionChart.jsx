@@ -14,35 +14,26 @@ const PrediccionesDistributionChart = () => {
     return acc;
   }, {});
 
-  const categories = Object.keys(counts);
-  const values = Object.values(counts);
+  //Categorias
+  const orderedCategories = ['A tiempo', 'Retraso'];
+  const categories = orderedCategories.filter(cat => counts[cat] !== undefined);
+  const values = categories.map(cat => counts[cat]);
 
-  // Colores específicos
+  //Colores específicos
   const colorMap = {
     'A tiempo': '#B0B8F9',
-    'Retraso': '#FF854C'
+    'Retraso': '#FF854C' //aca hay una diferencia entre retaso y retrasado
   };
 
-  // Crear dataset con la categoría incluida
-  const chartData = categories.map((cat, idx) => ({
-    category: cat,
-    value: values[idx],
-    color: colorMap[cat]
-  }));
+  // // Crear dataset con la categoría incluida
+  // const chartData = categories.map((cat, idx) => ({
+  //   category: cat,
+  //   value: values[idx],
+  //   color: colorMap[cat]
+  // }));
 
   return (
     <div className="border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center">
-      {/* <h2 style={{ marginBottom: '20px', color: '#333' }}>📊 Distribución de predicciones</h2>
-      <svg width="0" height="0">
-        <defs>
-          {chartData.map((item, idx) => (
-            <linearGradient key={idx} id={`barColor${idx}`}>
-              <stop offset="0%" stopColor={item.color} />
-              <stop offset="100%" stopColor={item.color} />
-            </linearGradient>
-          ))}
-        </defs>
-      </svg> */}
       <BarChart
         xAxis={[{ 
           scaleType: 'band', 
@@ -65,18 +56,21 @@ const PrediccionesDistributionChart = () => {
             label: { fill: '#251A79' },
           },
           legend: {
-            hidden: 'true',
+            hidden: true,
           },
           tooltip: {
             trigger: 'none',
           },
         }}
         sx={{
-          [`& .MuiBarElement-root:nth-of-type(1)`]: {
-            fill: colorMap['A tiempo'],
+          '& .MuiBarElement-root:nth-of-type(1)': {
+            fill: '#B0B8F9', // A tiempo - Celeste
           },
-          [`& .MuiBarElement-root:nth-of-type(2)`]: {
-            fill: colorMap['Retraso'],
+          '& .MuiBarElement-root:nth-of-type(2)': {
+            fill: '#FF854C', // Retraso - Naranja
+          },
+          '& .MuiBarElement-root:nth-of-type(3)': {
+            fill: '#FF854C', // Por si hay una tercera categoría
           },
         }}
       />

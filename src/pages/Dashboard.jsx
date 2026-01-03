@@ -4,7 +4,6 @@ import Header from "../components/layout/Header.jsx";
 import Menu from "../components/layout/Menu.jsx";
 import Title from "../components/ui/Title.jsx";
 import DashboardCharts from "../components/dashboard/DashboardCharts.jsx";
-import DashboardStats from "../components/dashboard/DashboardStats.jsx";
 
 const Dashboard = ({ variant = "default" }) => {
     const isCompact = variant === "compact";
