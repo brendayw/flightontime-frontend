@@ -1,8 +1,12 @@
+import { useTheme, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 
 const PrediccionesDistributionChart = ({ history }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   if (!history.length) {
-    return <p>No hay datos de predicciones</p>;
+    return <p className='text-[#251A79] text-center'>No hay datos de predicciones</p>;
   }
 
   const counts = history.reduce((acc, { prevision }) => {
@@ -10,56 +14,36 @@ const PrediccionesDistributionChart = ({ history }) => {
     return acc;
   }, {});
 
-  const categories = ["A tiempo", "Retraso"].filter(
-    (cat) => counts[cat] !== undefined
-  );
-  
-  const values = categories.map((cat) => counts[cat]);
+  const categories = ['A tiempo', 'Retraso'].filter(cat => counts[cat] !== undefined);
+  const values = categories.map(cat => counts[cat]);
+
+  // Ajustes responsivos
+  const chartWidth =  isMobile ? 200 : 300;
+  const chartHeight = isMobile ? 200 : 300;
+  const chartMargin = isMobile
+    ? { top: 5, bottom: 20, left: 20, right: 20 }
+    : { top: 5, bottom: 10, left: 20, right: 50 };
 
   return (
-    <div className="border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center">
+    <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center w-full'>
       <BarChart
-        xAxis={[{ 
-          scaleType: 'band', 
-          data: categories,
-        }]}
-        series={[{
-          data: values,
-        }]}
-        height={300}
-        margin={{ top: 5, bottom: 10, left: 20, right: 50 }}
+        xAxis={[{ scaleType: 'band', data: categories }]}
+        series={[{ data: values }]}
+        width={chartWidth}
+        height={chartHeight}
+        margin={chartMargin}
         slotProps={{
-          xAxis: {
-            line: { stroke: '#251A79', strokeWidth: 2 },
-            tick: { stroke: '#251A79' },
-            label: { fill: '#251A79' },
-          },
-          yAxis: {
-            line: { stroke: '#251A79', strokeWidth: 2 },
-            tick: { stroke: '#251A79' },
-            label: { fill: '#251A79' },
-          },
-          legend: {
-            hidden: true,
-          },
-          tooltip: {
-            trigger: 'none',
-          },
+          legend: { hidden: true },
+          tooltip: { trigger: 'none' },
         }}
         sx={{
-          '& .MuiBarElement-root:nth-of-type(1)': {
-            fill: '#B0B8F9', // A tiempo - Celeste
-          },
-          '& .MuiBarElement-root:nth-of-type(2)': {
-            fill: '#FF854C', // Retraso - Naranja
-          },
-          '& .MuiBarElement-root:nth-of-type(3)': {
-            fill: '#FF854C', // Por si hay una tercera categoría
-          },
+          '& .MuiBarElement-root:nth-of-type(1)': { fill: '#B0B8F9' },
+          '& .MuiBarElement-root:nth-of-type(2)': { fill: '#FF854C' },
+          '& .MuiBarElement-root:nth-of-type(3)': { fill: '#FF854C' },
         }}
       />
     </div>
   );
-};
+}
 
 export default PrediccionesDistributionChart;

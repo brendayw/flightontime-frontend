@@ -1,5 +1,5 @@
-import { useMemo, useState, useEffect } from "react";
-import { LineChart } from "@mui/x-charts/LineChart";
+import { useMemo, useState, useEffect } from 'react';
+import { LineChart } from '@mui/x-charts/LineChart';
 
 const PrediccionesPorVueloChart = ({ history }) => {
     const [selectedVuelo, setSelectedVuelo] = useState(null);
@@ -32,8 +32,8 @@ const PrediccionesPorVueloChart = ({ history }) => {
     }, {});
 
     const colorMap = {
-        "A tiempo": "#B0B8F9",
-        Retraso: "#FF854C",
+        'A tiempo': '#B0B8F9',
+        Retraso: '#FF854C',
     };
 
     const series = Object.entries(groupedByPrevision).map(
@@ -52,11 +52,11 @@ const PrediccionesPorVueloChart = ({ history }) => {
     );
 
     return (
-        <div className="border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-start">
+        <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-start'>
             {/* Selector */}
-            <div className="flex justify-center mb-4">
+            <div className='flex justify-center mb-4'>
                 <select
-                    className="bg-white text-black border rounded-md px-3 py-1 focus:outline-none"
+                    className='bg-white text-black border rounded-md px-3 py-1 focus:outline-none'
                     value={selectedVuelo}
                     onChange={(e) => setSelectedVuelo(Number(e.target.value))}
                 >
@@ -73,13 +73,13 @@ const PrediccionesPorVueloChart = ({ history }) => {
                 xAxis={[
                     {
                         data: xAxisData,
-                        scaleType: "time",
+                        scaleType: 'time',
                         valueFormatter: (v) =>
                         new Date(v).toLocaleString(),
                     },
                 ]}
                 series={series}
-                width={1100}
+                //width={1000}
                 height={320}
                 margin={{ top: 20, bottom: 20, left: 20, right: 20 }}
             />

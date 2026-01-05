@@ -2,7 +2,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 
 const PrediccionesEvolutionChart = ({ history }) => {
     if (!history.length) {
-        return <p>No hay datos de evolución</p>;
+        return <p className='text-[#251A79] text-center'>No hay datos de evolución</p>;
     }
 
     const groupedByFlight = history.reduce((acc, h) => {
@@ -30,7 +30,7 @@ const PrediccionesEvolutionChart = ({ history }) => {
     );
 
     return (
-        <div className="border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center text-center">
+        <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center text-center'>
             <LineChart
                 xAxis={[
                     {

@@ -21,7 +21,7 @@ const Predictions = () => {
         }
         : {
             initial: { opacity: 0, y: 60 },
-            animate: { opacity: 1, y: -110, x: -210 },
+            animate: { opacity: 1, y: -150, x: -210 },
         };
 
     return (
@@ -33,14 +33,12 @@ const Predictions = () => {
                 paddingBottom: isMobile ? '90px' : '0px',
             }}
         >
-            {/* ✅ Header en modo predicted */}
             <Header predicted={predicted} />
             <Menu />
 
             <div className='flex flex-col items-center mt-28 gap-6'>
 
-                {/* ✅ Form compacto */}
-                <PredictionForm variant="compact" />
+                <PredictionForm variant="compact" predicted={predicted} />
 
                 <AnimatePresence mode="wait">
                     {predicted && (
