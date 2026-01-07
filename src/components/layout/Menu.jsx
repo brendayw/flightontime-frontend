@@ -7,6 +7,7 @@ import ProfileIcon from '../../assets/icons/profile.png';
 import FileIcon from '../../assets/icons/file.png';
 import WeatherIcon from '../../assets/icons/weather.png';
 import StatsIcon from '../../assets/icons/stats.png';
+import LogoutIcon from '../../assets/icons/logout.png';
 
 const Menu = () => {
     const theme = useTheme();
@@ -19,14 +20,14 @@ const Menu = () => {
         `}>
             <ul className={`flex items-center
                 ${isMobile ? 'flex-row justify-around h-full'
-                : 'flex-col gap-8 mt-6'
+                : 'flex-col gap-6 mt-6'
                 }
             `}>
                 {!isMobile && (
                     <img src={MenuIcon} alt='Menu' className='w-6 h-6' />
                 )}
 
-                <Link to='/' className='flex items-center gap-2 md:mt-12'>
+                <Link to='/home' className='flex items-center gap-2 md:mt-12'>
                     <img src={HomeIcon} alt='Inicio' className='w-6 h-6' />
                 </Link>
 
@@ -35,7 +36,7 @@ const Menu = () => {
                 </Link>
                 
 
-                <Link to='/' className='flex items-center gap-2'>
+                <Link to='/profile' className='flex items-center gap-2'>
                     <img src={ProfileIcon} alt='Perfil' className='w-6 h-6' />
                 </Link>
 
@@ -44,11 +45,15 @@ const Menu = () => {
                 </Link>
 
                 <Link to='/' className='flex items-center gap-2'>
-                    <img src={WeatherIcon} alt='Clima' className='w-7 h-7' />
+                    <img src={WeatherIcon} alt='Clima' className='w-6 h-6' />
                 </Link>
 
                 <Link to='/dashboard' className='flex items-center gap-2'>
                     <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />
+                </Link>
+
+                <Link to='/' className='flex items-center gap-2'>
+                    <img src={LogoutIcon} alt='Cerrar sesión' className='w-6 h-6' />
                 </Link>
                 
             </ul>

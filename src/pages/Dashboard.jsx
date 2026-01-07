@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Header from '../components/layout/Header.jsx';
 import Menu from '../components/layout/Menu.jsx';
-import Title from '../components/ui/Title.jsx';
 import DashboardCharts from '../components/dashboard/DashboardCharts.jsx';
 
 const Dashboard = () => {
@@ -30,8 +29,7 @@ const Dashboard = () => {
                     maxWidth: isMobile ? '90%' : 1200,
                     padding: isMobile ? '0.5rem' : '1rem',
                     transition: 'all 0.6s ease-in-out',
-            }}>
-                
+            }}> 
                 <DashboardCharts />
             </main>
         </section>

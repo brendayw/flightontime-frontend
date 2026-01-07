@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTheme, useMediaQuery, Grid, Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import useAerolineas from '../../hooks/useAerolineas';
-import useAeropuertos from '../../hooks/useAeropuertos';
+import useAerolineas from '../../hooks/core/useAerolineas';
+import useAeropuertos from '../../hooks/core/useAeropuertos';
 import Title from '../ui/Title';
 import Avion from '../../assets/icons/avion.png';
 import Maleta from '../../assets/icons/maleta.png';
@@ -275,6 +275,7 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
               fontWeight: 600,
               height: isMobile ? '45px' : isCompact ? '30px' : '45px',
               zIndex: 10,
+              textTransform: "none", 
               '&.Mui-disabled': {
                 backgroundColor: '#e2855aff',
                 color: '#ffffffe0',

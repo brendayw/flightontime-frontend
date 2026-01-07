@@ -103,14 +103,23 @@ const BatchPredictionFile = () => {
                                 Arrastrá tu archivo CSV o hacé click para seleccionarlo
                             </Typography> 
                             
-                            <Button variant='outlined' component='label' disabled={loading} sx={{ mt: 2, color: '#ff854c7e', fontWeight: 600, borderColor: '#ff854c7e', }} > 
+                            <Button variant='outlined' component='label' disabled={loading} 
+                                sx={{ 
+                                    mt: 2, color: '#ff854c7e', fontWeight: 600, borderColor: '#ff854c7e', textTransform: "none" 
+                                }} 
+                            > 
                                 Seleccionar archivo 
                                 <input type='file' accept='.csv' hidden onChange={(e) => selectFile(e.target.files?.[0])} /> 
                             </Button> 
                         </Box> 
                         
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}> 
-                            <Button onClick={handleUpload} disabled={!file || loading} sx={{ backgroundColor: '#ff854c', color: '#ffffff', fontWeight: 600, '&:disabled': { backgroundColor: '#cccccc', color: '#666666', }, '&:hover': { backgroundColor: '#e6764a' } }} > 
+                            <Button onClick={handleUpload} disabled={!file || loading} 
+                                sx={{ 
+                                    px: 4, backgroundColor: '#ff854c', color: '#ffffff', fontWeight: 600, textTransform: "none", 
+                                    '&:disabled': { backgroundColor: '#cccccc', color: '#666666', }, '&:hover': { backgroundColor: '#e6764a' } 
+                                }} 
+                            > 
                                 
                                 {loading ? 'Procesando...' : 'Predecir'} 
                             </Button> 
