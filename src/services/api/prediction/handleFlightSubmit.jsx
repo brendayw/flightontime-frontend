@@ -19,4 +19,3 @@ const handleFlightSubmit = async (formData, { setResult, setLoading, setError })
 };
 
 export default handleFlightSubmit;
-

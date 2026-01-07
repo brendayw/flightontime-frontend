@@ -6,6 +6,7 @@ import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
 function PredictionCard({ prediction }) {
   const data = formatPrediction(prediction);
+  const { row, response, error } = prediction;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 

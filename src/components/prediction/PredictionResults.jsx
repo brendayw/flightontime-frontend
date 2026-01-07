@@ -1,7 +1,7 @@
 import { useTheme, useMediaQuery, Card, CardContent, Typography, Box } from '@mui/material';
 import { useState } from 'react';
 
-const PredictionResults = ({ total, loading = false }) => {
+const PredictionResults = ({ total, loading = false, isBatch = false }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [predictions, setPredictions] = useState([]);

@@ -15,7 +15,7 @@ Este es el **frontend** de la aplicación de predicciones, desarrollado en **Rea
 
 ## Tecnologías utilizadas
 
-- **React +19 & Vie**
+- **React +19 & Vite**
 - **Tailwind**
 - **Material-UI (MUI)**
 - **Framer Motion**
@@ -28,7 +28,7 @@ Este es el **frontend** de la aplicación de predicciones, desarrollado en **Rea
 1. Clonar el repositorio:
 
     ```bash
-    git clone https://github.com/usuario/proyecto-frontend.git
+    git clone https://github.com/brendayw/flightontime-frontend.git
 
 2. Entrar al directorio del proyecto:
 

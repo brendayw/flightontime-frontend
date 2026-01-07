@@ -79,7 +79,6 @@ const PrediccionesPorVueloChart = ({ history }) => {
                     },
                 ]}
                 series={series}
-                //width={1000}
                 height={320}
                 margin={{ top: 20, bottom: 20, left: 20, right: 20 }}
             />

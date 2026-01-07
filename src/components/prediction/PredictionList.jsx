@@ -2,7 +2,7 @@ import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import PredictionCard from './PredictionCard';
 import PredictionResults from './PredictionResults';
 
-function PredictionList({ predictions = [], loading = false }) {
+function PredictionList({ predictions = [], loading = false, isBatch = false }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -18,7 +18,7 @@ function PredictionList({ predictions = [], loading = false }) {
         alignItems: 'center',
       }}
     >
-      <PredictionResults total={predictions.length} loading={loading} />
+      <PredictionResults total={predictions.length} loading={loading} isBatch={isBatch} />
 
       {loading && (
         <Box sx={{ textAlign: 'center', py: isMobile ? 2 : 4 }}>
@@ -39,7 +39,10 @@ function PredictionList({ predictions = [], loading = false }) {
       {/* Lista de predicciones */}
       {!loading && predictions.length > 0 &&
         predictions.map((prediction, index) => (
-          <PredictionCard key={index} prediction={prediction} />
+          <PredictionCard 
+            key={`prediction-${index}-${prediction.id || ''}`} 
+            prediction={prediction} 
+          />
         ))
       }
     </section>
