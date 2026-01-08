@@ -9,7 +9,6 @@ const Home = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const navigate = useNavigate();
-
     const { predict, loading, error } = usePrediction();
 
     const handlePredict = async (formData) => {

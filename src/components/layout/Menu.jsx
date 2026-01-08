@@ -31,11 +31,10 @@ const Menu = () => {
                     <img src={HomeIcon} alt='Inicio' className='w-6 h-6' />
                 </Link>
 
-                <Link to='/' className='flex items-center gap-2'>
+                {/* <Link to='/' className='flex items-center gap-2'>
                     <img src={NotificationIcon} alt='Notificacion' className='w-6 h-6' />
-                </Link>
+                </Link> */}
                 
-
                 <Link to='/profile' className='flex items-center gap-2'>
                     <img src={ProfileIcon} alt='Perfil' className='w-6 h-6' />
                 </Link>
@@ -44,9 +43,9 @@ const Menu = () => {
                     <img src={FileIcon} alt='Archivo' className='w-6 h-6' />
                 </Link>
 
-                <Link to='/' className='flex items-center gap-2'>
+                {/* <Link to='/' className='flex items-center gap-2'>
                     <img src={WeatherIcon} alt='Clima' className='w-6 h-6' />
-                </Link>
+                </Link> */}
 
                 <Link to='/dashboard' className='flex items-center gap-2'>
                     <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />

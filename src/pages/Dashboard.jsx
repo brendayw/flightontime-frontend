@@ -7,7 +7,7 @@ import DashboardCharts from '../components/dashboard/DashboardCharts.jsx';
 const Dashboard = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [predicted, setPredicted] = useState(false);
+    const isPredictedView = true;
     
     return (
         <section id='dashboard' className='min-w-screen min-h-screen bg-[#ffffff]'
@@ -16,13 +16,12 @@ const Dashboard = () => {
                 paddingBottom: isMobile ? '90px' : '0px',
         }}>
 
-            <Header predicted={predicted} />
+            <Header predicted={isPredictedView} />
             <Menu />
 
             <main
-                className='relative mx-auto mt-8'
+                className='relative mx-auto mt-2'
                 style={{
-                    top: isMobile ? 50 : 60,
                     left: isMobile ? 0 : 20,
                     marginBottom: isMobile ? 18 : 0,
                     width: '100%',

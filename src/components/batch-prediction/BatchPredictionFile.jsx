@@ -34,8 +34,8 @@ const BatchPredictionFile = () => {
             sx={{ 
                 width: isMobile ? '90%' : { sm: '75%', md: '85%', lg: '90%', xl: '100%' }, 
                 maxWidth: 750, 
-                height: isMobile ? 'auto' : 'auto', 
-                p: isMobile ? 2 : { sm: 4, md: 4, lg: 3.5, xl: 4 }, 
+                height: isMobile ? 'auto' : '500', 
+                p: isMobile ? 2 : { sm: 4, md: 4, lg: 3, }, 
                 marginBottom: isMobile ? 8 : 0, 
                 borderRadius: 5, 
                 overflow: 'hidden', 
@@ -43,13 +43,9 @@ const BatchPredictionFile = () => {
         }}> 
             <Title titulo='Predicción en lote' className='text-2xl text-[#251A79] text-center font-medium'/> 
             
-            <CardContent> 
-                <Typography variant='body2' color='#FF854C' textAlign='center' mb={2}> 
-                    Subí un archivo CSV con múltiples vuelos para obtener sus predicciones de retraso. 
-                </Typography> 
-                
+            <CardContent>                 
                 {/* Instrucciones del formato esperado */} 
-                <Alert severity="info" sx={{ mb: 2, fontSize: '0.85rem' }}> 
+                <Alert severity="info" sx={{ mb: 0.8, fontSize: '0.8rem' }}> 
                     <Typography variant="caption" display="block" mb={0.5}> 
                         <strong>Formato requerido:</strong> 
                     </Typography> 
@@ -98,14 +94,14 @@ const BatchPredictionFile = () => {
                 
                 {!result && ( 
                     <> 
-                        <Box sx={{ border: '2px dashed #ff854c7e', borderRadius: 2, p: 3, textAlign: 'center', }} >
-                            <Typography color='#ff854cb7' fontSize='12px' mb={1}> 
+                        <Box sx={{ border: '2px dashed #251a7981', borderRadius: 2, p: 3, textAlign: 'center', }} >
+                            <Typography color='#251a7981' fontSize='12px' mb={1}> 
                                 Arrastrá tu archivo CSV o hacé click para seleccionarlo
                             </Typography> 
                             
                             <Button variant='outlined' component='label' disabled={loading} 
                                 sx={{ 
-                                    mt: 2, color: '#ff854c7e', fontWeight: 600, borderColor: '#ff854c7e', textTransform: "none" 
+                                    mt: 2, color: '#251a7981', fontWeight: 600, borderColor: '#251a7981', textTransform: "none" 
                                 }} 
                             > 
                                 Seleccionar archivo 
@@ -116,8 +112,8 @@ const BatchPredictionFile = () => {
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}> 
                             <Button onClick={handleUpload} disabled={!file || loading} 
                                 sx={{ 
-                                    px: 4, backgroundColor: '#ff854c', color: '#ffffff', fontWeight: 600, textTransform: "none", 
-                                    '&:disabled': { backgroundColor: '#cccccc', color: '#666666', }, '&:hover': { backgroundColor: '#e6764a' } 
+                                    px: 4, backgroundColor: '#251A79', color: '#FEFFFA', fontWeight: 600, textTransform: "none", 
+                                    '&:disabled': { backgroundColor: '#cccccc', color: '#5c5555', }, '&:hover': { backgroundColor: '#e6764a' } 
                                 }} 
                             > 
                                 

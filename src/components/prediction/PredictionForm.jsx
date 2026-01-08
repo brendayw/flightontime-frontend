@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTheme, useMediaQuery, Grid, Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import useAerolineas from '../../hooks/core/useAerolineas';
 import useAeropuertos from '../../hooks/core/useAeropuertos';
+import FollowPredictionToggle from "../ui/FollowPredictionToggle";
 import Title from '../ui/Title';
 import Avion from '../../assets/icons/avion.png';
 import Maleta from '../../assets/icons/maleta.png';
@@ -122,6 +123,7 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
   const [destino, setDestino] = useState('');
   const [fechaHora, setFechaHora] = useState('');
   const [distancia, setDistancia] = useState('');
+  const [followPrediction, setFollowPrediction] = useState(false);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -137,7 +139,9 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
       destino: destino.trim(),
       fecha_partida: `${fechaHora}:00`,
       distancia_km: distanciaInt,
+      notify: followPrediction
     };
+    
 
     if (onPredict) {
       await onPredict(formData);
@@ -162,7 +166,7 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
         width: isMobile ? '90%' : isCompact ? '100%' : { sm: '75%', md: '85%', lg: '90%', xl: '100%' },
         maxWidth: isCompact ? { sm: 500, md: 800, lg: 1100, xl: 1200 } : 950,
         minHeight: isMobile ? 'auto' : isCompact ? 90 : { sm: 500, md: 350 },
-        maxHeight: isCompact ? 90 : 500,
+        maxHeight: isCompact ? 90 : 550,
         mx: 'auto',
         my: isMobile ? 2: 4,
         boxShadow: 3,
@@ -174,7 +178,7 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
       {!isCompact && (
         <div className='flex justify-center mb-8'>
           <div className='inline-flex items-center'>
-            <Title titulo='¿Tu vuelo va a salir a tiempo?' className='text-[#251A79] text-xl' />
+            <Title titulo='¿Tu vuelo va a salir a tiempo?' className='text-[#251a79] text-xl' />
             <img src={Avion} alt='Avión' className='w-8 h-8 ml-2' />
           </div>
         </div>
@@ -254,39 +258,56 @@ const PredictionForm = ({ onPredict, variant = 'default', predicted = false }) =
 
         <FormGridItem isMobile={isMobile} isCompact={isCompact}>
           <TextField
-            label='Distancia (km)'
-            type='number'
-            value={distancia}
-            onChange={(e) => setDistancia(e.target.value)}
+            label="Distancia (km)"
+            value={distancia ?? ""}
             fullWidth
+            inputProps={{
+              readOnly: true
+            }}
             InputLabelProps={{ sx: labelSx }}
-            sx={textFieldSx(isCompact)}
+            sx={{
+              ...textFieldSx(isCompact),
+              '& input': {
+                ...textFieldSx(isCompact)['& input'],
+                cursor: 'not-allowed',
+              },
+            }}
           />
         </FormGridItem>
 
         <FormGridItem isMobile={isMobile} isCompact={isCompact} display='flex' alignItems='center'>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={isCompact && predicted}
-            fullWidth
-            sx={{
-              backgroundColor: '#FF854C',
-              fontWeight: 600,
-              height: isMobile ? '45px' : isCompact ? '30px' : '45px',
-              zIndex: 10,
-              textTransform: "none", 
-              '&.Mui-disabled': {
-                backgroundColor: '#e2855aff',
-                color: '#ffffffe0',
-                opacity: 0.7,
-              }
-            }}
-          >
-            {isCompact ? 'Predecir' : 'Predecir vuelo'}
-          </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={isCompact && predicted}
+              fullWidth
+              sx={{
+                backgroundColor: '#251A79',
+                fontWeight: 600,
+                height: isMobile ? '45px' : isCompact ? '30px' : '45px',
+                zIndex: 10,
+                textTransform: "none", 
+                '&.Mui-disabled': {
+                  backgroundColor: '#e2855aff',
+                  color: '#5c5555',
+                  opacity: 0.7,
+                }
+              }}
+            >
+              {isCompact ? 'Predecir' : 'Predecir vuelo'}
+            </Button>
+
+            
+          
         </FormGridItem>
       </Grid>
+      
+      <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'end', zIndex: 10 }}>
+        <FollowPredictionToggle
+          value={followPrediction}
+          onChange={setFollowPrediction}
+        />
+      </Box>
 
       {!isCompact && !isMobile && (
         <>

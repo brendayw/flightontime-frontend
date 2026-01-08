@@ -12,7 +12,7 @@ const Header = ({ predicted }) => {
     return (
         <section id='header' className={`bg-[#B0B8F9] relative  ${isMobile ? 'h-28 w-full' : 'h-28 max-w-8xl'}`}>
             <div className={`absolute ${isMobile ? 'bottom-4 left-4' : 'bottom-4 left-32'}`}>
-                <Title titulo='Bienvenido a' className='text-[#ffffff] text-lg italic'></Title>
+                <Title titulo='Bienvenido a' className='text-[#FEFFFA] text-lg italic'></Title>
             </div> 
             
             {/* Logo */}
@@ -49,7 +49,7 @@ const Header = ({ predicted }) => {
                 animate={{
                     // predicted ? (mobile : desktop) : (desktop)
                     y: predicted ? (isMobile ? -40 : -80) : (isMobile ? -50 : -30),
-                    x: predicted ? (isMobile ? 100 : 150) : 0,
+                    x: predicted ? (isMobile ? 100 : 150) : (isMobile ? -0 : -30),
                 scale: predicted ? (isMobile ? 0.5 : 0.6) : 1,
                 }}
                 transition={{ duration: 0.8 }}

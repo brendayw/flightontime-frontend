@@ -16,12 +16,12 @@ const DashboardCharts = () => {
     if (error) return <p className='text-[#251A79] text-center'>{error}</p>;
 
     return (
-        <div className={`w-full ${isMobile ? 'px-2' : 'px-6'} py-2 space-y-6`}>
+        <div className={`w-full ${isMobile ? 'px-2' : 'px-6'} py-2 space-y-4`}>
 
             <div className={`relative w-100% ${isMobile ? 'left-0' : 'left-16 md:left-24 lg:left-16 xl:left-0'} mr-6`}>
                 <Title titulo='Dashboard de Predicciones de Vuelos' className='text-[#251A79] text-2xl font-medium text-start mb-6'/>
 
-                <p className='text-[#000000] italic text-lg text-start mb-6'>
+                <p className='text-[#5c5555] italic text-lg text-start mb-6'>
                     Visualización en tiempo real basada en datos almacenados en nuestra BDD.
                 </p>
             </div>

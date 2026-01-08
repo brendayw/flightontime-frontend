@@ -17,8 +17,6 @@ const useBatchPrediction = () => {
 
       const data = await uploadBatchPrediction(file);
 
-      console.log('📊 Datos del API:', data);
-
       // El API devuelve los datos en español
       setResult({
         total: data.totalFilas,
@@ -29,13 +27,9 @@ const useBatchPrediction = () => {
       // El API devuelve 'resultados', no 'results'
       const predictionsData = data.resultados || [];
       setPredictions(predictionsData);
-      
-      console.log('✅ Predicciones guardadas:', predictionsData);
-      console.log('📈 Total de predicciones:', predictionsData.length);
-
+  
     } catch (e) {
       setError("Error procesando archivo");
-      console.error('❌ Error completo:', e);
     } finally {
       setLoading(false);
     }
