@@ -1,14 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { Button, TextField, Box } from "@mui/material";
+import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 import FlightOnTime from '../../assets/images/FlightOnTime!.png';
 
 const LoginForm = ({ onSwitch }) => {
+  const { login, error } = useAuth();
   const navigate = useNavigate();
+  
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Aquí va tu lógica de login real
-    navigate("/home"); // Redirige al Home después del login
+    const success = await login(form);
+    if (success) navigate("/home");
   };
 
   return (
@@ -37,6 +45,7 @@ const LoginForm = ({ onSwitch }) => {
             variant="outlined"
             InputLabelProps={{ shrink: false }}
             type="email"
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             sx={{
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "#F9F3F3",
@@ -55,6 +64,7 @@ const LoginForm = ({ onSwitch }) => {
             variant="outlined"
             InputLabelProps={{ shrink: false }}
             type="password"
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
             sx={{
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "#F9F3F3",

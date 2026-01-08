@@ -1,10 +1,29 @@
 import { Box, Button, TextField,  } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const SignupForm = ({ onSwitch }) => {
+    const { signup, error, loading } = useAuth();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const [form, setForm] = useState({
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // aquí va la lógica de registro
+
+        if (form.password !== form.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+        }
+
+        const success = await signup(form);
+        if (success) navigate("/login");
     };
 
     return (
@@ -27,6 +46,10 @@ const SignupForm = ({ onSwitch }) => {
                         placeholder="Full name"
                         variant="outlined"
                         InputLabelProps={{ shrink: false }}
+                        value={form.fullname}
+                        onChange={(e) =>
+                            setForm({ ...form, fullname: e.target.value })
+                        }
                         sx={{
                         "& .MuiOutlinedInput-root": {
                             backgroundColor: "#F9F3F3",
@@ -45,6 +68,10 @@ const SignupForm = ({ onSwitch }) => {
                         variant="outlined"
                         InputLabelProps={{ shrink: false }}
                         type="email"
+                        value={form.email}
+                        onChange={(e) =>
+                            setForm({ ...form, email: e.target.value })
+                        }
                         sx={{
                         "& .MuiOutlinedInput-root": {
                             backgroundColor: "#F9F3F3",
@@ -63,6 +90,10 @@ const SignupForm = ({ onSwitch }) => {
                         variant="outlined"
                         InputLabelProps={{ shrink: false }}
                         type="password"
+                        value={form.password}
+                        onChange={(e) =>
+                            setForm({ ...form, password: e.target.value })
+                        }
                         sx={{
                         "& .MuiOutlinedInput-root": {
                             backgroundColor: "#F9F3F3",
@@ -81,6 +112,10 @@ const SignupForm = ({ onSwitch }) => {
                         variant="outlined"
                         InputLabelProps={{ shrink: false }}
                         type="password"
+                        value={form.confirmPassword}
+                        onChange={(e) =>
+                            setForm({ ...form, confirmPassword: e.target.value })
+                        }
                         sx={{
                         "& .MuiOutlinedInput-root": {
                             backgroundColor: "#F9F3F3",

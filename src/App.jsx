@@ -6,6 +6,7 @@ import Predictions from "./pages/Predictions";
 import BatchPrediction from "./pages/BatchPrediction";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
+import NotifyPage from "./pages/NotifyPage";
 // import "./assets/styles/global.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path="/home" element={<Home />} />
         <Route path="profile" element={<ProfilePage /> } />
+        <Route path="notify" element={<NotifyPage /> } />
         <Route path="batch" element={ <BatchPrediction />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="predictions" element={<Predictions />} />
