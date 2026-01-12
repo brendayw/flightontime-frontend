@@ -2,10 +2,8 @@ import { Link } from 'react-router-dom';
 import { useTheme, useMediaQuery } from '@mui/material';
 import MenuIcon from '../../assets/icons/menu.png';
 import HomeIcon from '../../assets/icons/home.png';
-import NotificationIcon from '../../assets/icons/notification.png';
 import ProfileIcon from '../../assets/icons/profile.png';
 import FileIcon from '../../assets/icons/file.png';
-import WeatherIcon from '../../assets/icons/weather.png';
 import StatsIcon from '../../assets/icons/stats.png';
 import LogoutIcon from '../../assets/icons/logout.png';
 
@@ -14,9 +12,9 @@ const Menu = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     
     return (
-        <nav className={`fixed z-50 shadow-lg bg-[#251A79] rounded-xl
+        <nav className={`fixed z-50 shadow-lg bg-[#222E60] rounded-xl
             ${isMobile ? 'bottom-4 left-1/2 -translate-x-1/2 w-[95%] h-14'
-            : 'top-12 left-10 w-14 h-[550px]'}
+            : 'top-20 left-10 w-14 h-[500px]'}
         `}>
             <ul className={`flex items-center
                 ${isMobile ? 'flex-row justify-around h-full'

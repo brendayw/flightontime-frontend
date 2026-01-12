@@ -1,7 +1,7 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const PrediccionesDistributionChart = ({ history }) => {
+const DistributionChart = ({ history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -21,8 +21,8 @@ const PrediccionesDistributionChart = ({ history }) => {
   const chartWidth =  isMobile ? 200 : 300;
   const chartHeight = isMobile ? 200 : 300;
   const chartMargin = isMobile
-    ? { top: 5, bottom: 20, left: 20, right: 20 }
-    : { top: 5, bottom: 10, left: 20, right: 50 };
+    ? { top: 5, bottom: 5, left: 10, right: 10 }
+    : { top: 5, bottom: 5, left: 20, right: 50 };
 
   return (
     <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center w-full'>
@@ -46,4 +46,4 @@ const PrediccionesDistributionChart = ({ history }) => {
   );
 }
 
-export default PrediccionesDistributionChart;
+export default DistributionChart;

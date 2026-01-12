@@ -61,9 +61,7 @@ const PrediccionesPorVueloChart = ({ history }) => {
                     onChange={(e) => setSelectedVuelo(Number(e.target.value))}
                 >
                     {vueloIds.map((id) => (
-                        <option key={id} value={id}>
-                            Vuelo {id}
-                        </option>
+                        <option key={id} value={id}> Vuelo {id} </option>
                     ))}
                 </select>
             </div>
@@ -79,8 +77,13 @@ const PrediccionesPorVueloChart = ({ history }) => {
                     },
                 ]}
                 series={series}
-                height={320}
-                margin={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                height={250}
+                margin={{ top: 10, bottom: 10, left: 5, right: 5 }}
+                slotProps={{
+                    legend: {
+                        p: 0.2,
+                    }
+                }}
             />
         </div>
     );

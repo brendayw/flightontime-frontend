@@ -1,14 +1,17 @@
-import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, LinearProgress, Divider } from '@mui/material';
-import AvionIcon from '../../assets/icons/avion.png';
-import RelojIcon from '../../assets/icons/reloj.png';
-import DistanciaIcon from '../../assets/icons/distance.png';
+import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, Stack, LinearProgress, Divider } from '@mui/material';
+import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
+import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
+import PredictionCircle from './PredictionCircle.jsx';
 import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
 function PredictionCard({ prediction }) {
-  const data = formatPrediction(prediction);
-  const { row, response, error } = prediction;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const data = formatPrediction(prediction);
+  const { row, response, error } = prediction;
+
 
   if (!data) {
     return (
@@ -23,93 +26,63 @@ function PredictionCard({ prediction }) {
   return (
     <Card sx={{
         borderRadius: '25px',
-        backgroundColor: '#F9F3F3',
+        background: 'rgba(65, 64, 64, 0.45)',
         boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
-        width: isMobile ? '95%' : { sm: '80%', md: 600},
-        height: isMobile ? 'auto' : 300,
+        border: '0.5px solid #d9d9d954',
+        width: isMobile ? '95%' : { sm: '80%', md: 450},
+        height: isMobile ? 'auto' : 350,
         mx: isMobile ? 'auto' : 0,
         overflow: 'hidden'
       }}
     >
-      <CardContent sx={{ p: 0 }}>
-        {/* Header con aerolineas y aeropuerto*/}
-        <Box
-          sx={{
-            backgroundColor: '#798AF4',
-            p: isMobile ? 1.5 : 2,
-            display: 'flex',
-            alignItems: 'center',
-            gap: isMobile ? 1.5 : 3,
-            flexWrap: isMobile ? 'wrap' : 'nowrap',
-            borderTopLeftRadius: 25,
-            borderTopRightRadius: 25,
-          }}
-        >
-          <img 
-            src={AvionIcon} 
-            alt='Icono de avión' 
-            className={isMobile ? 'w-6 h-6 ml-2' : 'w-7 h-7 ml-4'}
-          />
-          <Typography fontWeight={600} color='#FFFFFF' fontSize={isMobile ? 14 : 16}>
-            {aerolinea} | {origen} → {destino}
-          </Typography>
-        </Box>
+      <CardContent sx={{ p: 4 }}>
+        {/* Porcentaje */}
+        <PredictionCircle prediction={prediction} />
 
-        {/* Fecha de partida*/}
-        <Box 
-          display='flex'
-          alignItems='center'
-          gap={2} 
-          mt={2} 
-          pl={2} 
-        >
-          <img src={RelojIcon} alt='Icono de reloj' className={isMobile ? 'w-6 h-6' : 'w-7 h-7'}/>
-          <Typography variant='body2' fontSize={isMobile ? 13 : 15}>
-            <strong>{formattedDate}</strong>
+        {/*Datos del vuelo*/}
+        <Box sx={{ mt: 4}}>
+          <Typography color='#E5E6EA' fontSize={isMobile ? 12 : 14} padding={1}>
+            Detalles de su vuelo
           </Typography>
-        </Box>
 
-        {/* Distancia en km*/}
-        <Box display='flex' alignItems='center' gap={2} mt={2} pl={2}>
-          <img src={DistanciaIcon} alt='Icono de distancia' className={isMobile ? 'w-6 h-6' : 'w-7 h-7'} />
-          <Typography variant='body2' fontSize={isMobile ? 13 : 15}>
-            <strong>{distancia} </strong>de distancia
-          </Typography>
+          <Stack spacing={0.5}>
+            <Box sx={{display: 'flex', gap: 2}}>
+              <FlightTakeoffRoundedIcon sx={{ fontSize: 20, color: '#FEAB77'}}/>
+              <Typography fontWeight={600} color='#d9d9d9bb' fontSize={isMobile ? 14 : 14}>
+                {aerolinea} | {origen} → {destino}
+              </Typography>
+            </Box>
+          
+            <Box sx={{display: 'flex', gap: 2}}>
+              <AccessTimeRoundedIcon sx={{ fontSize: 20, color: '#d9d9d9bb'}}/>
+              <Typography color='#d9d9d9bb' fontSize={isMobile ? 14 : 14}>
+                {formattedDate} hs
+              </Typography>
+            </Box>
+          
+            <Box sx={{display: 'flex', gap: 2}}>
+              <RouteRoundedIcon sx={{ fontSize: 20, color: '#d9d9d9bb'}}/>
+              <Typography color='#d9d9d9bb' fontSize={isMobile ? 14 : 14}>
+                {distancia}
+              </Typography>
+            </Box>
+          </Stack>
         </Box>
+        
 
-        {/* Linea divisoria */}
-        <Divider sx={{ backgroundColor: '#D9D9D9', m:2, }} />
 
         {/* Estado del vuelo*/}
-        <Typography mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
+        {/* <Typography mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
           Estado del vuelo: {' '} 
           <strong style={{ color: '#d32f2f', fontSize: '16px'}}>
             {status}
           </strong>
-        </Typography>
+        </Typography> */}
 
         {/* Probabilidad */}
-        <Typography variant='body2' mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
+        {/* <Typography variant='body2' mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
           Probabilidad de retraso: <strong>{probability}%</strong>
-        </Typography>
-
-        {/* Barra de probabilidad */}
-        <LinearProgress
-          variant='determinate'
-          value={probability}
-          sx={{
-            height: isMobile ? 3 : 4,
-            borderRadius: 5,
-            marginTop: 1,
-            marginRight: 2,
-            marginLeft: 2,
-            padding: 1.5,
-            backgroundColor: '#e0e0e0ff',
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: isDelayed ? "#d32f2f" : "#2e7d32",
-            },
-          }}
-        />
+        </Typography> */}
       </CardContent>
     </Card>
   );

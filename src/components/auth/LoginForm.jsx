@@ -103,7 +103,7 @@ const LoginForm = ({ onSwitch }) => {
           Don’t have an account?
         </span>
         <Button
-          onClick={onSwitch}
+          onClick={() => navigate('/auth/signup')}
           variant="text"
           sx={{
             ml: 1,

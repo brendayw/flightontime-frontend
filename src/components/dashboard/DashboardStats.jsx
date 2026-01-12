@@ -1,53 +1,70 @@
 import { useTheme, useMediaQuery, Box } from '@mui/material';
-import useDashboard from '../../hooks/useDashboard';
+import useDashboardSummary from '../../hooks/useDashboardSummary';
+import FlightIcon from '@mui/icons-material/Flight';
 
 const DashboardStats = () => {
-    const { history, loading, error } = useDashboard();
+    const { summary, loading, error } = useDashboardSummary();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     if (loading) return <p className='text-[#251A79] text-center'>Cargando estadísticas...</p>;
-    if (error) return <p className='text-[#251A79] text-center'>Error al cargar estadísticas</p>;
-
-  
-    const total = history.length;
-    const puntuales = total === 0
-        ? 0
-        : ((history.filter(h => h.prevision?.toLowerCase().trim() === "a tiempo").length / total) * 100).toFixed(1);
-
-    const retrasos = total === 0
-        ? 0
-        : ((history.filter(h => h.prevision?.toLowerCase().trim() === "retraso").length / total) * 100).toFixed(1);
+    if (error || !summary)
+        return <p className="text-[#251A79] text-center">Error al cargar estadísticas</p>;
 
     const stats = [
-        { title: '📊 Total de predicciones', value: total, bg: 'bg-gray-100', textColor: '#251A79' },
-        { title: '🟢 Puntuales', value: `${puntuales}%`, bg: 'bg-green-100', textColor: '#2e7d32' },
-        { title: '🔴 Retrasos', value: `${retrasos}%`, bg: 'bg-red-100', textColor: '#d32f2f' },
-    ];
+        {
+            title: 'Predicciones totales',
+            value: summary.totalPredicciones,
+            icon: '#e5e6ead8',
+            iconbg: 'rgba(37, 26, 121, 0.25)',
+            bg: 'rgba(41, 36, 66, 0.53)',
+            textColor: '#E5E6EA',
+        },
+        {
+            title: 'Predicciones a tiempo',
+            value: `${summary.porcentajePuntuales.toFixed(1)}%`,
+            icon: '#B0B8F9',
+            iconbg: 'rgba(176, 184, 249, 0.25)',
+            bg: 'rgba(41, 36, 66, 0.53)',
+            textColor: '#E5E6EA',
+        },
+        {
+            title: 'Predicciones con retraso',
+            value: `${summary.porcentajeRetrasos.toFixed(1)}%`,
+            icon: '#FEA062',
+            iconbg: 'rgba(254, 160, 98, 0.25)',
+            //bg: 'rgba(41, 36, 66, 0.53)',
+            textColor: '#E5E6EA',
+        },
+    ]
 
     return (
         <Box
             sx={{
                 position: 'relative',
                 display: 'flex',
-                flexDirection: isMobile ? 'column' : { md:'row', lg: 'row',},
+                flexDirection: isMobile ? 'column' : { md:'row', lg: 'row' },
                 flexWrap: 'wrap',
-                left: isMobile ? 0 : { sm: 52, md: 12, lg: 24, xl: 0},
+                //left: isMobile ? 0 : { sm: 52, md: 12 },
                 justifyContent: 'center',
-                gap: 3,
+                gap: isMobile ? 2 : 8,
                 width: '100%',
                 maxWidth: isMobile ? '100%' : { sm: '100%', md: '93%', xl: '100%'},
                 mx: 'auto',
         }}>
             {stats.map((stat, idx) => (
-                <div
-                    key={idx}
-                    className={`${isMobile ? 'w-full' : 'w-[280px]'} text-center p-4 ${stat.bg} rounded-lg shadow`}
+                <div key={idx} 
+                    className={`${isMobile ? 'w-full h-[100px] flex items-center justify-between gap-4' : 'w-[300px] h-[250px]'} p-6 ${stat.bg} rounded-lg shadow border border-[#F9F3F3]` }
                 >
-                    <span className='text-xl font-medium block'style={{ color: stat.textColor }}>
+                    <span key={idx} >
+                        <FlightIcon sx={{ p: 1, background: stat.iconbg, display: 'flex', textAlign: 'start', transform: 'rotate(90deg)',
+                            width: 55, height: 55, color: stat.icon, borderRadius: 4 }}
+                        />
+                    </span>
+                    <span className={`${isMobile ? 'text-lg': 'text-xl block mt-6 pb-8'}`} style={{ color: stat.textColor }}>
                         {stat.title}
                     </span>
-                    <span className='text-2xl font-bold' style={{ color: stat.textColor }}>
+                    <span className={`${isMobile ? 'text-2xl font-bold' : 'text-5xl font-bold'}`} style={{ color: stat.textColor }}>
                         {stat.value}
                     </span>
                 </div>

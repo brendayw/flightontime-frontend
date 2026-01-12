@@ -1,6 +1,6 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 
-const PrediccionesEvolutionChart = ({ history }) => {
+const EvolutionChart = ({ history }) => {
     if (!history.length) {
         return <p className='text-[#251A79] text-center'>No hay datos de evolución</p>;
     }
@@ -30,7 +30,7 @@ const PrediccionesEvolutionChart = ({ history }) => {
     );
 
     return (
-        <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center text-center'>
+        <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-center justify-center text-start'>
             <LineChart
                 xAxis={[
                     {
@@ -41,18 +41,12 @@ const PrediccionesEvolutionChart = ({ history }) => {
                     },
                 ]}
                 series={series}
-                height={300}
-                margin={{ top: 20, bottom: 20, left: 10, right: 25 }} 
+                height={325}
+                margin={{ top: 10, bottom: 10, left: 5, right: 5 }} 
                 slotProps={{
                     legend: {
-                        direction: 'row',
-                        position: { vertical: 'bottom', horizontal: 'center' },
-                        itemGap: 10,
-                        sx: {
-                            display: 'flex',
-                            justifyContent: 'center',
-                            width: '100%',
-                        },
+                        sx: { display: 'none' },
+                        hidden: true,
                     },
                 }}
             />
@@ -60,4 +54,4 @@ const PrediccionesEvolutionChart = ({ history }) => {
     );
 };
 
-export default PrediccionesEvolutionChart;
+export default EvolutionChart;

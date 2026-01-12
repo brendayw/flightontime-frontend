@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
-const SignupForm = ({ onSwitch }) => {
+const SignupForm = () => {
     const { signup, error, loading } = useAuth();
     const navigate = useNavigate();
 
@@ -23,41 +23,41 @@ const SignupForm = ({ onSwitch }) => {
         }
 
         const success = await signup(form);
-        if (success) navigate("/login");
+        if (success) navigate("/auth/login");
     };
 
     return (
         <Box>
             <Box className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-[#251A79]">
-                    Create your account
-                </h1>
-                <p className="text-sm text-[#F9F3F3]/70 mt-2">
-                    Start predicting flights on time
-                </p>
+                <div className="flex flex-col justify-center mb-6">
+                    <h1 className="text-3xl font-bold text-[#E5E6EA]">
+                        Create your account
+                    </h1>
+                    <p className="text-sm text-[#F9F3F3]/70 mt-2">
+                        Start predicting flights on time
+                    </p>
+                </div>
             </Box>
 
             <form onSubmit={handleSubmit}>   
-                <Box className="space-y-4">
-
+                <Box className="space-y-5">
                     {/* Full name */}
                     <TextField
                         fullWidth
                         placeholder="Full name"
                         variant="outlined"
                         InputLabelProps={{ shrink: false }}
+                        type="text"
                         value={form.fullname}
-                        onChange={(e) =>
-                            setForm({ ...form, fullname: e.target.value })
-                        }
+                        onChange={ (e) => setForm({ ...form, fullname: e.target.value }) }
                         sx={{
-                        "& .MuiOutlinedInput-root": {
-                            backgroundColor: "#F9F3F3",
-                            borderRadius: 2,
-                            "&.Mui-focused fieldset": {
-                            borderColor: "#F9F3F3",
+                            "& .MuiOutlinedInput-root": {
+                                backgroundColor: "#F9F3F3",
+                                borderRadius: 2,
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "#F9F3F3",
+                                },
                             },
-                        },
                         }}
                     />
 
@@ -69,17 +69,15 @@ const SignupForm = ({ onSwitch }) => {
                         InputLabelProps={{ shrink: false }}
                         type="email"
                         value={form.email}
-                        onChange={(e) =>
-                            setForm({ ...form, email: e.target.value })
-                        }
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
                         sx={{
-                        "& .MuiOutlinedInput-root": {
-                            backgroundColor: "#F9F3F3",
-                            borderRadius: 2,
-                            "&.Mui-focused fieldset": {
-                            borderColor: "#F9F3F3",
+                            "& .MuiOutlinedInput-root": {
+                                backgroundColor: "#F9F3F3",
+                                borderRadius: 2,
+                                "&.Mui-focused fieldset": {
+                                borderColor: "#F9F3F3",
+                                },
                             },
-                        },
                         }}
                     />
 
@@ -91,17 +89,15 @@ const SignupForm = ({ onSwitch }) => {
                         InputLabelProps={{ shrink: false }}
                         type="password"
                         value={form.password}
-                        onChange={(e) =>
-                            setForm({ ...form, password: e.target.value })
-                        }
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
                         sx={{
-                        "& .MuiOutlinedInput-root": {
-                            backgroundColor: "#F9F3F3",
-                            borderRadius: 2,
-                            "&.Mui-focused fieldset": {
-                            borderColor: "#F9F3F3",
+                            "& .MuiOutlinedInput-root": {
+                                backgroundColor: "#F9F3F3",
+                                borderRadius: 2,
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "#F9F3F3",
+                                },
                             },
-                        },
                         }}
                     />
 
@@ -113,17 +109,15 @@ const SignupForm = ({ onSwitch }) => {
                         InputLabelProps={{ shrink: false }}
                         type="password"
                         value={form.confirmPassword}
-                        onChange={(e) =>
-                            setForm({ ...form, confirmPassword: e.target.value })
-                        }
+                        onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
                         sx={{
-                        "& .MuiOutlinedInput-root": {
-                            backgroundColor: "#F9F3F3",
-                            borderRadius: 2,
-                            "&.Mui-focused fieldset": {
-                            borderColor: "#F9F3F3",
+                            "& .MuiOutlinedInput-root": {
+                                backgroundColor: "#F9F3F3",
+                                borderRadius: 2,
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "#F9F3F3",
+                                },
                             },
-                        },
                         }}
                     />
 
@@ -154,7 +148,7 @@ const SignupForm = ({ onSwitch }) => {
                     Already have an account?
                 </span>
                 <Button
-                    onClick={onSwitch}
+                    onClick={() => navigate('/auth/login')}
                     variant="text"
                     sx={{
                         ml: 1,
@@ -162,12 +156,12 @@ const SignupForm = ({ onSwitch }) => {
                         fontWeight: 500,
                         textTransform: "none",
                         "&:hover": {
-                        backgroundColor: "transparent",
-                        color: "#F9F3F3",
+                            backgroundColor: "transparent",
+                            color: "#F9F3F3",
                         },
                         "&:focus": {
-                        outline: "2px solid #F9F3F3",
-                        outlineOffset: 2,
+                            outline: "2px solid #F9F3F3",
+                            outlineOffset: 2,
                         },
                     }}
                 >
