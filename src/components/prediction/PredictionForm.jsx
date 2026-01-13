@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useTheme, useMediaQuery, Box, Stack, TextField, Button, MenuItem, Select, } from '@mui/material';
+import AppAlert from '../ui/AppAlert'; 
 import useAerolineas from'../../hooks/catalog/useAerolineas';
 import useAeropuertos from '../../hooks/catalog/useAeropuertos';
 import { prepareFlightFormData } from '../../services/formDataService';
-
-;
 
 /**
  * PredictionForm - Formulario para que el usuario ingrese datos de un vuelo y generar predicción.
@@ -34,7 +33,7 @@ import { prepareFlightFormData } from '../../services/formDataService';
 const PredictionForm = ({ onPredict}) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+    const [localError, setLocalError] = useState("");
     const { aerolineas, loading: loadingAerolineas } = useAerolineas();
     const { aeropuertos, loading: loadingAeropuertos } = useAeropuertos();
     
@@ -47,9 +46,11 @@ const PredictionForm = ({ onPredict}) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        setLocalError("");
+
         // Prepara los datos para la predicción
         const formData = prepareFlightFormData({ aerolinea, origen, destino, fechaHora, distancia });
-        if (!formData) return; // Si no es válido, no hacemos nada
+        if (!formData) return setLocalError("Datos del vuelo incompletos");
 
         // Ejecuta la función de predicción pasada por props
         if (onPredict) {
@@ -60,96 +61,62 @@ const PredictionForm = ({ onPredict}) => {
     return (
         <Box component="form" onSubmit={handleFormSubmit}>
             <Stack spacing={2}>
+                {localError && <AppAlert severity="warning">{localError}</AppAlert>}
+
                 {/* Aerolínea */}
-                <Select
-                    value={aerolinea}
-                    disabled={loadingAerolineas}
+                <Select value={aerolinea} disabled={loadingAerolineas} displayEmpty fullWidth
                     onChange={(e) => setAerolinea(e.target.value)}
-                    fullWidth
-                    displayEmpty
-                    sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
-                        '& .MuiOutlinedInput-notchedOutline': {
-                            border: '1px solid #e5e6ea50' 
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#e5e6ea50'
-                        },
-                        '& .MuiSelect-select': {
-                            padding: '10px 14px'
-                        }
+                    sx={{ 
+                        color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
+                        '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e5e6ea50' },
+                        '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#e5e6ea50' },
+                        '& .MuiSelect-select': { padding: '10px 14px' }
                     }}
                 >
                     <MenuItem value="" disabled>Aerolínea</MenuItem>
                     {aerolineas.map(a => (
-                        <MenuItem key={a.id} value={a.iata}>
-                            {a.nombre}
-                        </MenuItem>
+                        <MenuItem key={a.id} value={a.iata}> {a.nombre} </MenuItem>
                     ))}
                 </Select>
 
                 {/* Origen | Destino (MISMA FILA) */}
                 <Grid container gap={0.5}>
                     <Grid item xs={6} width='49.5%'>
-                        <Select
-                            value={origen}
-                            disabled={loadingAeropuertos}
+                        <Select value={origen} disabled={loadingAeropuertos} displayEmpty fullWidth
                             onChange={(e) => setOrigen(e.target.value)}
-                            fullWidth
-                            displayEmpty
                             sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: '1px solid #e5e6ea50' },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#e5e6ea50'
-                                },
-                                '& .MuiSelect-select': {
-                                    padding: '10px 14px'
-                                }
+                                '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e5e6ea50' },
+                                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#e5e6ea50' },
+                                '& .MuiSelect-select': { padding: '10px 14px' }
                             }}
                         >
                         <MenuItem value="" disabled>Origen</MenuItem>
                             {aeropuertos.map(a => (
-                                <MenuItem key={a.id} value={a.iata}>
-                                    {a.iata} - {a.nombre}
-                                </MenuItem>
+                                <MenuItem key={a.id} value={a.iata}> {a.iata} - {a.nombre} </MenuItem>
                             ))}
                         </Select>
                     </Grid>
 
                     <Grid item xs={6} width='49.5%'>
-                        <Select
-                            value={destino}
-                            disabled={loadingAeropuertos}
+                        <Select value={destino} disabled={loadingAeropuertos} displayEmpty fullWidth
                             onChange={(e) => setDestino(e.target.value)}
-                            fullWidth
-                            displayEmpty
                             sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: '1px solid #e5e6ea50' },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#e5e6ea50'
-                                },
-                                '& .MuiSelect-select': {
-                                    padding: '10px 14px'
-                                }
+                                '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e5e6ea50' },
+                                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#e5e6ea50' },
+                                '& .MuiSelect-select': { padding: '10px 14px' }
                             }}
                         >
                         <MenuItem value="" disabled>Destino</MenuItem>
                             {aeropuertos.map(a => (
-                                <MenuItem key={a.id} value={a.iata}>
-                                    {a.iata} - {a.nombre}
-                                </MenuItem>
+                                <MenuItem key={a.id} value={a.iata}> {a.iata} - {a.nombre} </MenuItem>
                             ))}
                         </Select>
                     </Grid>
                 </Grid>
 
                 {/* Fecha y hora */}
-                <TextField
-                    type="datetime-local"
-                    value={fechaHora}
+                <TextField type="datetime-local" value={fechaHora} fullWidth
                     onChange={(e) => setFechaHora(e.target.value)}
-                    fullWidth
                     InputLabelProps={{ shrink: true }}
                     sx={{
                         '& .MuiOutlinedInput-root': { color: '#E5E6EA', borderRadius: 4, height: 45 }, 
@@ -162,14 +129,10 @@ const PredictionForm = ({ onPredict}) => {
 
                 {/* Distancia */}
                 {/* Borrar luego de que este lo de lat / long */}
-                <TextField
-                    label="Distancia (km)"
-                    type="number"
-                    fullWidth
-                    value={distancia}
+                <TextField type="number" label="Distancia (km)" value={distancia}
                     onChange={(e) => setDistancia(e.target.value)}
-                    InputLabelProps={{ shrink: true, sx: { color: '#E5E6EA', '&.Mui-focused': {
-                        color: '#E5E6EA' }} }}
+                    fullWidth
+                    InputLabelProps={{ shrink: true, sx: { color: '#E5E6EA', '&.Mui-focused': { color: '#E5E6EA' }} }}
                     sx={{
                         '& .MuiOutlinedInput-root': { color: '#E5E6EA', borderRadius: 4, height: 45 }, 
                         '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e5e6ea50' },
@@ -180,11 +143,7 @@ const PredictionForm = ({ onPredict}) => {
                 />
 
                 {/* Botón */}
-                <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    size="large"
+                <Button type="submit" variant="contained" fullWidth size="large"
                     sx={{
                         backgroundColor: '#222E60',
                         color: '#E5E6EA',

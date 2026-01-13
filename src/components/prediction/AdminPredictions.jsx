@@ -93,7 +93,7 @@ const AdminPredictions = ({ predictions = [] }) => {
     return (
         <Box sx={{ height: 650, width: '100%', mb: 8 }} >
             <Typography variant="h5" gutterBottom fontWeight="bold">
-                Usuarios registrados 
+                Todos los usuarios registrados 
             </Typography>
 
             <DataGrid

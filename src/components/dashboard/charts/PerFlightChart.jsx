@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+import AppAlert from '../../ui/AppAlert';
 
 /**
  * Componente PerFlightChart
@@ -42,7 +43,13 @@ const PerFlightChart = ({ history }) => {
         }
     }, [selectedVuelo, vueloIds]);
 
-    if (!history.length || selectedVuelo === null) return null;
+    if (!history.length || selectedVuelo === null) {
+        return (
+            <div className="px-4 py-4">
+                <AppAlert severity="error">Error al cargar datos</AppAlert>
+            </div>
+        );
+    }
 
     const flightData = history.filter(
         (h) => h.vueloId === selectedVuelo

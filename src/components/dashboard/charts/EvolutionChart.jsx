@@ -1,5 +1,5 @@
 import { LineChart } from '@mui/x-charts/LineChart';
-
+import AppAlert from '../../ui/AppAlert';
 /**
  * Componente EvolutionChart
  *
@@ -26,7 +26,11 @@ import { LineChart } from '@mui/x-charts/LineChart';
 
 const EvolutionChart = ({ history }) => {
     if (!history.length) {
-        return <p className='text-[#251A79] text-center'>No hay datos de evolución</p>;
+        return (
+            <div className="px-4 py-4">
+                <AppAlert severity="error">Error al cargar datos</AppAlert>
+            </div>
+        );
     }
 
     const groupedByFlight = history.reduce((acc, h) => {

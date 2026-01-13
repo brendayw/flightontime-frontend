@@ -1,4 +1,5 @@
-import LoginForm from '../components/auth/LoginForm'
+import Header from '../components/ui/Header';
+import LoginForm from '../components/auth/LoginForm';
 
 const LoginPage = () => {
     return (
@@ -8,7 +9,9 @@ const LoginPage = () => {
             `}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-            <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-xl bg-[#F9F3F3]/30 rounded-2xl shadow-2xl px-8 py-10">
+            <Header />
+
+            <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-xl bg-[#F9F3F3]/30 rounded-2xl shadow-2xl px-8 py-10 mt-12">
                 <LoginForm />
             </div>
         </section>

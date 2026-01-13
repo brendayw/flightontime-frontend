@@ -1,6 +1,7 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import useDashboardHistory from '../../hooks/useDashboardHistory';
 import Title from '../ui/Title';
+import AppAlert from '../ui/AppAlert';
 import DistributionChart from './charts/DistributionChart';
 import EvolutionChart from './charts/EvolutionChart';
 import PerFlightChart from './charts/PerFlightChart';
@@ -23,15 +24,9 @@ import DashboardStats from './DashboardStats';
  */
 
 const DashboardCharts = () => {
-    const { history, loading: loadingHistory, error: errorHistory } = useDashboardHistory();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    if (loadingHistory) 
-        return <p className='text-[#251A79] text-center'>Cargando dashboard...</p>;
-
-    if (errorHistory) 
-        return <p className='text-[#251A79] text-center'>{errorHistory}</p>;
+    const { history } = useDashboardHistory();
             
     return (
         <div className={`w-full ${isMobile ? 'px-2 py-2' : 'px-6 py-6'} py-2 space-y-4 mb-14 bg-[#EAE8EC]/5 rounded-lg`}>

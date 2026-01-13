@@ -1,12 +1,13 @@
 import { Box, Button, TextField,  } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import AppAlert from "../ui/AppAlert";
+import { validateSignup } from "../../utils/formatValidator";
 import useAuth from "../../hooks/useAuth";
 
 /**
- * SignupForm Component
- * 
- * Componente de formulario de registro de usuarios para Flight On Time.
+ * SignupForm Component - Componente de formulario de registro de usuarios 
+ * para Flight On Time.
  * Permite crear una nueva cuenta ingresando:
  * - Nombre completo
  * - Email
@@ -31,7 +32,9 @@ import useAuth from "../../hooks/useAuth";
 const SignupForm = () => {
     const { signup, error, loading } = useAuth();
     const navigate = useNavigate();
+    const [localError, setLocalError] = useState("");
 
+    //mock
     const [form, setForm] = useState({
         fullname: "",
         email: "",
@@ -42,9 +45,13 @@ const SignupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (form.password !== form.confirmPassword) {
-        alert("Passwords do not match");
-        return;
+        const errors = validateSignup(form);
+        setFormErrors(errors);
+
+        // Si hay errores, mostramos el primero general en AppAlert
+        if (Object.keys(errors).length > 0) {
+            setLocalError(errors.confirmPassword || errors.fullname || errors.email);
+            return;
         }
 
         const success = await signup(form);
@@ -66,90 +73,77 @@ const SignupForm = () => {
 
             <form onSubmit={handleSubmit}>   
                 <Box className="space-y-5">
+                    {/* Error general */}
+                    {localError && (
+                        <AppAlert severity="warning"> {localError} </AppAlert>
+                    )}
+
                     {/* Full name */}
-                    <TextField
-                        fullWidth
-                        placeholder="Full name"
-                        variant="outlined"
-                        InputLabelProps={{ shrink: false }}
-                        type="text"
-                        value={form.fullname}
+                    <TextField type="text" placeholder="Full name" variant="outlined" value={form.fullname}
                         onChange={ (e) => setForm({ ...form, fullname: e.target.value }) }
+                        error={!!formErrors.fullname}
+                        helperText={formErrors.fullname}
+                        fullWidth
+                        InputLabelProps={{ shrink: false }}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 backgroundColor: "#F9F3F3",
                                 borderRadius: 2,
-                                "&.Mui-focused fieldset": {
-                                    borderColor: "#F9F3F3",
-                                },
+                                "&.Mui-focused fieldset": { borderColor: "#F9F3F3" },
                             },
                         }}
                     />
 
                     {/* Email */}
-                    <TextField
-                        fullWidth
-                        placeholder="Email"
-                        variant="outlined"
-                        InputLabelProps={{ shrink: false }}
-                        type="email"
-                        value={form.email}
+                    <TextField type="email" placeholder="Email" variant="outlined" value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        error={!!formErrors.email}
+                        helperText={formErrors.email}
+                        fullWidth
+                        InputLabelProps={{ shrink: false }}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 backgroundColor: "#F9F3F3",
                                 borderRadius: 2,
-                                "&.Mui-focused fieldset": {
-                                borderColor: "#F9F3F3",
-                                },
+                                "&.Mui-focused fieldset": { borderColor: "#F9F3F3" },
                             },
                         }}
                     />
 
                     {/* Password */}
-                    <TextField
-                        fullWidth
-                        placeholder="Password"
-                        variant="outlined"
-                        InputLabelProps={{ shrink: false }}
-                        type="password"
-                        value={form.password}
+                    <TextField type="password" placeholder="Password" variant="outlined" value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        error={!!formErrors.password}
+                        helperText={formErrors.password}
+                        fullWidth  
+                        InputLabelProps={{ shrink: false }}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 backgroundColor: "#F9F3F3",
                                 borderRadius: 2,
-                                "&.Mui-focused fieldset": {
-                                    borderColor: "#F9F3F3",
-                                },
+                                "&.Mui-focused fieldset": { borderColor: "#F9F3F3" },
                             },
                         }}
                     />
 
                     {/* Confirm password */}
-                    <TextField
-                        fullWidth
-                        placeholder="Confirm password"
-                        variant="outlined"
-                        InputLabelProps={{ shrink: false }}
-                        type="password"
-                        value={form.confirmPassword}
+                    <TextField type="password" placeholder="Confirm password" variant="outlined" value={form.confirmPassword}
                         onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                        error={!!formErrors.confirmPassword}
+                        helperText={formErrors.confirmPassword}
+                        fullWidth
+                        InputLabelProps={{ shrink: false }}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 backgroundColor: "#F9F3F3",
                                 borderRadius: 2,
-                                "&.Mui-focused fieldset": {
-                                    borderColor: "#F9F3F3",
-                                },
+                                "&.Mui-focused fieldset": { borderColor: "#F9F3F3" },
                             },
                         }}
                     />
 
                     {/* Submit Button */}
-                    <Button
-                        type="submit"
-                        fullWidth
+                    <Button type="submit" fullWidth
                         sx={{
                             py: 2,
                             borderRadius: 3,
@@ -172,9 +166,7 @@ const SignupForm = () => {
                 <span className="text-sm text-[#251A79]/70">
                     Already have an account?
                 </span>
-                <Button
-                    onClick={() => navigate('/auth/login')}
-                    variant="text"
+                <Button variant="text" onClick={() => navigate('/auth/login')}
                     sx={{
                         ml: 1,
                         color: "#F9F3F3",
@@ -187,11 +179,11 @@ const SignupForm = () => {
                         "&:focus": {
                             outline: "2px solid #F9F3F3",
                             outlineOffset: 2,
-                        },
+                        }
                     }}
                 >
                     Sign in
-                </Button>
+                </Button> 
             </Box>
         </Box>
     );

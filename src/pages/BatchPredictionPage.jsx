@@ -31,7 +31,7 @@ const BatchPredictionPage = () => {
                     rgba(254, 160, 98, 0.85) 50%, rgba(254, 171, 119, 0.85) 55%,
                     rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%) `
             }}>
-                <Container maxWidth="lg" sx={{ mt: -8 }}  >
+                <Container maxWidth="lg" sx={{ mt: isMobile ? -3 : -8 }}  >
                     <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
                         Predicciones en lote
                     </Typography>

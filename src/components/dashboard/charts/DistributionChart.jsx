@@ -1,5 +1,6 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
+import AppAlert from '../../ui/AppAlert';
 
 /**
  * Componente DistributionChart
@@ -24,7 +25,11 @@ const DistributionChart = ({ history }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!history.length) {
-    return <p className='text-[#251A79] text-center'>No hay datos de predicciones</p>;
+    return (
+      <div className="px-4 py-4">
+        <AppAlert severity="error">Error al cargar datos</AppAlert>
+      </div>
+    );
   }
 
   const counts = history.reduce((acc, { prevision }) => {

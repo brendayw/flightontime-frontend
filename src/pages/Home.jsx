@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import { Typography, Container, Box, Card, useMediaQuery, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/ui/Header';
@@ -48,7 +48,12 @@ const Home = () => {
                 <Container maxWidth="lg" sx={{ mt: -4 }}  >
                     {view === "hero" ? (
                         <>
-                            <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+                            <Typography variant="h3" component="h1" gutterBottom fontWeight="bold"
+                                sx={{
+                                    fontSize: isMobile ? 30 : 36,
+                                    mt: isMobile ? 8 : 0
+                                }}
+                            >
                                 ¿Tu vuelo llegará a tiempo?
                             </Typography>
                     

@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { useTheme, useMediaQuery,Card } from '@mui/material';
 
 /**
  * BaseCard Component
@@ -28,11 +28,14 @@ import { Card } from '@mui/material';
  */
 
 const BaseCard = ({ children, sx }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Card sx={{
             background: 'rgba(41, 36, 66, 0.5)',
             color: '#EAE8EC',
-            width: 250,
+            width: isMobile ? 450 : 250,
             alignContent: 'center',
             borderRadius: 4,
             ...sx // permite extender estilos

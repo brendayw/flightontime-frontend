@@ -1,4 +1,4 @@
-import { Typography, Container, Grid } from '@mui/material';
+import { useTheme, useMediaQuery, Typography, Container, Grid } from '@mui/material';
 import BaseCard from '../ui/BaseCard';
 import SpeedIcon from '@mui/icons-material/Speed';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
@@ -21,7 +21,7 @@ import InsertEmoticonRoundedIcon from '@mui/icons-material/InsertEmoticonRounded
  *    2. Alertas de retraso
  *    3. Datos históricos
  *    4. Fácil de usar
- * - Diseñado para ser responsive:
+ * - Diseñado para ser responsive
  * 
  * Props:
  * - Ninguna

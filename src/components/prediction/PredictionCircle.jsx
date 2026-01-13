@@ -56,20 +56,18 @@ const PredictionCircle = ({ prediction }) => {
                 sx={{
                     color: color,
                     position: 'absolute',
-                    '& .MuiCircularProgress-circle': {
-                        strokeLinecap: 'round'
-                    }
+                    '& .MuiCircularProgress-circle': { strokeLinecap: 'round' }
                 }}
             />
 
             {/* Contenido central */}
             <Box
                 sx={{
-                position: 'absolute',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                color: 'white',
+                    position: 'absolute',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    color: 'white',
                 }}
             >
                 <Typography variant="h3" component="div" fontWeight="bold" sx={{ lineHeight: 1, color: '#E5E6EA' }}>

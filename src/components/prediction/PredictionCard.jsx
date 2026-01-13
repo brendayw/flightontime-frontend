@@ -3,12 +3,11 @@ import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
 import PredictionCircle from './PredictionCircle.jsx';
+import AppAlert from '../ui/AppAlert.jsx';
 import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
 /**
- * PredictionCard
- *
- * Componente que muestra la predicción de un vuelo en un card estilizado.
+ * PredictionCard - Componente que muestra la predicción de un vuelo en un card estilizado.
  *
  * Props:
  * - prediction: objeto que contiene los datos de predicción del vuelo.
@@ -30,8 +29,10 @@ function PredictionCard({ prediction }) {
 
   if (!data) {
     return (
-      <Card sx={{ borderRadius: '25px', p: 3, backgroundColor: '#F9F3F3' }}>
-        <Typography color='text-[#251A79] text-center'>No hay datos disponibles</Typography>
+      <Card sx={{ borderRadius: '25px', p: 3, backgroundColor: 'rgba(65, 64, 64, 0.45)' }}>
+        <AppAlert severity="info">
+          No hay predicciones disponibles.
+        </AppAlert>
       </Card>
     );
   }

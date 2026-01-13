@@ -1,6 +1,7 @@
 import { Box, Typography, Stack, useTheme, useMediaQuery, Grid } from '@mui/material';
 import PredictionCard from './PredictionCard';
 import ResultsCount from './ResultsCount';
+import AppAlert from '../ui/AppAlert';
 
 /**
  * Componente que muestra un listado de predicciones.
@@ -22,19 +23,11 @@ const ResultsList = ({ predictions = [], loading = false, isBatch = false }) => 
 
         <ResultsCount total={predictions.length} loading={loading} isBatch={isBatch} />
 
-        {loading && (
-          <Box sx={{ textAlign: 'center', py: isMobile ? 2 : 4 }}>
-            <Typography color='text-[#251A79] text-center'>
-              Cargando predicciones...
-            </Typography>
-          </Box>
-        )}
-
         {!loading && predictions.length === 0 && (
-          <Box sx={{ textAlign: 'center', py: isMobile ? 2 : 4 }}>
-            <Typography color='text-[#251A79] text-center'>
-              No hay predicciones disponibles. Realiza tu primera predicción.
-            </Typography>
+          <Box sx={{ py: isMobile ? 2 : 4 }}>
+            <AppAlert severity="info">
+              No hay predicciones disponibles.
+            </AppAlert>
           </Box>
         )}
 
