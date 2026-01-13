@@ -12,7 +12,6 @@ function PredictionCard({ prediction }) {
   const data = formatPrediction(prediction);
   const { row, response, error } = prediction;
 
-
   if (!data) {
     return (
       <Card sx={{ borderRadius: '25px', p: 3, backgroundColor: '#F9F3F3' }}>
@@ -21,7 +20,7 @@ function PredictionCard({ prediction }) {
     );
   }
 
-  const { aerolinea, origen, destino, distancia, status, probability, isDelayed, formattedDate } = data;
+  const { aerolinea, origen, destino, distancia, formattedDate } = data;
 
   return (
     <Card sx={{
@@ -68,21 +67,6 @@ function PredictionCard({ prediction }) {
             </Box>
           </Stack>
         </Box>
-        
-
-
-        {/* Estado del vuelo*/}
-        {/* <Typography mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
-          Estado del vuelo: {' '} 
-          <strong style={{ color: '#d32f2f', fontSize: '16px'}}>
-            {status}
-          </strong>
-        </Typography> */}
-
-        {/* Probabilidad */}
-        {/* <Typography variant='body2' mt={2} pl={2} fontSize={isMobile ? 14 : 16}>
-          Probabilidad de retraso: <strong>{probability}%</strong>
-        </Typography> */}
       </CardContent>
     </Card>
   );

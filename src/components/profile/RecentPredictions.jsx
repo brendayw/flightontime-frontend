@@ -67,7 +67,7 @@ const RecentPredictions = () => {
                                 fontWeight: 600,
                                 textTransform: "none",
                                 "&:hover": { backgroundColor: "#1d145f" },
-                                transition: "all 0.3s",
+                                transition: "all 0.3s"
                         }}>
                             Ver más
                         </Button>
@@ -84,7 +84,7 @@ const RecentPredictions = () => {
 
                                 <div className="text-right">
                                     <p className="font-medium" style={{
-                                        color: p.result === "A tiempo" ? "#48a74d" : p.result === "Retrasado" ? "#8d1515" : "#000",
+                                        color: p.result === "A tiempo" ? "#48a74d" : p.result === "Retrasado" ? "#8d1515" : "#000"
                                     }}>
                                         {p.result}
                                     </p>

@@ -3,7 +3,6 @@ import { useTheme, useMediaQuery, Card, CardContent, Typography, Box } from '@mu
 const ResultsCount = ({ total, loading = false, isBatch = false }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    //const [predictions, setPredictions] = useState([]);
 
     return (
         <Card 
@@ -22,7 +21,7 @@ const ResultsCount = ({ total, loading = false, isBatch = false }) => {
                     p: isMobile ? 1.5 : 0, 
                     display: 'flex', 
                     alignItems: 'center',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'flex-start'
                 }}
             >
                 <Box sx={{ 

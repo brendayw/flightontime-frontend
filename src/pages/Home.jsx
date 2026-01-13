@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Typography, Container, Box, Card, useMediaQuery, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/ui/Header';
@@ -7,7 +7,7 @@ import Features from '../components/ui/Features';
 import CTA from '../components/ui/CTA';
 import Footer from '../components/ui/Footer';
 import BatchPredictionFile from '../components/batchPrediction/BatchPredictionFile';
-import useAuth from '../hooks/useAuth';
+// import useAuth from '../hooks/useAuth';
 import usePrediction from '../hooks/usePrediction';
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
     const [view, setView] = useState("hero"); //cambia entre form de predicción y el de batch
     const navigate = useNavigate();
     const { predict, loading, error } = usePrediction();
-    const { isGuest, isUser, isAdmin } = useAuth(); 
+    //const { isGuest, isUser, isAdmin } = useAuth(); 
 
     const handlePredict = async (formData) => {
         const result = await predict(formData);

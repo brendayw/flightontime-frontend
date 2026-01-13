@@ -17,7 +17,6 @@ const DashboardStats = () => {
             value: summary.totalPredicciones,
             icon: '#e5e6ead8',
             iconbg: 'rgba(37, 26, 121, 0.25)',
-            bg: 'rgba(41, 36, 66, 0.53)',
             textColor: '#E5E6EA',
         },
         {
@@ -25,7 +24,6 @@ const DashboardStats = () => {
             value: `${summary.porcentajePuntuales.toFixed(1)}%`,
             icon: '#B0B8F9',
             iconbg: 'rgba(176, 184, 249, 0.25)',
-            bg: 'rgba(41, 36, 66, 0.53)',
             textColor: '#E5E6EA',
         },
         {
@@ -33,7 +31,6 @@ const DashboardStats = () => {
             value: `${summary.porcentajeRetrasos.toFixed(1)}%`,
             icon: '#FEA062',
             iconbg: 'rgba(254, 160, 98, 0.25)',
-            //bg: 'rgba(41, 36, 66, 0.53)',
             textColor: '#E5E6EA',
         },
     ]
@@ -45,12 +42,11 @@ const DashboardStats = () => {
                 display: 'flex',
                 flexDirection: isMobile ? 'column' : { md:'row', lg: 'row' },
                 flexWrap: 'wrap',
-                //left: isMobile ? 0 : { sm: 52, md: 12 },
                 justifyContent: 'center',
                 gap: isMobile ? 2 : 8,
                 width: '100%',
                 maxWidth: isMobile ? '100%' : { sm: '100%', md: '93%', xl: '100%'},
-                mx: 'auto',
+                mx: 'auto'
         }}>
             {stats.map((stat, idx) => (
                 <div key={idx} 

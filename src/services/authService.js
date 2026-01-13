@@ -1,4 +1,16 @@
-//import axiosInstance from "../../axiosInstance";
+//import axiosInstance from "../api/axiosInstance";
+
+/**
+ * API de autenticación (MOCK).
+ *
+ * Este archivo simula las respuestas del backend de autenticación.
+ * Se utiliza mientras el backend real no está integrado.
+ *
+ * ⚠️ IMPORTANTE:
+ * - No realiza requests HTTP reales
+ * - No utiliza axios
+ * - Debe ser reemplazado cuando el backend esté disponible
+ */
 
 export const loginRequest = async (data) => {
   console.log("Mock login:", data);

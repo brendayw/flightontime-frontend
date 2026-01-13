@@ -9,7 +9,6 @@ import RecentPredictions from '../components/profile/RecentPredictions';
 const ProfilePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  //const isPredictedView = true;
 
   return (
     <section id='profile' style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,

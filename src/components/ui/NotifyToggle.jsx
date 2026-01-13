@@ -13,11 +13,11 @@ const NotifyToggle = ({ value, onChange, isCompact }) => {
               color: '#FEA062', // color del círculo cuando está unchecked
               '&.Mui-checked': {
                 color: '#FEA062', // color del círculo cuando checked
-              },
+              }
             },
             '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
               backgroundColor: '#FEAB77',
-              opacity: 0.8,
+              opacity: 0.8
             }
           }}
         />
@@ -25,8 +25,8 @@ const NotifyToggle = ({ value, onChange, isCompact }) => {
       sx={{ color: '#E5E6EA', 
         '& .MuiFormControlLabel-label': {
           fontSize: '0.8rem',
-          fontWeight: 600,
-        },
+          fontWeight: 600
+        }
       }}
     />
   );

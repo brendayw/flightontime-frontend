@@ -44,7 +44,7 @@ const ProfileDetails = () => {
                             textTransform: "none",
                             "&:hover": { backgroundColor: "#1d145f" },
                             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                            transition: "all 0.3s",
+                            transition: "all 0.3s"
                     }}>
                         Editar perfil
                     </Button>

@@ -11,7 +11,7 @@ const FooterButton = () => {
             flexDirection: 'row',
             justifyContent: 'center', 
             gap: 2 ,
-            mt: 2,
+            mt: 2
         }}>
             <Button onClick={() => navigate('/auth/login')} variant="contained"
                 sx={{
@@ -40,10 +40,9 @@ const FooterButton = () => {
                     fontSize: 14,
                     fontWeight: 600,
                     borderRadius: 1
-                    }}
-                >
-                    Nueva Predicción
-                </Button>
+            }}>
+                Nueva Predicción
+            </Button>
         </Box>
     );
 }

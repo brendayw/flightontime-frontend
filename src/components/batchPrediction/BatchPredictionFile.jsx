@@ -18,16 +18,15 @@ const BatchPredictionFile = () => {
     useEffect(() => {
         if (result && predictions && predictions.length > 0 && !loading) {
             const timer = setTimeout(() => {
-                const targetRoute = isAuthenticated
-                    ? '/predictions'
-                    : '/predictions-guest';
+                const targetRoute = isAuthenticated ? '/predictions' : '/predictions-guest';
 
                 navigate(targetRoute, {
                     state: {
                         predictions,
                         isBatch: true,
-                    },
+                    }
                 });
+
             }, 1000);
             return () => clearTimeout(timer);
         }
@@ -74,12 +73,12 @@ const BatchPredictionFile = () => {
 
                     {!result && ( 
                         <> 
-                            <Box sx={{ border: '2px dashed #feab7780', borderRadius: 2, p: 3, textAlign: 'center', }} >
+                            <Box sx={{ border: '2px dashed #feab7780', borderRadius: 2, p: 3, textAlign: 'center' }} >
                                 <Typography color='#e5e6ea9f' fontSize='12px' mb={1}> 
                                     Arrastrá tu archivo CSV o hacé click para seleccionarlo
                                 </Typography> 
                                 
-                                <Button variant='outlined' component='label' disabled={loading} sx={{ mt: 2, color:'#e5e6ea9f', fontWeight: 600, borderColor: '#e5e6ea9f', }} > 
+                                <Button variant='outlined' component='label' disabled={loading} sx={{ mt: 2, color:'#e5e6ea9f', fontWeight: 600, borderColor: '#e5e6ea9f' }} > 
                                     Seleccionar archivo 
                                     <input type='file' accept='.csv' hidden onChange={(e) => selectFile(e.target.files?.[0])} /> 
                                 </Button> 

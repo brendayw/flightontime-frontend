@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getProfileRequest } from "../services/api/auth/authService";
+import { useEffect, useState } from 'react';
+import { getProfileRequest } from '../services/authService';
 
 const useProfile = () => {
   const [profile, setProfile] = useState(null);

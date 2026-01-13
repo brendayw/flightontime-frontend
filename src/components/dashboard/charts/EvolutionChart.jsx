@@ -24,7 +24,7 @@ const EvolutionChart = ({ history }) => {
             return {
                 label: `Vuelo ${vueloId}`,
                 data: xAxisData.map((d) => dataByDate[d] ?? null),
-                valueFormatter: (v) => (v == null ? "—" : v.toFixed(2)),
+                valueFormatter: (v) => (v == null ? "—" : v.toFixed(2))
             };
         }
     );
@@ -37,8 +37,8 @@ const EvolutionChart = ({ history }) => {
                         data: xAxisData,
                         scaleType: 'time',
                         valueFormatter: (value) =>
-                            new Date(value).toLocaleDateString(),
-                    },
+                            new Date(value).toLocaleDateString()
+                    }
                 ]}
                 series={series}
                 height={325}
@@ -46,7 +46,7 @@ const EvolutionChart = ({ history }) => {
                 slotProps={{
                     legend: {
                         sx: { display: 'none' },
-                        hidden: true,
+                        hidden: true
                     },
                 }}
             />

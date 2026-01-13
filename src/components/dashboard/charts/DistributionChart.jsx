@@ -34,12 +34,12 @@ const DistributionChart = ({ history }) => {
         margin={chartMargin}
         slotProps={{
           legend: { hidden: true },
-          tooltip: { trigger: 'none' },
+          tooltip: { trigger: 'none' }
         }}
         sx={{
           '& .MuiBarElement-root:nth-of-type(1)': { fill: '#B0B8F9' },
           '& .MuiBarElement-root:nth-of-type(2)': { fill: '#FF854C' },
-          '& .MuiBarElement-root:nth-of-type(3)': { fill: '#FF854C' },
+          '& .MuiBarElement-root:nth-of-type(3)': { fill: '#FF854C' }
         }}
       />
     </div>

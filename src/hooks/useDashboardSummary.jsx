@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getDashboardSummary } from "../services/api/dashboard/dashboardApi";
+import { useEffect, useState } from 'react';
+import { getDashboardSummary } from '../api/dashboard.api';
 
 const useDashboardSummary = () => {
   const [summary, setSummary] = useState(null);

@@ -19,13 +19,13 @@ const PredictionCircle = ({ prediction }) => {
 
     return (
         <Box sx={{ position: 'relative', width: 'full', height: {sm:100, md: 160}, display: 'flex', 
-            alignItems: 'center', justifyContent: 'center', margin: '0 auto',
+            alignItems: 'center', justifyContent: 'center', margin: '0 auto'
         }}>
             {/* Círculo de fondo gris tenue */}
             <CircularProgress variant="determinate"
                 value={100} size={size}
                 thickness={thickness}
-                sx={{color: 'rgba(255,255,255,0.12)', position: 'absolute', }}
+                sx={{color: 'rgba(255,255,255,0.12)', position: 'absolute' }}
             />
 
             {/* Progreso real */}
@@ -35,11 +35,11 @@ const PredictionCircle = ({ prediction }) => {
                 size={size}
                 thickness={thickness}
                 sx={{
-                color: color,
-                position: 'absolute',
-                '& .MuiCircularProgress-circle': {
-                    strokeLinecap: 'round', // extremos redondeados (muy importante para el look moderno)
-                },
+                    color: color,
+                    position: 'absolute',
+                    '& .MuiCircularProgress-circle': {
+                        strokeLinecap: 'round'
+                    }
                 }}
             />
 

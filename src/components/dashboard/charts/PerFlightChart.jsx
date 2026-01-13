@@ -38,16 +38,16 @@ const PrediccionesPorVueloChart = ({ history }) => {
 
     const series = Object.entries(groupedByPrevision).map(
         ([prevision, records]) => {
-        const dataByDate = Object.fromEntries(
-            records.map((r) => [r.createdAt, r.probabilidad])
-        );
+            const dataByDate = Object.fromEntries(
+                records.map((r) => [r.createdAt, r.probabilidad])
+            );
 
-        return {
-            label: prevision,
-            data: xAxisData.map((d) => dataByDate[d] ?? null),
-            color: colorMap[prevision],
-            valueFormatter: (v) => (v == null ? "—" : v.toFixed(2)),
-        };
+            return {
+                label: prevision,
+                data: xAxisData.map((d) => dataByDate[d] ?? null),
+                color: colorMap[prevision],
+                valueFormatter: (v) => (v == null ? "—" : v.toFixed(2))
+            };
         }
     );
 
@@ -55,10 +55,8 @@ const PrediccionesPorVueloChart = ({ history }) => {
         <div className='border border-[#F9F3F3] rounded-xl shadow p-4 flex flex-col items-start'>
             {/* Selector */}
             <div className='flex justify-center mb-4'>
-                <select
-                    className='bg-white text-black border rounded-md px-3 py-1 focus:outline-none'
-                    value={selectedVuelo}
-                    onChange={(e) => setSelectedVuelo(Number(e.target.value))}
+                <select className='bg-white text-black border rounded-md px-3 py-1 focus:outline-none'
+                    value={selectedVuelo} onChange={(e) => setSelectedVuelo(Number(e.target.value))}
                 >
                     {vueloIds.map((id) => (
                         <option key={id} value={id}> Vuelo {id} </option>
@@ -73,16 +71,14 @@ const PrediccionesPorVueloChart = ({ history }) => {
                         data: xAxisData,
                         scaleType: 'time',
                         valueFormatter: (v) =>
-                        new Date(v).toLocaleString(),
-                    },
+                        new Date(v).toLocaleString()
+                    }
                 ]}
                 series={series}
                 height={250}
                 margin={{ top: 10, bottom: 10, left: 5, right: 5 }}
                 slotProps={{
-                    legend: {
-                        p: 0.2,
-                    }
+                    legend: { p: 0.2 }
                 }}
             />
         </div>

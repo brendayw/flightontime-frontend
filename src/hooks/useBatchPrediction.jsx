@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { uploadBatchPrediction } from '../services/api/prediction/uploadBatchPrediction';
+import { uploadBatchPrediction } from '../api/prediction.api';
 
 const useBatchPrediction = () => {
   const [file, setFile] = useState(null);

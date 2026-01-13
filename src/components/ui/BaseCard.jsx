@@ -8,7 +8,7 @@ const BaseCard = ({ children, sx }) => {
             width: 250,
             alignContent: 'center',
             borderRadius: 4,
-            ...sx, // permite extender estilos
+            ...sx // permite extender estilos
         }}>
             {children}
         </Card>

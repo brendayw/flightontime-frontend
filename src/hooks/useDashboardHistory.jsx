@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getGlobalHistory } from "../services/api/dashboard/dashboardApi";
+import { useEffect, useState } from 'react';
+import { getGlobalHistory } from '../api/dashboard.api';
 
 const normalizePrevision = (p) => {
   if (!p) return "Desconocido";

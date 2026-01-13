@@ -48,7 +48,7 @@ function App() {
         } />
 
         <Route path="dashboard" element={
-          <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
             <DashboardPage />
           </ProtectedRoute>
         } />
@@ -62,7 +62,7 @@ function App() {
 
         {/* Predicciones que reciben notificacion / en seguimiento */}
         <Route path="notify" element={
-          <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
+          <ProtectedRoute allowedRoles={["USER"]}>
             <NotifyPage />
           </ProtectedRoute>
         }/>

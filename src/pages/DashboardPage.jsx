@@ -27,7 +27,7 @@ const DashboardPage = () => {
                     width: '100%',
                     maxWidth: isMobile ? '90%' : 1200,
                     padding: isMobile ? '0.5rem' : '1rem',
-                    transition: 'all 0.6s ease-in-out',
+                    transition: 'all 0.6s ease-in-out'
             }}> 
                 <DashboardCharts />
             </main>

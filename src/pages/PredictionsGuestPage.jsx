@@ -24,7 +24,6 @@ const PredictionsGuestPage = () => {
                     rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%) `
             }}>
                 <ResultsList predictions={predictions} isBatch={isBatch} />
-
                 <FooterButton />
             </Box>
             

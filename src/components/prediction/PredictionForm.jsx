@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useTheme, useMediaQuery, Box, Stack, TextField, Button, MenuItem, Select, } from '@mui/material';
-import useAerolineas from'../../hooks/core/useAerolineas';
-import useAeropuertos from '../../hooks/core/useAeropuertos';
+import useAerolineas from'../../hooks/catalog/useAerolineas';
+import useAeropuertos from '../../hooks/catalog/useAeropuertos';
+import { prepareFlightFormData } from '../../services/formDataService';
 
 const PredictionForm = ({ onPredict}) => {
     const theme = useTheme();
@@ -19,28 +20,14 @@ const PredictionForm = ({ onPredict}) => {
         
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-    
-        if (!aerolinea || !origen || !destino || !fechaHora || !distancia) return;
-    
-        const distanciaInt = parseInt(distancia);
-        if (isNaN(distanciaInt) || distanciaInt <= 0) return;
-    
-        const formData = {
-            aerolinea: aerolinea.trim(),
-            origen: origen.trim(),
-            destino: destino.trim(),
-            fecha_partida: `${fechaHora}:00`,
-            distancia_km: parseInt(distancia),
-        };
+
+        const formData = prepareFlightFormData({ aerolinea, origen, destino, fechaHora, distancia });
+        if (!formData) return; // Si no es válido, no hacemos nada
 
         if (onPredict) {
-            await onPredict(formData);
+        await onPredict(formData);
         }
-    }
-
-    if (loadingAerolineas || loadingAeropuertos) {
-        return <p>Cargando datos...</p>;
-    }
+    };
 
     return (
         <Box component="form" onSubmit={handleFormSubmit}>
@@ -48,18 +35,20 @@ const PredictionForm = ({ onPredict}) => {
                 {/* Aerolínea */}
                 <Select
                     value={aerolinea}
+                    disabled={loadingAerolineas}
                     onChange={(e) => setAerolinea(e.target.value)}
                     fullWidth
                     displayEmpty
                     sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
                         '& .MuiOutlinedInput-notchedOutline': {
-                            border: '1px solid #e5e6ea50' },
+                            border: '1px solid #e5e6ea50' 
+                        },
                         '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#e5e6ea50',
+                            borderColor: '#e5e6ea50'
                         },
                         '& .MuiSelect-select': {
-                            padding: '10px 14px',
-                        },
+                            padding: '10px 14px'
+                        }
                     }}
                 >
                     <MenuItem value="" disabled>Aerolínea</MenuItem>
@@ -75,6 +64,7 @@ const PredictionForm = ({ onPredict}) => {
                     <Grid item xs={6} width='49.5%'>
                         <Select
                             value={origen}
+                            disabled={loadingAeropuertos}
                             onChange={(e) => setOrigen(e.target.value)}
                             fullWidth
                             displayEmpty
@@ -82,11 +72,11 @@ const PredictionForm = ({ onPredict}) => {
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: '1px solid #e5e6ea50' },
                                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#e5e6ea50',
+                                    borderColor: '#e5e6ea50'
                                 },
                                 '& .MuiSelect-select': {
-                                    padding: '10px 14px',
-                                },
+                                    padding: '10px 14px'
+                                }
                             }}
                         >
                         <MenuItem value="" disabled>Origen</MenuItem>
@@ -101,6 +91,7 @@ const PredictionForm = ({ onPredict}) => {
                     <Grid item xs={6} width='49.5%'>
                         <Select
                             value={destino}
+                            disabled={loadingAeropuertos}
                             onChange={(e) => setDestino(e.target.value)}
                             fullWidth
                             displayEmpty
@@ -108,11 +99,11 @@ const PredictionForm = ({ onPredict}) => {
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: '1px solid #e5e6ea50' },
                                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#e5e6ea50',
+                                    borderColor: '#e5e6ea50'
                                 },
                                 '& .MuiSelect-select': {
-                                    padding: '10px 14px',
-                                },
+                                    padding: '10px 14px'
+                                }
                             }}
                         >
                         <MenuItem value="" disabled>Destino</MenuItem>
