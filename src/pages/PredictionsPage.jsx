@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTheme, useMediaQuery, Box, Container } from "@mui/material";
 import Header from '../components/ui/Header';
 import ResultsList from '../components/prediction/ResultsList';
-import FooterButton from "../components/ui/FooterButton";
+import PredictionActions from "../components/ui/PredictionActions";
 
 import Menu from '../components/layout/Menu';
 
@@ -54,7 +54,7 @@ const PredictionsPage = () => {
                                 <ResultsList predictions={predictions} isBatch={isBatch} />
                                 
                                 {/* Botones para nueva prediccion o notificar */}
-                                <FooterButton />
+                                <PredictionActions />
                             </motion.div>
                         )}
                     </AnimatePresence>

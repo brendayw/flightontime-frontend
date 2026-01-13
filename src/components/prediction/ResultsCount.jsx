@@ -1,5 +1,14 @@
 import { useTheme, useMediaQuery, Card, CardContent, Typography, Box } from '@mui/material';
 
+/**
+ * Componente que muestra un Card con la cantidad de predicciones.
+ *
+ * Props:
+ * - total: número de resultados (obligatorio)
+ * - loading: booleano para mostrar "..." mientras se cargan los datos (opcional, default false)
+ * - isBatch: booleano para indicar si son predicciones en batch (opcional, default false, actualmente no se usa)
+ */
+
 const ResultsCount = ({ total, loading = false, isBatch = false }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -16,21 +25,9 @@ const ResultsCount = ({ total, loading = false, isBatch = false }) => {
                 overflow: 'hidden'
             }}
         >
-            <CardContent 
-                sx={{ 
-                    p: isMobile ? 1.5 : 0, 
-                    display: 'flex', 
-                    alignItems: 'center',
-                    justifyContent: 'flex-start'
-                }}
-            >
-                <Box sx={{ 
-                    p: isMobile ? 1 : 2, 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 1 
-                }}>
-
+            <CardContent sx={{ p: isMobile ? 1.5 : 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }} >
+                <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    
                     <Typography fontWeight={600} ml={2} color='#E5E6EA'> Predicciones </Typography>
 
                     <Typography color='#E5E6EA'>

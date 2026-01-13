@@ -2,6 +2,21 @@ import { useTheme, useMediaQuery, Box } from '@mui/material';
 import useDashboardSummary from '../../hooks/useDashboardSummary';
 import FlightIcon from '@mui/icons-material/Flight';
 
+/**
+ * Componente DashboardStats
+ * 
+ * Muestra un resumen visual de estadísticas de predicciones de vuelos:
+ * - Total de predicciones
+ * - Porcentaje de predicciones a tiempo
+ * - Porcentaje de predicciones con retraso
+ * 
+ * Obtiene los datos mediante el hook useDashboardSummary().
+ * Adapta el layout para dispositivos móviles usando MUI useMediaQuery.
+ * 
+ * Uso:
+ * <DashboardStats />
+ */
+
 const DashboardStats = () => {
     const { summary, loading, error } = useDashboardSummary();
     const theme = useTheme();
@@ -11,6 +26,7 @@ const DashboardStats = () => {
     if (error || !summary)
         return <p className="text-[#251A79] text-center">Error al cargar estadísticas</p>;
 
+    // Datos a mostrar en tarjetas
     const stats = [
         {
             title: 'Predicciones totales',

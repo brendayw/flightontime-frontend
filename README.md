@@ -15,7 +15,8 @@ Este es el **frontend** de la aplicación de predicciones, desarrollado en **Rea
 
 ## Tecnologías utilizadas
 
-- **React +19 & Vite**
+- **React +19**
+- **Vite**
 - **Tailwind**
 - **Material-UI (MUI)**
 - **Framer Motion**
@@ -47,12 +48,17 @@ Crear un archivo .env en la raíz del proyecto con la URL del backend:
 ## Estructura de carpetas recomendada
 
     src/
+    ├─ api/             # Funciones para llamadas a la API
     ├─ components/      # Componentes reutilizables (formularios, listas, cards)
     ├─ pages/           # Páginas principales (Home, Predictions, Batch, Dashboard)
     ├─ hooks/           # Custom hooks (useDashboard, usePredictions)
-    ├─ services/        # Funciones para llamadas a la API
-    ├─ assets/          # Imágenes, íconos y estilos
+    ├─ services/        # Lógica de negocio y servicios (authService, formDataService)
+    ├─ assets/          # Imágenes, íconos
     ├─ utils/           # Funciones utilitarias
     ├─ App.js          
     ├─ index.css
     └─ main.js
+
+## Variables de entonrno
+
+VITE_API_URL=http://localhost:8080/api

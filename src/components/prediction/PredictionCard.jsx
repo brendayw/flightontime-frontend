@@ -1,14 +1,30 @@
-import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, Stack, LinearProgress, Divider } from '@mui/material';
+import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, Stack } from '@mui/material';
 import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
 import PredictionCircle from './PredictionCircle.jsx';
 import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
+/**
+ * PredictionCard
+ *
+ * Componente que muestra la predicción de un vuelo en un card estilizado.
+ *
+ * Props:
+ * - prediction: objeto que contiene los datos de predicción del vuelo.
+ *
+ * Características:
+ * - Responsive: adapta tamaño y padding según el ancho de la pantalla.
+ * - Muestra porcentaje de predicción mediante PredictionCircle.
+ * - Muestra datos del vuelo: aerolínea, origen-destino, fecha/hora y distancia.
+ * - Maneja casos donde no hay datos disponibles.
+ */
+
 function PredictionCard({ prediction }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Formatea la predicción para mostrarla en el card
   const data = formatPrediction(prediction);
   const { row, response, error } = prediction;
 
@@ -20,6 +36,7 @@ function PredictionCard({ prediction }) {
     );
   }
 
+  // Destructuring de los datos formateados
   const { aerolinea, origen, destino, distancia, formattedDate } = data;
 
   return (

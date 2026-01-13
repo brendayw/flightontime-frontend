@@ -4,6 +4,20 @@ import { useEffect } from 'react';
 import useBatchPrediction from '../../hooks/useBatchPrediction'; 
 import useAuth from '../../hooks/useAuth';
 
+/**
+ * Componente para subir un archivo CSV con predicciones de vuelos en batch.
+ * 
+ * Funcionalidades:
+ * - Permite seleccionar un archivo CSV arrastrándolo o mediante botón.
+ * - Muestra las instrucciones de formato esperado.
+ * - Llama al backend para procesar el archivo mediante useBatchPrediction().
+ * - Muestra un resumen de resultados (total, exitosos, errores) tras el procesamiento.
+ * - Redirige automáticamente a la pantalla de resultados (/predictions o /predictions-guest) una vez completado.
+ * 
+ * Uso:
+ * <BatchPredictionFile />
+ */
+
 const BatchPredictionFile = () => {
     const theme = useTheme(); 
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
@@ -11,10 +25,18 @@ const BatchPredictionFile = () => {
     const { isAuthenticated, role } = useAuth();
     const { file, loading, error, result, predictions, selectFile, upload, reset } = useBatchPrediction(); 
 
+    /**
+     * Función que ejecuta la subida y predicción del archivo.
+     * Se llama al presionar el botón "Predecir".
+     */
     const handleUpload = async () => {
         await upload();
     };
 
+    /**
+     * useEffect para redirigir automáticamente al usuario a la pantalla de resultados
+     * una vez que se procesan las predicciones.
+     */
     useEffect(() => {
         if (result && predictions && predictions.length > 0 && !loading) {
             const timer = setTimeout(() => {

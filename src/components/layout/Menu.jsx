@@ -9,6 +9,26 @@ import StatsIcon from '../../assets/icons/stats.png';
 import LogoutIcon from '../../assets/icons/logout.png';
 import useAuth from '../../hooks/useAuth';
 
+/**
+ * Componente Menu
+ *
+ * Renderiza la barra de navegación principal de la aplicación una vez loggeado.
+ * - Muestra distintos links dependiendo de si el usuario es admin o user.
+ * - Es responsive: 
+ *   - En mobile se muestra horizontal en la parte inferior.
+ *   - En desktop se muestra vertical en la parte lateral izquierda.
+ * - Contiene iconos para cada sección y link a la ruta correspondiente.
+ *
+ * Iconos / Links:
+ * - Inicio (/home)
+ * - Perfil (/profile)
+ * - Batch de predicciones (/batch)
+ * - Solo admin:
+ *   - Historial de predicciones (/admin/history)
+ *   - Dashboard de estadísticas (/admin/dashboard)
+ * - Logout (/) -> normalmente redirige al login
+ */
+
 const Menu = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -28,10 +48,6 @@ const Menu = () => {
                 <Link to='/home' className='flex items-center gap-2 md:mt-12'>
                     <img src={HomeIcon} alt='Inicio' className='w-6 h-6' />
                 </Link>
-
-                {/* <Link to='/' className='flex items-center gap-2'>
-                    <img src={NotificationIcon} alt='Notificacion' className='w-6 h-6' />
-                </Link> */}
                 
                 <Link to='/profile' className='flex items-center gap-2'>
                     <img src={ProfileIcon} alt='Perfil' className='w-6 h-6' />

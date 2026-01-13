@@ -1,21 +1,40 @@
 import { useTheme, useMediaQuery, Box, CircularProgress, Typography } from '@mui/material';
 import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
+/**
+ * PredictionCircle
+ *
+ * Componente que visualiza de manera circular el porcentaje de probabilidad de retraso de un vuelo.
+ *
+ * Props:
+ * - prediction: objeto que contiene la información de la predicción del vuelo.
+ *
+ * Características:
+ * - Muestra un círculo de fondo gris tenue.
+ * - Muestra un círculo de progreso que representa la probabilidad de retraso.
+ * - El color del círculo cambia según si el vuelo tiene retraso (naranja) o está a tiempo (verde).
+ * - Centra el porcentaje en el medio del círculo.
+ * - Muestra un mensaje debajo indicando si el vuelo se retrasará o llegará a tiempo.
+ * - Responsive: adapta el tamaño según si es móvil o no.
+ */
+
 const PredictionCircle = ({ prediction }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    // Si no hay predicción, no renderiza nada
     if (!prediction) return null;
 
+    // Formatear datos de la predicción
     const data = formatPrediction(prediction);
     if (!data) return null;
 
     const { probability, isDelayed } = data;
 
-    const size = isMobile ? 160 : 180;
-    const thickness = 5;
-
-    const color = isDelayed ? '#FF854C' : '#4caf50';
+    //Estilos
+    const size = isMobile ? 160 : 180;      //tamaño del circulo
+    const thickness = 5;                    //grosor del circulo
+    const color = isDelayed ? '#FF854C' : '#4caf50';        //color
 
     return (
         <Box sx={{ position: 'relative', width: 'full', height: {sm:100, md: 160}, display: 'flex', 

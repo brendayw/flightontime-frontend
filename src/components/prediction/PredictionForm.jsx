@@ -5,6 +5,32 @@ import useAerolineas from'../../hooks/catalog/useAerolineas';
 import useAeropuertos from '../../hooks/catalog/useAeropuertos';
 import { prepareFlightFormData } from '../../services/formDataService';
 
+;
+
+/**
+ * PredictionForm - Formulario para que el usuario ingrese datos de un vuelo y generar predicción.
+ *
+ * Props:
+ * - onPredict: función async que se ejecuta al enviar el formulario con los datos válidos
+ *
+ * Hooks internos:
+ * - useAerolineas: carga la lista de aerolíneas desde catálogo
+ * - useAeropuertos: carga la lista de aeropuertos desde catálogo
+ *
+ * Estado local:
+ * - aerolinea: aerolínea seleccionada
+ * - origen: aeropuerto de origen
+ * - destino: aeropuerto de destino
+ * - fechaHora: fecha y hora del vuelo
+ * - distancia: distancia del vuelo en km
+ *
+ * Características:
+ * - Responsive: ajusta el formulario según pantalla móvil o desktop
+ * - Validación mínima: no llama onPredict si los datos no son válidos
+ * - Uso de Material UI Select y TextField con estilos personalizados
+ * - Botón de envío estilizado
+ */
+
 const PredictionForm = ({ onPredict}) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -21,9 +47,11 @@ const PredictionForm = ({ onPredict}) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        // Prepara los datos para la predicción
         const formData = prepareFlightFormData({ aerolinea, origen, destino, fechaHora, distancia });
         if (!formData) return; // Si no es válido, no hacemos nada
 
+        // Ejecuta la función de predicción pasada por props
         if (onPredict) {
         await onPredict(formData);
         }

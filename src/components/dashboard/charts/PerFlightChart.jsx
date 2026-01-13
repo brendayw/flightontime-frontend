@@ -1,7 +1,34 @@
 import { useMemo, useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 
-const PrediccionesPorVueloChart = ({ history }) => {
+/**
+ * Componente PerFlightChart
+ *
+ * Muestra un gráfico de líneas con la evolución de probabilidades por vuelo.
+ * Permite seleccionar un vuelo específico mediante un <select> y ver sus predicciones
+ * agrupadas por tipo de prevision (por ejemplo, "A tiempo" o "Retraso").
+ *
+ * Props:
+ * @param {Array<Object>} history - Array de objetos de predicciones, cada uno con:
+ *    - vueloId: identificador del vuelo
+ *    - createdAt: fecha/hora de la predicción (timestamp o ISO string)
+ *    - prevision: "A tiempo" o "Retraso"
+ *    - probabilidad: número (probabilidad de esa predicción)
+ *
+ * Comportamiento:
+ * - Obtiene todos los IDs de vuelo únicos de las predicciones.
+ * - Inicializa el vuelo seleccionado con el primer vuelo disponible.
+ * - Filtra los datos por el vuelo seleccionado.
+ * - Agrupa las predicciones por tipo de prevision.
+ * - Construye la serie de datos para el gráfico alineada al eje X (fechas ordenadas).
+ * - Formatea valores numéricos con 2 decimales y fechas como locales.
+ * - Aplica colores distintos a cada prevision.
+ *
+ * Ejemplo de uso:
+ * <PerFlightChart history={predicciones} />
+ */
+
+const PerFlightChart = ({ history }) => {
     const [selectedVuelo, setSelectedVuelo] = useState(null);
 
     const vueloIds = useMemo(
@@ -85,4 +112,4 @@ const PrediccionesPorVueloChart = ({ history }) => {
     );
 };
 
-export default PrediccionesPorVueloChart;
+export default PerFlightChart;

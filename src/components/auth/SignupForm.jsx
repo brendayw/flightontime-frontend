@@ -3,6 +3,31 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * SignupForm Component
+ * 
+ * Componente de formulario de registro de usuarios para Flight On Time.
+ * Permite crear una nueva cuenta ingresando:
+ * - Nombre completo
+ * - Email
+ * - Password
+ * - Confirmación de password
+ * 
+ * Comportamiento:
+ * - Valida que la contraseña y confirmación coincidan
+ * - Ejecuta la función signup del hook useAuth
+ * - Redirige a /auth/login si el registro es exitoso
+ * 
+ * Hooks / Librerías utilizadas:
+ * - useState (React) → manejo del estado del formulario
+ * - useNavigate (react-router-dom) → navegación programática
+ * - useAuth (hook personalizado) → maneja la lógica de signup y estado de loading/error
+ * - Material UI: Box, TextField, Button
+ * 
+ * Uso:
+ * <SignupForm />
+ */
+
 const SignupForm = () => {
     const { signup, error, loading } = useAuth();
     const navigate = useNavigate();

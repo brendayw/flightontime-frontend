@@ -1,6 +1,30 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Chip, LinearProgress, Typography } from '@mui/material';
 
+/**
+ * Columnas para el DataGrid de predicciones
+ * 
+ * Cada columna tiene:
+ * - field: nombre del atributo en los datos
+ * - headerName: título mostrado en la tabla
+ * - width: ancho de la columna
+ * - renderCell (opcional): renderizado personalizado de la celda
+ */
+
+/**
+ * Componente AdminPredictions
+ *
+ * Muestra un DataGrid con todas las predicciones de vuelos registradas.
+ * 
+ * Props:
+ * - predictions: array de objetos con la información de cada predicción
+ * 
+ * Características:
+ * - Columnas personalizadas para mostrar chips, barras de progreso y factores.
+ * - Soporte de paginación.
+ * - Estilizado responsive y con sombras.
+ */
+
 const columns = [
   { field: 'id', headerName: 'ID', width: 80 },
   { field: 'aerolinea', headerName: 'Aerolínea', width: 120 },
@@ -85,31 +109,17 @@ const AdminPredictions = ({ predictions = [] }) => {
                     boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
                     border: '0.5px solid #d9d9d954',
                     color: '#EAE8EC',
-                    //fondo de la columna (encabezados)
-                    '& .MuiDataGrid-columnHeaders': {
-                        backgroundColor: 'transparent',
-                        borderBottom: 'none',
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                        backgroundColor: 'transparent !important',
-                    },
-                    '& .MuiDataGrid-columnHeadersInner': {
-                    backgroundColor: 'transparent !important',
-                    }, 
-                    '& .MuiDataGrid-filler': {
-                        backgroundColor: 'transparent !important',
-                    },
-                    //color de fondo (celdas con info)
-                    '& .MuiDataGrid-overlay': {
-                        backgroundColor: 'transparent',
-                    },
-                    //Color de texto y paginacion
-                    '& .MuiTablePagination-displayedRows': {
-                        color: '#EAE8EC',
-                    },
-                    '& .MuiTablePagination-actions .MuiSvgIcon-root': {
-                        color: '#EAE8EC',
-                    },
+                    // Encabezados
+                    '& .MuiDataGrid-columnHeaders': { backgroundColor: 'transparent', borderBottom: 'none' },
+                    '& .MuiDataGrid-columnHeader': { backgroundColor: 'transparent !important' },
+                    '& .MuiDataGrid-columnHeadersInner': { backgroundColor: 'transparent !important' },
+                    '& .MuiDataGrid-filler': { backgroundColor: 'transparent !important' },
+
+                    // Overlay y paginación
+                    '& .MuiDataGrid-overlay': { backgroundColor: 'transparent' },
+                    '& .MuiTablePagination-displayedRows': { color: '#EAE8EC' },
+                    '& .MuiTablePagination-actions .MuiSvgIcon-root': { color: '#EAE8EC' },
+                    
                     // '& .MuiDataGrid-main': {
                     //     backgroundColor: 'transparent',
                     // },

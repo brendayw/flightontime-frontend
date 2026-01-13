@@ -2,6 +2,40 @@ import { Card, CardContent, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
 
+/**
+ * RecentPredictions Component
+ * 
+ * Componente que muestra las predicciones recientes con seguimiento activo para usuarios loggeados.
+ * Actualmente utiliza datos mockeados, pero en el futuro se integrará con el backend para obtener
+ * las predicciones reales del usuario.
+ * 
+ * Comportamiento:
+ * - Animación de aparición usando Framer Motion (opacity + desplazamiento vertical)
+ * - Muestra un Card con:
+ *    - Título: "Predicciones con seguimiento"
+ *    - Botón "Ver más" que redirige a la página /notify
+ *    - Lista de predicciones (mock)
+ *       - Aerolínea + Origen | Destino
+ *       - Fecha y hora
+ *       - Resultado del vuelo con color según estado:
+ *           - "A tiempo" → verde (#48a74d)
+ *           - "Retrasado" → rojo (#8d1515)
+ *           - Otro → negro
+ * 
+ * Props:
+ * - Ninguna (usa datos internos mockeados)
+ * 
+ * Hooks / Librerías utilizadas:
+ * - useNavigate (react-router-dom) → para navegar a /notify
+ * - motion (framer-motion) → animación de aparición
+ * - Card, CardContent, Button (MUI) → contenedores y botones estilizados
+ * 
+ * Uso:
+ * <RecentPredictions />
+ * 
+ * Nota: Solo se muestra en la pantalla de usuario loggeado.
+ */
+
 const RecentPredictions = () => {
     const navigate = useNavigate();
 

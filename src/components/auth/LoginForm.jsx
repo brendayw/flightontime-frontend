@@ -4,6 +4,35 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import FlightOnTime from '../../assets/images/FlightOnTime!.png';
 
+/**
+ * LoginForm Component
+ * 
+ * Componente de formulario de inicio de sesión para Flight On Time.
+ * Permite a los usuarios ingresar su email y contraseña, realizar la autenticación 
+ * mediante el hook useAuth y navegar a la pantalla principal (/home) si el login es exitoso.
+ * 
+ * Comportamiento:
+ * - Muestra un logo y slogan en la parte superior
+ * - Campos de formulario:
+ *    - Email
+ *    - Password
+ * - Botón de submit "Sign in" que ejecuta la función handleLogin
+ * - Mensaje para cambiar a signup si no se tiene cuenta, con botón "Create one"
+ * 
+ * Props:
+ * - onSwitch (función opcional): se puede usar para alternar entre login/signup, 
+ *   actualmente no se utiliza porque se maneja la navegación con useNavigate
+ * 
+ * Hooks / Librerías utilizadas:
+ * - useState (React) → manejo del estado del formulario
+ * - useNavigate (react-router-dom) → navegación programática
+ * - useAuth (hook personalizado) → maneja la lógica de login
+ * - Material UI: Box, TextField, Button
+ * 
+ * Uso:
+ * <LoginForm />
+ */
+
 const LoginForm = ({ onSwitch }) => {
   const { login, error } = useAuth();
   const navigate = useNavigate();

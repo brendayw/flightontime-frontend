@@ -1,7 +1,40 @@
 import { Box, Button, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const FooterButton = () => {
+/**
+ * PredictionActions Component
+ * 
+ * Botonera que se muestra después de realizar una predicción (todos los roles).
+ * Permite al usuario:
+ *  - Seguir vuelo → redirige a /auth/login (para login o seguimiento)
+ *  - Nueva Predicción → redirige a /home para hacer otra predicción
+ * 
+ * Props:
+ * - Ninguna
+ * 
+ * Hooks utilizados:
+ * - useNavigate (react-router-dom) → para navegar entre rutas
+ * 
+ * Estilos:
+ * - Box: flex row, centrado, gap 2, margin-top 2
+ * - Botón "Seguir vuelo":
+ *    - Contained, fondo #FEA062, color texto #E5E6EA
+ *    - Hover: background #FEAB77
+ *    - Padding: px 4, py 1
+ *    - Font: size 14, weight 600
+ *    - Border radius 1
+ * - Botón "Nueva Predicción":
+ *    - Contained transparente, color texto #E5E6EA
+ *    - Hover: borde 1px sólido #E5E6EA
+ *    - Padding: px 4, py 1
+ *    - Font: size 14, weight 600
+ *    - Border radius 1
+ * 
+ * Uso:
+ * <PredictionActions />
+ */
+
+const PredictionActions = () => {
     const navigate = useNavigate();
     
     return (
@@ -47,4 +80,4 @@ const FooterButton = () => {
     );
 }
 
-export default FooterButton;
+export default PredictionActions;

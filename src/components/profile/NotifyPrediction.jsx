@@ -1,6 +1,43 @@
 import { Card, CardContent } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
+/**
+ * NotifyPrediction Component
+ * 
+ * Componente que muestra las predicciones de vuelos filtradas según seguimiento.
+ * Se utiliza en páginas donde se listan predicciones, permitiendo mostrar solo
+ * aquellas que tienen la opción de "notify" activa si así se indica.
+ * 
+ * Comportamiento:
+ * - Obtiene `state.onlyFollowed` desde `useLocation` para determinar si se muestran
+ *   solo las predicciones con seguimiento activo.
+ * - Filtra las predicciones según `notify` si `onlyFollowed` es true.
+ * - Si no hay predicciones filtradas, muestra un mensaje: "No hay predicciones con seguimiento activo."
+ * - Muestra un Card de MUI con cada predicción en filas con información:
+ *    - Aerolínea
+ *    - Origen | Destino
+ *    - Explicabilidad
+ *    - Fecha y hora
+ *    - Resultado del vuelo (A tiempo / Retrasado / Otro) con color según resultado
+ * 
+ * Props:
+ * @param {Array} predictions - Lista de objetos de predicción. Cada objeto debe tener al menos:
+ *    - id: identificador único
+ *    - aerolinea: nombre de la aerolínea
+ *    - origen: ciudad de origen
+ *    - destino: ciudad de destino
+ *    - explicabilidad: explicación de la predicción
+ *    - fecha_hora: fecha y hora de vuelo
+ *    - result: resultado de la predicción ("A tiempo", "Retrasado", etc.)
+ *    - notify: boolean indicando si el usuario sigue este vuelo
+ * 
+ * Hooks utilizados:
+ * - useLocation (react-router-dom) → para obtener estado enviado por navegación
+ * 
+ * Uso:
+ * <NotifyPrediction predictions={predictionsArray} />
+ */
+
 const NotifyPrediction = ({ predictions = [] }) => {
   const { state } = useLocation();
   const onlyFollowed = state?.onlyFollowed;

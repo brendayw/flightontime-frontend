@@ -1,8 +1,36 @@
 import { Card, CardContent, Button } from "@mui/material";
 import { motion } from 'framer-motion';
 
-const ProfileDetails = () => {
+/**
+ * ProfileDetails Component
+ * 
+ * Componente que muestra los detalles de perfil de un usuario.
+ * Actualmente utiliza datos mockeados, pero está preparado para integrar
+ * una llamada al backend en el futuro para obtener la información real del usuario.
+ * 
+ * Comportamiento:
+ * - Muestra un Card animado con Framer Motion:
+ *    - Animación inicial: opacidad 0 y desplazamiento X -20
+ *    - Animación final: opacidad 1 y posición X 0
+ * - Dentro del Card se muestran:
+ *    - Nombre del usuario (resaltado)
+ *    - Rol del usuario
+ *    - Email del usuario
+ * - Botón "Editar perfil" al final del card
+ * 
+ * Props:
+ * - Ninguna (actualmente usa datos internos mockeados)
+ * 
+ * Hooks / Librerías utilizadas:
+ * - motion (framer-motion) → animación de aparición
+ * - Card y CardContent (MUI) → contenedor estilizado
+ * - Button (MUI) → botón de acción
+ * 
+ * Uso:
+ * <ProfileDetails />
+ */
 
+const ProfileDetails = () => {
     //mock de datos
     const user = {
         name: "Brenda Yañez",

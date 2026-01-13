@@ -1,6 +1,24 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 
+/**
+ * Componente DistributionChart
+ *
+ * Muestra un gráfico de barras con la distribución de predicciones.
+ * 
+ * Props:
+ * @param {Array<Object>} history - Array de predicciones, donde cada elemento tiene:
+ *    - prevision: string ('A tiempo' o 'Retraso')
+ *
+ * Comportamiento:
+ * - Cuenta cuántas predicciones están a tiempo y cuántas con retraso.
+ * - Ajusta tamaño y márgenes según pantalla (responsive).
+ * - Oculta leyenda y tooltip por defecto.
+ *
+ * Ejemplo de uso:
+ * <DistributionChart history={predicciones} />
+ */
+
 const DistributionChart = ({ history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

@@ -6,6 +6,22 @@ import EvolutionChart from './charts/EvolutionChart';
 import PerFlightChart from './charts/PerFlightChart';
 import DashboardStats from './DashboardStats';
 
+/**
+ * Componente DashboardCharts
+ * 
+ * Renderiza el dashboard principal de estadísticas y gráficos de predicciones.
+ * Incluye:
+ * - Estadísticas generales (DashboardStats)
+ * - Distribución de predicciones (DistributionChart)
+ * - Evolución global de probabilidades por vuelo (EvolutionChart)
+ * - Análisis por vuelo individual (PerFlightChart)
+ * 
+ * Obtiene los datos históricos mediante el hook `useDashboardHistory()`.
+ * Se adapta a dispositivos móviles usando MUI `useMediaQuery`.
+ * 
+ * No recibe props externas; todos los datos provienen del hook interno.
+ */
+
 const DashboardCharts = () => {
     const { history, loading: loadingHistory, error: errorHistory } = useDashboardHistory();
     const theme = useTheme();

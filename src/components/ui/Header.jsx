@@ -3,6 +3,34 @@ import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
 import { useNavigate } from "react-router-dom";
 import useAuth from '../../hooks/useAuth';
 
+/**
+ * Header Component
+ * 
+ * Barra de navegación superior de la aplicación Flight On Time.
+ * Utiliza Material UI AppBar y Toolbar, e incluye botones de acción según el rol del usuario.
+ * 
+ * Props:
+ * @param {function} onShowBatch - Función que se ejecuta al hacer click en "Predicciones en Lote"
+ * 
+ * Comportamiento:
+ * - Muestra el icono de un avion (FlightTakeoff)
+ * - Muestra el título "Flight On Time"
+ * - Si el usuario es un guest (no autenticado):
+ *    - Botón "Predicciones en Lote" → ejecuta la función `onShowBatch`
+ *    - Botón "Login" → redirige a /auth/login
+ *    - Botón "Sign Up" → redirige a /auth/signup
+ * - Si el usuario está autenticado, no se muestran los botones de login/signup ni predicciones en lote.
+ * 
+ * Hooks utilizados:
+ * - useNavigate (react-router-dom) → navegación entre rutas
+ * - useAuth (custom hook) → obtiene estado de autenticación y rol del usuario (isGuest)
+ * 
+ * Estilos:
+ * - AppBar con gradiente lineal de azul oscuro a violeta claro
+ * - Botón "Predicciones en Lote" con fondo oscuro y hover personalizado
+ * - Botón "Log in" sin color de fondo pero con borde (#E5E6EA)
+ * - Botón "Sign Up" con color naranja (#FEAB77)
+ */
 const Header = ({ onShowBatch }) => {
     const navigate = useNavigate();
     const { isGuest } = useAuth();

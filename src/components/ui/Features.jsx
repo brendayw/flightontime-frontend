@@ -1,10 +1,45 @@
-import { Typography,  Container, Grid } from '@mui/material';
+import { Typography, Container, Grid } from '@mui/material';
 import BaseCard from '../ui/BaseCard';
-import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 import SpeedIcon from '@mui/icons-material/Speed';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InsertEmoticonRoundedIcon from '@mui/icons-material/InsertEmoticonRounded';
+
+/**
+ * Features Component
+ * 
+ * Componente que muestra las principales características de la aplicación Flight On Time.
+ * Se utiliza en las páginas:
+ *  - Home (pantalla inicial)
+ *  - PredictionsGuestPage (cuando el usuario no está loggeado)
+ * 
+ * Comportamiento:
+ * - Muestra un título centrado: "Por qué elegir Flight On Time"
+ * - Despliega una cuadrícula de tarjetas (cards) con iconos, subtítulos y descripciones.
+ * - Cada tarjeta representa una feature:
+ *    1. Predicciones precisas
+ *    2. Alertas de retraso
+ *    3. Datos históricos
+ *    4. Fácil de usar
+ * - Diseñado para ser responsive:
+ * 
+ * Props:
+ * - Ninguna
+ * 
+ * Estilos:
+ * - Container con padding vertical (py:10) y ancho máximo 'lg'
+ * - Grid con spacing 6 entre items y margin-top 4
+ * - BaseCard:
+ *    - Texto centrado
+ *    - Padding 3
+ *    - Altura 100%
+ * - Iconos: color #FEAB77, tamaño 50px, margin-bottom 2
+ * - Títulos de tarjetas: variant h6, gutterBottom
+ * - Texto descriptivo: color #d9d9d9bb, variant body2
+ * 
+ * Uso:
+ * <Features />
+ */
 
 const Features = () => {
     return (

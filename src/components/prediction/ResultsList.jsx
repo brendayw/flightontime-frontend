@@ -2,6 +2,15 @@ import { Box, Typography, Stack, useTheme, useMediaQuery, Grid } from '@mui/mate
 import PredictionCard from './PredictionCard';
 import ResultsCount from './ResultsCount';
 
+/**
+ * Componente que muestra un listado de predicciones.
+ *
+ * Props:
+ * - predictions: array de predicciones a mostrar (default: [])
+ * - loading: booleano para indicar si se están cargando los datos (default: false)
+ * - isBatch: booleano que indica si las predicciones vienen de un archivo batch (default: false)
+ */
+
 const ResultsList = ({ predictions = [], loading = false, isBatch = false }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

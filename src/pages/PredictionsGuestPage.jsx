@@ -5,7 +5,7 @@ import ResultsList from '../components/prediction/ResultsList';
 import Features from '../components/ui/Features';
 import CTA from '../components/ui/CTA';
 import Footer from '../components/ui/Footer';
-import FooterButton from '../components/ui/FooterButton';
+import PredictionActions from '../components/ui/PredictionActions';
 
 const PredictionsGuestPage = () => {
     const theme = useTheme();
@@ -24,7 +24,7 @@ const PredictionsGuestPage = () => {
                     rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%) `
             }}>
                 <ResultsList predictions={predictions} isBatch={isBatch} />
-                <FooterButton />
+                <PredictionActions />
             </Box>
             
             <Features />
