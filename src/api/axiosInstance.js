@@ -16,7 +16,7 @@ import axios from "axios";
  */
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api", // URL base de la API
+  baseURL: import.meta.env.VITE_API_URL, // URL base de la API
   timeout: 10000,                        // timeout global en ms
   headers: {
     "Content-Type": "application/json",  // header por defecto para JSON

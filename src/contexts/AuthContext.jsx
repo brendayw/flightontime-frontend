@@ -24,12 +24,12 @@ export const AuthProvider = ({ children }) => {
       const data = await getProfileRequest();
       setUser({
         ...data,
-        role: data.role || "USER", // esto es lo que se debe cambiar
+        role: data.role || "ADMIN", // esto es lo que se debe cambiar
       });
     } catch {
       // Si no hay token, usamos guest
-      //setUser({ role: "GUEST" });
-      logout();
+      setUser({ role: "GUEST" });
+      //logout();
     } finally {
       setLoading(false);
     }

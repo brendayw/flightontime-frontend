@@ -4,6 +4,7 @@ import MenuIcon from '../../assets/icons/menu.png';
 import HomeIcon from '../../assets/icons/home.png';
 import ProfileIcon from '../../assets/icons/profile.png';
 import FileIcon from '../../assets/icons/file.png';
+import DataIcon from '../../assets/icons/data.png';
 import StatsIcon from '../../assets/icons/stats.png';
 import LogoutIcon from '../../assets/icons/logout.png';
 import useAuth from '../../hooks/useAuth';
@@ -41,9 +42,15 @@ const Menu = () => {
                 </Link>
                 
                 { isAdmin && (
-                    <Link to='/dashboard' className='flex items-center gap-2'>
-                        <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />
-                    </Link>
+                    <>
+                        <Link to='/admin/history' className='flex items-center gap-2'>
+                            <img src={DataIcon} alt='Base de datos' className='w-6 h-6' />
+                        </Link>
+
+                        <Link to='/admin/dashboard' className='flex items-center gap-2'>
+                            <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />
+                        </Link>
+                    </>
                 )}
                 
                 <Link to='/' className='flex items-center gap-2'>

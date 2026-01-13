@@ -3,6 +3,7 @@ import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SingupPage from "./pages/SingupPage";
+import HistoryPage from "./pages/HistoryPage";
 import DashboardPage from "./pages/DashboardPage";
 import PredictionsPage from "./pages/PredictionsPage";
 import PredictionsGuestPage from "./pages/PredictionsGuestPage";
@@ -22,9 +23,7 @@ function App() {
         {/* Rutas publicas */}
         <Route index element={<Home />} />
 
-        <Route path="/predictions-guest" element={
-          <PredictionsGuestPage />} 
-        />
+        <Route path="/predictions-guest" element={ <PredictionsGuestPage />} />
         <Route path="/auth/login" element={<LoginPage /> } />
         <Route path="/auth/signup" element={<SingupPage /> } />
 
@@ -46,8 +45,14 @@ function App() {
             <BatchPredictionPage />
           </ProtectedRoute>
         } />
+        
+        <Route path="/admin/history" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
+            <HistoryPage />
+          </ProtectedRoute>
+        } />
 
-        <Route path="dashboard" element={
+        <Route path="/admin/dashboard" element={
           <ProtectedRoute allowedRoles={["ADMIN"]}>
             <DashboardPage />
           </ProtectedRoute>

@@ -82,3 +82,19 @@ export const trackPrediction = async ({ predictionId, notifyBy, threshold }) => 
   });
 };
 
+/**
+ * Obtiene todas las predicciones guardadas.
+ *
+ * Endpoint:
+ * GET /predictions/all
+ *
+ * Uso:
+ * - Listado completo de predicciones para el dashboard o administración
+ *
+ * @returns {Promise<Object[]>} Array de predicciones
+ */
+export const getAllPredictions = async () => {
+  const response = await axiosInstance.get("/predictions/all");
+  return response.data;
+};
+
