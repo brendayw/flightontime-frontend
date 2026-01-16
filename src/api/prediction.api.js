@@ -20,7 +20,7 @@ import axiosInstance from "../api/axiosInstance";
  * @returns {Promise<AxiosResponse>} Respuesta de la API con el resultado de la predicción
  */
 export const predictFlight = async (flightData) => {
-  return axiosInstance.post("/predict", flightData, {
+  return axiosInstance.post("/api/predict", flightData, {
     headers: {
       "Content-Type": "application/json"
     }
@@ -46,7 +46,7 @@ export const uploadBatchPrediction = async (file) => {
   formData.append("file", file);
 
   const response = await axiosInstance.post(
-    "/predict/batch",
+    "/api/predict/batch",
     formData,
     {
       headers: {
@@ -56,6 +56,26 @@ export const uploadBatchPrediction = async (file) => {
   );
   return response.data;
 };
+
+export const calculateDistance = async (origenCoord, destinoCoord) => {
+  try {
+    const response = await axiosInstance.post("/api/distancia", {
+      origen: {
+        latitud: origenCoord.latitud,
+        longitud: origenCoord.longitud
+      },
+      destino: {
+        latitud: destinoCoord.latitud,
+        longitud: destinoCoord.longitud
+      }
+    });
+
+    return response.data.distanciaKm;
+  } catch (error) {
+    console.error("Error calculando distancia:", error);
+    return null;
+  }
+}
 
 /**
  * Activa el seguimiento de una predicción para recibir notificaciones.
@@ -75,7 +95,7 @@ export const uploadBatchPrediction = async (file) => {
  * @returns {Promise<void>}
  */
 export const trackPrediction = async ({ predictionId, notifyBy, threshold }) => {
-  await axiosInstance.post('/predictions/track', {
+  await axiosInstance.post('/api/predictions/track', {
     predictionId,
     notifyBy,
     threshold,

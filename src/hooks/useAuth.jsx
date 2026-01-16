@@ -1,4 +1,4 @@
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../contexts/AuthProvider";
 
 /**
  * Custom hook para acceder al contexto de autenticación.

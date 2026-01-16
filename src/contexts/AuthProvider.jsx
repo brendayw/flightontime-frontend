@@ -1,93 +1,156 @@
-import { useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext";
+import { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, signupRequest, getProfileRequest } from "../services/authService";
+import { useNavigate } from "react-router-dom";
+import { getEmailFromToken, isTokenExpired } from "../utils/jwtUtils";
 
-/**
- * Provider para AuthContext.
- * Envuelve componentes que necesitan acceso a la autenticación.
- *
- * @param {Object} props
- * @param {React.ReactNode} props.children - Componentes hijos que tendrán acceso al contexto
- */
+export const AuthContext = createContext(null);
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Efecto para cargar usuario si existe token en localStorage
+  // Carga usuario al montar si existe token
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      loadUser();
-    } else {
-      setLoading(false);
-    }
+    const initAuth = async () => {
+      const token = localStorage.getItem("jwt");
+      
+      if (token && token !== "null" && token !== "undefined") {
+        // Verificar si el token expiró
+        if (isTokenExpired(token)) {
+          console.log("Token expirado, limpiando sesión");
+          localStorage.removeItem("jwt");
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+        
+        await loadUser();
+      } else {
+        setLoading(false);
+      }
+    };
+    
+    initAuth();
   }, []);
 
-  /**
-   * Carga el perfil del usuario desde la API.
-   * Si falla, se asigna rol "GUEST".
-   */
   const loadUser = async () => {
     try {
-      // se usa asi porque el back no esta listo
-      // Pse puede cambiar el rol de "ADMIN" a "USER" para testear
-      const data = await getProfileRequest();
-      setUser({
-        ...data,
-        role: data.role || "ADMIN", // esto es lo que se debe cambiar
-      });
-    } catch {
-      // Si no hay token, usamos guest
-      setUser({ role: "GUEST" });
-      //logout();
+      const token = localStorage.getItem("jwt");
+      console.log("Token en loadUser:", token);
+      
+      if (!token || token === "null" || token === "undefined") {
+        console.log("No hay token válido");
+        throw new Error("No hay token válido");
+      }
+      
+      // Verificar expiración
+      if (isTokenExpired(token)) {
+        console.log("Token expirado");
+        throw new Error("Token expirado");
+      }
+      
+      console.log("Llamando a getProfileRequest...");
+      
+      try {
+        const profile = await getProfileRequest();
+        console.log("Perfil obtenido:", profile);
+        setUser(profile);
+      } catch (err) {
+        console.warn("Error obteniendo perfil del backend, usando info del token");
+        // Si falla el backend, usamos la info del token
+        const emailFromToken = getEmailFromToken(token);
+        const tempUser = {
+          email: emailFromToken,
+          username: emailFromToken?.split('@')[0],
+          rol: "USER",
+        };
+        setUser(tempUser);
+      }
+    } catch (err) {
+      console.error("Error cargando usuario:", err);
+      setUser(null);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * Inicia sesión con las credenciales proporcionadas.
-   * @param {Object} credentials - { email, password }
-   * @returns {Promise<boolean>} true si el login fue exitoso, false si falló
-   */
-  const login = async (credentials) => {
+  const login = async ({ email, password }) => {
     try {
       setError(null);
-      const res = await loginRequest(credentials);
-      localStorage.setItem("jwt", res.data.token);
-      await loadUser();
+      setLoading(true);
+      
+      // 1. Hacer login y obtener token
+      const response = await loginRequest({ email, password });
+      console.log("Response de login:", response);
+      
+      const token = response.token;
+      console.log("Token recibido:", token);
+      
+      if (!token) {
+        throw new Error("No se recibió token del servidor");
+      }
+      
+      // 2. Verificar que el token no esté expirado
+      if (isTokenExpired(token)) {
+        throw new Error("El token recibido ya expiró");
+      }
+      
+      // 3. Guardar token
+      localStorage.setItem("jwt", token);
+      console.log("Token guardado en localStorage");
+      
+      // 4. Extraer email del token
+      const emailFromToken = getEmailFromToken(token);
+      console.log("Email extraído del token:", emailFromToken);
+      
+      // 5. NO intentar obtener perfil del backend por ahora
+      // El backend no está recibiendo el header Authorization correctamente
+      console.log("Creando usuario desde token JWT...");
+      
+      const tempUser = {
+        email: emailFromToken || email,
+        username: emailFromToken?.split('@')[0] || email.split('@')[0],
+        rol: "USER", // Rol por defecto - si necesitas ADMIN, deberás agregarlo al JWT en el backend
+      };
+      
+      console.log("Usuario creado:", tempUser);
+      setUser(tempUser);
+      
+      console.log("Login exitoso, redirigiendo a /home");
+      
+      // 6. Redirigir a /home
+      navigate("/home");
+      
       return true;
     } catch (err) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      console.error("Error crítico en login:", err);
+      setError(err.response?.data?.message || err.message || "Error en login");
+      localStorage.removeItem("jwt");
+      setUser(null);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
-  /**
-   * Registra un nuevo usuario.
-   * @param {Object} data - Datos de registro
-   * @returns {Promise<boolean>} true si el registro fue exitoso, false si falló
-   */
   const signup = async (data) => {
     try {
       setError(null);
       await signupRequest(data);
       return true;
     } catch (err) {
-      setError(err.response?.data?.message || "Error en el registro");
+      setError(err.response?.data?.message || "Error en registro");
       return false;
     }
   };
 
-  /**
-   * Cierra sesión eliminando el token y asignando rol "GUEST"
-   */
   const logout = () => {
     localStorage.removeItem("jwt");
-    setUser({ role: "GUEST" });
-    //setUser(null);
+    setUser(null);
+    navigate("/");
   };
 
   return (
@@ -96,18 +159,11 @@ const AuthProvider = ({ children }) => {
         user,
         loading,
         error,
-
-        //acciones
         login,
         signup,
         logout,
-
-        //helpers
-        isAuthenticated: user?.role !== "GUEST",
-        role: user?.role || "GUEST",
-        isGuest: user?.role === "GUEST",
-        isUser: user?.role === "USER",
-        isAdmin: user?.role === "ADMIN",
+        isAuthenticated: !!user,
+        role: user?.rol, // Cambié de "role" a "rol" para coincidir con tu backend
       }}
     >
       {children}
@@ -115,4 +171,9 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export default AuthProvider;
+// Hook para consumir el contexto
+export const useAuthContext = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuthContext debe usarse dentro de AuthProvider");
+  return ctx;
+};

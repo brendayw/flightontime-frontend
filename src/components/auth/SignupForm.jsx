@@ -33,6 +33,7 @@ const SignupForm = () => {
     const { signup, error, loading } = useAuth();
     const navigate = useNavigate();
     const [localError, setLocalError] = useState("");
+    const [formErrors, setFormErrors] = useState({});
 
     //mock
     const [form, setForm] = useState({

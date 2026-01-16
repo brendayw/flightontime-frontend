@@ -17,9 +17,10 @@ const ProfilePage = () => {
       `,}}
       className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
     >
-      <Header />
-
-      <Menu />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <Header />
+        <Menu />
+      </motion.div>
 
       <main className='relative mx-auto mt-14' 
         style={{

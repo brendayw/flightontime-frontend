@@ -38,7 +38,7 @@ function PredictionCard({ prediction }) {
   }
 
   // Destructuring de los datos formateados
-  const { aerolinea, origen, destino, distancia, formattedDate } = data;
+  const { aerolinea, origen, destino, formattedDate, distancia } = data;
 
   return (
     <Card sx={{

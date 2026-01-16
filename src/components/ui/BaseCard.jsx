@@ -1,4 +1,5 @@
 import { useTheme, useMediaQuery,Card } from '@mui/material';
+import { motion } from 'framer-motion';
 
 /**
  * BaseCard Component
@@ -31,17 +32,29 @@ const BaseCard = ({ children, sx }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    const cardVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+    };
+
     return (
-        <Card sx={{
-            background: 'rgba(41, 36, 66, 0.5)',
-            color: '#EAE8EC',
-            width: isMobile ? 450 : 250,
-            alignContent: 'center',
-            borderRadius: 4,
-            ...sx // permite extender estilos
-        }}>
-            {children}
-        </Card>
+        <motion.div variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+            whileHover={{ scale: 1.03, boxShadow: '0px 8px 15px rgba(0,0,0,0.2)' }}
+            transition={{ type: 'spring', stiffness: 300 }}
+            style={{ display: 'inline-block', borderRadius: 16 }} // evita que el hover afecte layout
+        >
+            <Card sx={{
+                background: 'rgba(41, 36, 66, 0.5)',
+                color: '#EAE8EC',
+                width: isMobile ? 450 : 250,
+                height: isMobile ? 150 : 250,
+                alignContent: 'center',
+                borderRadius: 4,
+                ...sx // permite extender estilos
+            }}>
+                {children}
+            </Card>
+        </motion.div>
     );
 }
 

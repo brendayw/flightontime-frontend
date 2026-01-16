@@ -1,4 +1,5 @@
 // import { useLocation, Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useMediaQuery, useTheme, Box, Card, Container, Typography } from '@mui/material';
 import Header from '../components/ui/Header';
 import Menu from '../components/layout/Menu';
@@ -21,10 +22,10 @@ const BatchPredictionPage = () => {
             `}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-            <Header />
-
-            {/* El menu se muestra si NO es guest */}
-            {isAuthenticated && <Menu />}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+                <Header />
+                <Menu />
+            </motion.div>
 
             <Box sx={{ width: '100vw', textAlign: 'center', pt: { xs: 12, md: 20 }, pb: { xs: 10, md: 16 },
                 backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%, rgba(74, 58, 87, 0.85) 45%,
@@ -32,15 +33,20 @@ const BatchPredictionPage = () => {
                     rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%) `
             }}>
                 <Container maxWidth="lg" sx={{ mt: isMobile ? -3 : -8 }}  >
-                    <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
-                        Predicciones en lote
-                    </Typography>
-
+                    
+                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
+                        <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
+                            Predicciones en lote
+                        </Typography>
+                    </motion.div>
+                    
                     <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: {sm: 415, md: 420}, mx: 'auto', 
                         p: { xs: 2, md: 2 }, borderRadius: 5 
                     }}>
-                        <BatchPredicionFile />
-                    </Card>
+                        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
+                            <BatchPredicionFile />
+                        </motion.div>
+                    </Card>                       
                 </Container>  
             </Box>
         </section>

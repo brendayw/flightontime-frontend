@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage";
 import NotifyPage from "./pages/NotifyPage";
 import WorkspacePage from "./pages/WorkspacePage";
 import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from "./routes/PublicRoute";
 // import "./assets/styles/global.css";
 
 function App() {
@@ -21,11 +22,23 @@ function App() {
       <Route path="/" element={<Layout />}>
 
         {/* Rutas publicas */}
-        <Route index element={<Home />} />
+        <Route index element={
+          <PublicRoute> <Home /> </PublicRoute>
+        }/>
+        
+        <Route path="/auth/login" element={
+          <PublicRoute> <LoginPage/> </PublicRoute> 
+        }/>
 
-        <Route path="/predictions-guest" element={ <PredictionsGuestPage />} />
-        <Route path="/auth/login" element={<LoginPage /> } />
-        <Route path="/auth/signup" element={<SingupPage /> } />
+        <Route path="/predictions-guest" element={ 
+          <PublicRoute>
+            <PredictionsGuestPage />
+          </PublicRoute>
+        }/>
+        
+        <Route path="/auth/signup" element={
+          <PublicRoute > <SingupPage /> </PublicRoute>
+        }/>
 
         {/* Rutas protegidas */}
         <Route path="/home" element={

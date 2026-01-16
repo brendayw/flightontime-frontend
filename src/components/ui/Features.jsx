@@ -51,7 +51,7 @@ const Features = () => {
 
             <Grid container spacing={6} sx={{ mt: 4 }}>
                 <Grid item xs={12} md={4}>
-                    <BaseCard sx={{ height: '100%', textAlign: 'center', p: 3 }}>
+                    <BaseCard sx={{ textAlign: 'center', p: 3 }}>
                         <SpeedIcon sx={{ fontSize: 50, color: '#FEAB77', mb: 2 }} />
                         <Typography variant="h6" gutterBottom>
                             Predicciones precisas
@@ -63,7 +63,7 @@ const Features = () => {
                 </Grid>
                 
                 <Grid item xs={12} md={4}>
-                    <BaseCard sx={{ height: '100%', textAlign: 'center', p: 3 }}>
+                    <BaseCard sx={{ textAlign: 'center', p: 3 }}>
                         <NotificationsActiveIcon sx={{ fontSize: 50, color: '#FEAB77', mb: 2 }} />
                         <Typography variant="h6" gutterBottom>
                             {/* notificaciones en tiempo real */}
@@ -76,7 +76,7 @@ const Features = () => {
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                    <BaseCard sx={{ height: '100%', textAlign: 'center', p: 3 }}>
+                    <BaseCard sx={{ textAlign: 'center', p: 3 }}>
                         <BarChartRoundedIcon sx={{ fontSize: 50, color: '#FEAB77', mb: 2 }} />
                         <Typography variant="h6" gutterBottom>
                             Datos históricos
@@ -87,8 +87,8 @@ const Features = () => {
                     </BaseCard>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
-                    <BaseCard sx={{ height: '100%', textAlign: 'center', p: 3 }}>
+                <Grid item xs={12} md={4} >
+                    <BaseCard sx={{ textAlign: 'center', p: 3 }}>
                         <InsertEmoticonRoundedIcon sx={{ fontSize: 50, color: '#FEAB77', mb: 2 }} />
                         <Typography variant="h6" gutterBottom>
                             Fácil de usar

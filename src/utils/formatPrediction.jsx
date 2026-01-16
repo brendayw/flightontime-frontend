@@ -67,7 +67,7 @@ export const formatPrediction = (prediction) => {
     const [year, month, day] = fecha.split("-");
     const formattedDate = `${day}/${month}/${year} ${hora}`;
 
-    const probability = Math.round(probabilidad * 100);
+    const probability = Math.round(probabilidad);
     const isDelayed = prevision === "Retrasado";
     const status = isDelayed ? "Retrasado" : "A tiempo";
 
@@ -76,17 +76,17 @@ export const formatPrediction = (prediction) => {
   }
 
   // Caso 2: Predicción individual (estructura directa)
-  const { aerolinea, origen, destino, distancia_km, fecha_partida, prevision, probabilidad } = prediction;
+  const { aerolinea, origen, destino, distancia_km, fecha_partida, prevision, probabilidad, latencia, explicabilidad } = prediction;
 
   if (!fecha_partida) return null;
   const [fecha, horaCompleta] = fecha_partida.split("T");
   const hora = horaCompleta.slice(0, 5); // HH:mm
   const [year, month, day] = fecha.split("-");
   const formattedDate = `${day}/${month}/${year} ${hora}`;
-  const probability = Math.round(probabilidad * 100);
+  const probability = Math.round(probabilidad);
   const isDelayed = prevision === "Retrasado";
   const status = isDelayed ? "Retrasado" : "No Retrasado";
 
   return { aerolinea, origen, destino, distancia: `${distancia_km} km`, formattedDate, 
-    status, probability, isDelayed };
+    status, probability, isDelayed, latencia, explicabilidad };
 }

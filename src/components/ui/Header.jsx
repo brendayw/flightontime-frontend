@@ -46,7 +46,7 @@ const Header = ({ onShowBatch }) => {
                 </Typography>
 
                 {/* Botones */}
-                {isGuest && (
+                {/* {isGuest && ( */}
                     <>
                         <Button onClick={onShowBatch} color="inherit" variant="outlined" sx={{ mr: 1, color: '#E5E6EA', border: 'none', backgroundColor: '#222E60', 
                             ":hover": { border: 'none', backgroundColor:'#292442'}
@@ -67,7 +67,7 @@ const Header = ({ onShowBatch }) => {
                             Sign Up
                         </Button>
                     </>
-                )}
+                {/* )} */}
             </Toolbar>
         </AppBar>
     );

@@ -14,7 +14,7 @@ import axiosInstance from "../api/axiosInstance";
  */
 export const fetchAerolineas = async () => {
   try {
-    const { data } = await axiosInstance.get("/aerolineas");
+    const { data } = await axiosInstance.get("/api/aerolineas");
     return data;
   } catch (err) {
     console.error("Error al obtener aerolíneas:", err);
@@ -36,7 +36,7 @@ export const fetchAerolineas = async () => {
  */
 export const fetchAeropuertos = async () => {
   try {
-    const { data } = await axiosInstance.get("/aeropuertos");
+    const { data } = await axiosInstance.get("/api/aeropuertos");
     return data;
   } catch (err) {
     console.error("Error al obtener aeropuertos:", err);

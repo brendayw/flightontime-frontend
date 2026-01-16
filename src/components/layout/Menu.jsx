@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useTheme, useMediaQuery } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTheme, useMediaQuery, Button } from '@mui/material';
 import MenuIcon from '../../assets/icons/menu.png';
 import HomeIcon from '../../assets/icons/home.png';
 import ProfileIcon from '../../assets/icons/profile.png';
@@ -32,7 +32,13 @@ import useAuth from '../../hooks/useAuth';
 const Menu = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const { isAdmin } = useAuth();
+    const { isAdmin, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();             // Borra token y limpia estado
+        navigate('/', { replace: true }); // Redirige al login
+    };
     
     return (
         <nav className={`fixed z-50 shadow-lg bg-[#222E60] rounded-xl
@@ -69,9 +75,9 @@ const Menu = () => {
                     </>
                 )}
                 
-                <Link to='/' className='flex items-center gap-2'>
+                <Button onClick={handleLogout} className='flex items-center gap-2'>
                     <img src={LogoutIcon} alt='Cerrar sesión' className='w-6 h-6' />
-                </Link>
+                </Button>
                 
             </ul>
         </nav>

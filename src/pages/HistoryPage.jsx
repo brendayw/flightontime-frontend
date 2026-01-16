@@ -1,4 +1,5 @@
 import { useTheme, useMediaQuery } from '@mui/material';
+import { motion } from 'framer-motion';
 import Header from '../components/ui/Header';
 import Menu from '../components/layout/Menu';
 import AdminPredictions from '../components/prediction/AdminPredictions';
@@ -19,8 +20,10 @@ const HistoryPage = () => {
             `}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-            <Header />
-            <Menu />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+                <Header />
+                <Menu />
+            </motion.div>
 
             <main className='relative mx-auto mt-16'
                 style={{
@@ -31,10 +34,10 @@ const HistoryPage = () => {
                     padding: isMobile ? '0.5rem' : '1rem',
                     transition: 'all 0.6s ease-in-out',
             }}>
-                <AdminPredictions predictions={predictions} onRefresh={refresh} />;
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
+                    <AdminPredictions predictions={predictions} onRefresh={refresh} />
+                </motion.div>
             </main>
-            
-            
         </section>
     );
 }

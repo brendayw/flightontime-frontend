@@ -47,18 +47,19 @@ const NotifyPage = () => {
             `}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-            <Header />
-
-            <Menu />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+                <Header />
+                <Menu />
+            </motion.div>
 
             <main className='relative mx-auto' 
                 style={{
-                left: isMobile ? 0 : 20,
-                marginBottom: isMobile ? 18 : 0,
-                width: '100%',
-                maxWidth: isMobile ? '90%' : 1200,
-                padding: isMobile ? '0.5rem' : '1rem',
-                transition: 'all 0.6s ease-in-out'
+                    left: isMobile ? 0 : 20,
+                    marginBottom: isMobile ? 18 : 0,
+                    width: '100%',
+                    maxWidth: isMobile ? '90%' : 1200,
+                    padding: isMobile ? '0.5rem' : '1rem',
+                    transition: 'all 0.6s ease-in-out'
             }}>
                 <motion.div 
                     initial={{ opacity: 0, y: -10 }}

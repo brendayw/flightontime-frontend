@@ -1,10 +1,21 @@
 import { useTheme, useMediaQuery, Card, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Header from '../components/ui/Header';
 import Menu from '../components/layout/Menu';
 import PredictionForm from '../components/prediction/PredictionForm';
 import NotifyToggle from '../components/ui/NotifyToggle';
 import usePrediction from '../hooks/usePrediction';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15, duration: 0.6 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 const WorkspacePage = () => {
     const navigate = useNavigate();
@@ -33,26 +44,36 @@ const WorkspacePage = () => {
             `,}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-            <Header />
-            <Menu />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+                <Header />
+                <Menu />
+            </motion.div>
 
             <Box sx={{ width: '100vw', textAlign: 'center', pt: { xs: 12, md: 20 }, pb: { xs: 10, md: 16 } }}>
                 <Container maxWidth="lg" sx={{ mt: -4 }}  >
 
-                    <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
-                        ¡Bienvenido!
-                    </Typography>
+                    <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                        <motion.div variants={itemVariants}>
+                            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
+                                ¡Bienvenido!
+                            </Typography>
+                        </motion.div>
+                    </motion.div>
 
-                    <Card sx={{ 
-                        background: 'rgba(65, 64, 64, 0.45)',
+                    <Card sx={{ background: 'rgba(65, 64, 64, 0.45)',
                         maxWidth: 650, mx: 'auto', p: { xs: 3, md: 2 }, borderRadius: 5 
                     }}>
-                        <PredictionForm onPredict={handlePredict} />
-                        
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                        <motion.div variants={itemVariants}>
+                            <PredictionForm onPredict={handlePredict} />
+                        </motion.div>
+      
+                        {/* NotifyToggle */}
+                        <motion.div variants={itemVariants} transition={{ type: "spring", stiffness: 300 }}
+                            style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}
+                        >
                             <NotifyToggle />
-                        </Box>
-                    </Card>
+                        </motion.div>
+                        </Card>
                 </Container>
             </Box>  
         </section>

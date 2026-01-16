@@ -2,29 +2,43 @@ import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 /**
- * Componente para proteger rutas según el rol del usuario.
- *
- * Si el usuario no está autenticado o no tiene un rol permitido,
- * redirige al home ("/").  
- * De lo contrario, renderiza los children.
- *
- * @param {Object} props
- * @param {Array<string>} props.allowedRoles - Roles permitidos para acceder a esta ruta (ej: ["ADMIN", "USER"])
- * @param {React.ReactNode} props.children - Componente(s) hijos que se renderizan si el usuario está autorizado.
- *
- * @example
- * <ProtectedRoute allowedRoles={["ADMIN"]}>
- *   <AdminDashboard />
- * </ProtectedRoute>
+ * Componente para proteger rutas según autenticación.
+ * Si el usuario no está autenticado, redirige al home ("/").
  */
-const ProtectedRoute = ({ allowedRoles = [], children }) => {
-    const { role, isAuthenticated } = useAuth();
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { isAuthenticated, loading, user } = useAuth();
 
-    if (!isAuthenticated || !allowedRoles.includes(role)) {
-        return <Navigate to="/" replace />; // redirige al home
+  // Mostrar loading mientras se verifica la autenticación
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh' 
+      }}>
+        <p>Cargando...</p>
+      </div>
+    );
+  }
+
+  // Si no está autenticado, redirigir a "/"
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Si se especifican roles permitidos, verificar el rol del usuario
+  if (allowedRoles && allowedRoles.length > 0) {
+    const userRole = user?.rol;
+    
+    if (!userRole || !allowedRoles.includes(userRole)) {
+      // Usuario no tiene el rol necesario, redirigir a home
+      return <Navigate to="/home" replace />;
     }
+  }
 
-    return children;
-}
+  // Todo OK, mostrar el componente protegido
+  return children;
+};
 
 export default ProtectedRoute;
