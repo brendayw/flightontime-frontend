@@ -47,7 +47,7 @@ const BaseCard = ({ children, sx }) => {
                 background: 'rgba(41, 36, 66, 0.5)',
                 color: '#EAE8EC',
                 width: isMobile ? 450 : 250,
-                height: isMobile ? 150 : 250,
+                height: isMobile ? 200 : 250,
                 alignContent: 'center',
                 borderRadius: 4,
                 ...sx // permite extender estilos

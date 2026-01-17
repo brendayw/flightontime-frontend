@@ -89,7 +89,7 @@ const Home = () => {
                                 </motion.div>
 
                                 <motion.div variants={itemVariants}>
-                                    <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: 400, mx: 'auto', 
+                                    <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: 440, mx: 'auto', 
                                         p: { xs: 3, md: 2 }, borderRadius: 5 
                                     }}>
                                         <BatchPredictionFile />
