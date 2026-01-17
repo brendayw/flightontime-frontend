@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
     if (!userRole || !allowedRoles.includes(userRole)) {
       // Rol no permitido → redirigir
-      return <Navigate to="/home" replace />;
+      return <Navigate to="/" replace />;
     }
   }
 

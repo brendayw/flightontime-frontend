@@ -7,8 +7,8 @@ const useAuth = () => {
     user,
     loading,
     logout,
-    login,     // 🔹 agregamos login
-    signup,    // 🔹 agregamos signup
+    login, 
+    signup,
     isAuthenticated: user?.rol !== "INVITADO",
     isAdmin: user?.rol === "ADMIN",
     isUser: user?.rol === "USER",
