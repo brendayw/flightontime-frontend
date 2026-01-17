@@ -30,7 +30,7 @@ import useAuth from "../../hooks/useAuth";
  */
 
 const SignupForm = () => {
-    const { signup, error, loading } = useAuth();
+    const { signup } = useAuth();
     const navigate = useNavigate();
     const [localError, setLocalError] = useState("");
     const [formErrors, setFormErrors] = useState({});

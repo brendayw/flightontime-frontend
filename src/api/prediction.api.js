@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosInstance";
+import apiPrivate from "../api/apiPrivate";
 
 /**
  * Obtiene una predicción de vuelo a partir de los datos ingresados por el usuario.
@@ -20,7 +20,7 @@ import axiosInstance from "../api/axiosInstance";
  * @returns {Promise<AxiosResponse>} Respuesta de la API con el resultado de la predicción
  */
 export const predictFlight = async (flightData) => {
-  return axiosInstance.post("/api/predict", flightData, {
+  return apiPrivate.post("/api/predict", flightData, {
     headers: {
       "Content-Type": "application/json"
     }
@@ -45,7 +45,7 @@ export const uploadBatchPrediction = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await axiosInstance.post(
+  const response = await apiPrivate.post(
     "/api/predict/batch",
     formData,
     {
@@ -59,7 +59,7 @@ export const uploadBatchPrediction = async (file) => {
 
 export const calculateDistance = async (origenCoord, destinoCoord) => {
   try {
-    const response = await axiosInstance.post("/api/distancia", {
+    const response = await apiPrivate.post("/api/distancia", {
       origen: {
         latitud: origenCoord.latitud,
         longitud: origenCoord.longitud
@@ -95,7 +95,7 @@ export const calculateDistance = async (origenCoord, destinoCoord) => {
  * @returns {Promise<void>}
  */
 export const trackPrediction = async ({ predictionId, notifyBy, threshold }) => {
-  await axiosInstance.post('/api/predictions/track', {
+  await apiPrivate.post('/api/predictions/track', {
     predictionId,
     notifyBy,
     threshold,
@@ -114,7 +114,7 @@ export const trackPrediction = async ({ predictionId, notifyBy, threshold }) => 
  * @returns {Promise<Object[]>} Array de predicciones
  */
 export const getAllPredictions = async () => {
-  const response = await axiosInstance.get("/predictions/all");
+  const response = await apiPrivate.get("/predictions/all");
   return response.data;
 };
 

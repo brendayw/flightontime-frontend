@@ -34,7 +34,7 @@ import FlightOnTime from '../../assets/images/FlightOnTime!.png';
  */
 
 const LoginForm = ({ onSwitch }) => {  
-  const { login, error } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [localError, setLocalError] = useState("");
   const [formErrors, setFormErrors] = useState({});

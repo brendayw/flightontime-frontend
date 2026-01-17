@@ -70,9 +70,21 @@ export const getTokenInfo = (token) => {
   };
 };
 
+export const getRoleFromToken = (token) => {
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.rol || null;
+  } catch (err) {
+    console.error("Error decodificando rol del token", err);
+    return null;
+  }
+};
+
 export default {
   decodeJWT,
   getEmailFromToken,
   isTokenExpired,
   getTokenInfo,
+  getRoleFromToken
 };

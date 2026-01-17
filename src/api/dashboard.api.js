@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosInstance";
+import apiPrivate from "../api/apiPrivate";
 
 
 /**
@@ -14,7 +14,7 @@ import axiosInstance from "../api/axiosInstance";
  * @returns {Promise<Object>} Datos resumidos del dashboard
  */
 export const getDashboardSummary = async () => {
-  const response = await axiosInstance.get("/api/dashboard/summary");
+  const response = await apiPrivate.get("/api/dashboard/summary");
   return response.data;
 };
 
@@ -32,6 +32,6 @@ export const getDashboardSummary = async () => {
  * @returns {Promise<Array>} Historial global de predicciones
  */
 export const getGlobalHistory = async () => {
-  const response = await axiosInstance.get("/api/dashboard/global-history");
+  const response = await apiPrivate.get("/api/dashboard/global-history");
   return response.data;
 };
