@@ -1,4 +1,5 @@
 import apiPrivate from "../api/apiPrivate";
+import apiPublic from "../api/apiPublic";
 
 /**
  * Obtiene una predicción de vuelo a partir de los datos ingresados por el usuario.
@@ -22,7 +23,7 @@ import apiPrivate from "../api/apiPrivate";
 export const predictFlight = async (flightData) => {
   return apiPrivate.post("/api/predict", flightData, {
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     }
   });
 };
@@ -58,8 +59,11 @@ export const uploadBatchPrediction = async (file) => {
 };
 
 export const calculateDistance = async (origenCoord, destinoCoord) => {
+  
   try {
-    const response = await apiPrivate.post("/api/distancia", {
+    //console.log("=== TEST DISTANCIA ===");
+    //console.log("Token en localStorage:", localStorage.getItem("jwt"));
+    const response = await apiPublic.post("/api/distancia", {
       origen: {
         latitud: origenCoord.latitud,
         longitud: origenCoord.longitud
@@ -69,7 +73,7 @@ export const calculateDistance = async (origenCoord, destinoCoord) => {
         longitud: destinoCoord.longitud
       }
     });
-
+    //console.log("Respuesta exitosa:", response.data);
     return response.data.distanciaKm;
   } catch (error) {
     console.error("Error calculando distancia:", error);

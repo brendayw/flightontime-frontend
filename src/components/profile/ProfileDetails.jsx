@@ -1,5 +1,6 @@
 import { Card, CardContent, Button } from "@mui/material";
 import { motion } from 'framer-motion';
+import useProfile from "../../hooks/useProfile";
 
 /**
  * ProfileDetails Component
@@ -31,13 +32,10 @@ import { motion } from 'framer-motion';
  */
 
 const ProfileDetails = () => {
-    //mock de datos
-    const user = {
-        name: "Brenda Yañez",
-        email: "brenda@email.com",
-        role: "Analyst",
-        //joined: "2024-11-12",
-    };
+    const { profile, error } = useProfile();
+    
+    if (error) return <p>{error}</p>; //aca modificar por Alert
+    if (!profile) return <p>No se encontró el perfil.</p>;
 
     return (
         <motion.div
@@ -55,12 +53,14 @@ const ProfileDetails = () => {
             >
                 <CardContent className="p-6 space-y-4">
                     <div className="flex flex-col items-start gap-2">
-                        <p className="text-xl text-[#FEAB77] font-medium">{user.name}</p>
-                        <p className="text-sm text-[#E5E6EA] text-muted-foreground">{user.role}</p>
+                        <p className="text-xl text-[#FEAB77] font-medium">{profile.username}</p>
+                        {profile.role === "ADMIN" && ( //solo si el rol es admin se muestra
+                            <p className="text-sm text-[#E5E6EA] text-muted-foreground">{profile.role}</p>
+                        )}
                     </div>
 
                     <div className="text-sm space-y-1">
-                        <p className="text-[#E5E6EA]"><span className="font-medium color='#E5E6EA'">Email:</span> {user.email}</p>
+                        <p className="text-[#E5E6EA]"><span className="font-medium color='#E5E6EA'">Email:</span> {profile.email}</p>
                     </div>
 
                     <Button className="w-full mt-4"

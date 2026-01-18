@@ -9,7 +9,7 @@ import useAuth from "../../hooks/useAuth";
  * SignupForm Component - Componente de formulario de registro de usuarios 
  * para Flight On Time.
  * Permite crear una nueva cuenta ingresando:
- * - Nombre completo
+ * - Username
  * - Email
  * - Password
  * - Confirmación de password
@@ -37,7 +37,7 @@ const SignupForm = () => {
 
     //mock
     const [form, setForm] = useState({
-        fullname: "",
+        username: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -79,11 +79,11 @@ const SignupForm = () => {
                         <AppAlert severity="warning"> {localError} </AppAlert>
                     )}
 
-                    {/* Full name */}
-                    <TextField type="text" placeholder="Full name" variant="outlined" value={form.fullname}
-                        onChange={ (e) => setForm({ ...form, fullname: e.target.value }) }
-                        error={!!formErrors.fullname}
-                        helperText={formErrors.fullname}
+                    {/* Username */}
+                    <TextField type="text" placeholder="Username" variant="outlined" value={form.username}
+                        onChange={ (e) => setForm({ ...form, username: e.target.value }) }
+                        error={!!formErrors.username}
+                        helperText={formErrors.username}
                         fullWidth
                         InputLabelProps={{ shrink: false }}
                         sx={{

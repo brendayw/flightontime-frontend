@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { loginRequest, signupRequest, getProfileRequest } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { getEmailFromToken, isTokenExpired, getRoleFromToken } from "../utils/jwtUtils";
@@ -11,8 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Carga usuario como invitado
-   useEffect(() => {
+  useEffect(() => {
     const initAuth = async () => {
       const token = localStorage.getItem("jwt");
 
@@ -21,13 +20,11 @@ export const AuthProvider = ({ children }) => {
           console.log("Token expirado, asignando invitado");
           localStorage.removeItem("jwt");
           setUser({ email: null, username: "Invitado", rol: "INVITADO" });
-          console.log("Primer rol obtenido: ", guestUser.rol);
           setLoading(false);
           return;
         }
         await loadUser();
       } else {
-        // Usuario invitado por defecto
         setUser({ email: null, username: "Invitado", rol: "INVITADO" });
         setLoading(false);
       }
@@ -65,14 +62,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // LOGIN
-  const login = async ({ email, password }) => {
+  const login = useCallback(async ({ email, password }) => {
     try {
       setError(null);
       setLoading(true);
 
       const response = await loginRequest({ email, password });
       const token = response.token;
+      
       if (!token) throw new Error("No se recibió token del servidor");
 
       if (isTokenExpired(token)) throw new Error("El token recibido ya expiró");
@@ -101,10 +98,9 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
-  // Signup
-  const signup = async (data) => {
+  const signup = useCallback(async (data) => {
     try {
       setError(null);
       await signupRequest(data);
@@ -113,14 +109,13 @@ export const AuthProvider = ({ children }) => {
       setError(err.response?.data?.message || "Error en registro");
       return false;
     }
-  };
+  }, []);
 
-  // Logout
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("jwt");
     setUser({ email: null, username: "Invitado", rol: "INVITADO" });
     navigate("/");
-  };
+  }, [navigate]);
 
   return (
     <AuthContext.Provider
@@ -140,7 +135,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook para consumir el contexto
 export const useAuthContext = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuthContext debe usarse dentro de AuthProvider");

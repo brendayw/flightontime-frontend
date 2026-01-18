@@ -14,11 +14,11 @@ export const validateLogin = ({ email, password }) => {
   return errors;
 };
 
-export const validateSignup = ({ fullname, email, password, confirmPassword }) => {
+export const validateSignup = ({ username, email, password, confirmPassword }) => {
   const errors = {};
 
-  if (!fullname) {
-    errors.fullname = "Nombre completo requerido";
+  if (!username) {
+    errors.username = "Nombre de usuario (username) requerido";
   }
 
   if (!email) {
