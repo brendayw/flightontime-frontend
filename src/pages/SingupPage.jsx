@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import Header from "../components/ui/Header";
-import SingupForm from "../components/auth/SignupForm";
+import { Header, SignupForm } from '../components';
 
 const SingupPage = () => {
     return (
@@ -17,7 +16,7 @@ const SingupPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <SingupForm />
+                <SignupForm />
             </motion.div>
             
         </section>

@@ -15,13 +15,16 @@ import apiPublic from "../api/apiPublic";
  * @param {string} flightData.aerolinea
  * @param {string} flightData.origen
  * @param {string} flightData.destino
- * @param {string} flightData.fecha
- * @param {string} flightData.hora
+ * @param {string} flightData.fechaHora
+ * @param {string} flightData.distancia
  *
  * @returns {Promise<AxiosResponse>} Respuesta de la API con el resultado de la predicción
  */
 export const predictFlight = async (flightData) => {
-  return apiPrivate.post("/api/predict", flightData, {
+  return apiPrivate.post("/api/predict", [flightData], { 
+    params: {
+      explain: true 
+    },
     headers: {
       "Content-Type": "application/json",
     }
@@ -32,7 +35,7 @@ export const predictFlight = async (flightData) => {
  * Envía un archivo csv para ejecutar una predicción por lote (batch prediction).
  *
  * Endpoint:
- * POST /predict/batch
+ * POST /predict/csv
  *
  * Uso:
  * - Carga masiva de vuelos (CSV)
@@ -47,9 +50,7 @@ export const uploadBatchPrediction = async (file) => {
   formData.append("file", file);
 
   const response = await apiPrivate.post(
-    "/api/predict/batch",
-    formData,
-    {
+    "/api/predict/csv", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -61,8 +62,6 @@ export const uploadBatchPrediction = async (file) => {
 export const calculateDistance = async (origenCoord, destinoCoord) => {
   
   try {
-    //console.log("=== TEST DISTANCIA ===");
-    //console.log("Token en localStorage:", localStorage.getItem("jwt"));
     const response = await apiPublic.post("/api/distancia", {
       origen: {
         latitud: origenCoord.latitud,
@@ -73,7 +72,6 @@ export const calculateDistance = async (origenCoord, destinoCoord) => {
         longitud: destinoCoord.longitud
       }
     });
-    //console.log("Respuesta exitosa:", response.data);
     return response.data.distanciaKm;
   } catch (error) {
     console.error("Error calculando distancia:", error);

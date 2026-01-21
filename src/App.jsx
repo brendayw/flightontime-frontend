@@ -9,11 +9,10 @@ import PredictionsPage from "./pages/PredictionsPage";
 import PredictionsGuestPage from "./pages/PredictionsGuestPage";
 import BatchPredictionPage from "./pages/BatchPredictionPage";
 import ProfilePage from "./pages/ProfilePage";
-import NotifyPage from "./pages/NotifyPage";
+import FlightsPage from "./pages/FlightsPage";
 import WorkspacePage from "./pages/WorkspacePage";
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from "./routes/PublicRoute";
-// import "./assets/styles/global.css";
 
 function App() {
   return (
@@ -79,9 +78,9 @@ function App() {
         } />
 
         {/* Predicciones que reciben notificacion / en seguimiento */}
-        <Route path="notify" element={
+        <Route path="flights" element={
           <ProtectedRoute allowedRoles={["USER"]}>
-            <NotifyPage />
+            <FlightsPage />
           </ProtectedRoute>
         }/>
 

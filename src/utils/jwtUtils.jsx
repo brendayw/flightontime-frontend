@@ -16,8 +16,7 @@ export const decodeJWT = (token) => {
     
     // Convertimos de Base64 a string
     const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
-    
-    // Parseamos el JSON
+  
     const parsedPayload = JSON.parse(decodedPayload);
     
     return parsedPayload;
@@ -81,10 +80,4 @@ export const getRoleFromToken = (token) => {
   }
 };
 
-export default {
-  decodeJWT,
-  getEmailFromToken,
-  isTokenExpired,
-  getTokenInfo,
-  getRoleFromToken
-};
+export default { decodeJWT, getEmailFromToken, isTokenExpired, getTokenInfo,getRoleFromToken };

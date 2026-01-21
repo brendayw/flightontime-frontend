@@ -1,7 +1,7 @@
 import { useTheme, useMediaQuery, Box } from '@mui/material';
 import FlightIcon from '@mui/icons-material/Flight';
-import useDashboardSummary from '../../hooks/useDashboardSummary';
-import AppAlert from '../ui/AppAlert';
+import { AppAlert } from '../'; 
+import useDashboardSummary from '../../hooks/dashboard/useDashboardSummary';
 
 /**
  * Componente DashboardStats
@@ -19,17 +19,26 @@ import AppAlert from '../ui/AppAlert';
  */
 
 const DashboardStats = () => {
-    const { summary, error } = useDashboardSummary();
+    const { summary, loading, error,} = useDashboardSummary();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    if (error || !summary) {
+    if (error) {
         return (
             <div className="px-4 py-4">
                 <AppAlert severity="error">Error al cargar datos</AppAlert>
             </div>
         );
     }
+
+    if (loading) {
+        return (
+            <div>
+                <AppAlert severity="info">Cargando datos...</AppAlert>
+            </div>
+        )
+    }
+
     // Datos a mostrar en tarjetas
     const stats = [
         {

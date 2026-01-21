@@ -1,17 +1,10 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
-import Header from '../components/ui/Header';
-import Menu from '../components/layout/Menu';
-import AdminPredictions from '../components/prediction/AdminPredictions';
-import usePredictions from "../hooks/usePredictionsAdmin";
+import { Header, Menu, AllUsersData } from '../components';
 
 const HistoryPage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-    const { predictions, loading, error, refresh } = usePredictions();
-        
-    // if (loading) return <p>Cargando predicciones...</p>;
-    // if (error) return <p>Error al cargar predicciones</p>;
     
     return (
         <section id='batch' style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,
@@ -35,7 +28,7 @@ const HistoryPage = () => {
                     transition: 'all 0.6s ease-in-out',
             }}>
                 <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
-                    <AdminPredictions predictions={predictions} onRefresh={refresh} />
+                    <AllUsersData />
                 </motion.div>
             </main>
         </section>

@@ -1,4 +1,4 @@
-import { useAuthContext } from "../contexts/AuthProvider";
+import { useAuthContext } from "../../contexts/AuthProvider";
 
 const useAuth = () => {
   const { user, logout, loading, login, signup } = useAuthContext();

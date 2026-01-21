@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTheme, useMediaQuery } from '@mui/material';
-import Header from '../components/ui/Header.jsx';
-import Menu from '../components/layout/Menu.jsx';
+import { Header, Menu } from '../components';
 import DashboardCharts from '../components/dashboard/DashboardCharts.jsx';
 
 const DashboardPage = () => {

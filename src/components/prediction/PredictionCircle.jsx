@@ -1,10 +1,8 @@
 import { useTheme, useMediaQuery, Box, CircularProgress, Typography } from '@mui/material';
-import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
 /**
- * PredictionCircle
- *
- * Componente que visualiza de manera circular el porcentaje de probabilidad de retraso de un vuelo.
+ * PredictionCircle - Componente que visualiza de manera circular el porcentaje 
+ * de probabilidad de retraso de un vuelo.
  *
  * Props:
  * - prediction: objeto que contiene la información de la predicción del vuelo.
@@ -22,14 +20,10 @@ const PredictionCircle = ({ prediction }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    // Si no hay predicción, no renderiza nada
+    // La predicción ya viene formateada del padre
     if (!prediction) return null;
 
-    // Formatear datos de la predicción
-    const data = formatPrediction(prediction);
-    if (!data) return null;
-
-    const { probability, isDelayed } = data;
+    const { probability, isDelayed } = prediction;
 
     //Estilos
     const size = isMobile ? 160 : 180;      //tamaño del circulo
@@ -42,8 +36,7 @@ const PredictionCircle = ({ prediction }) => {
         }}>
             {/* Círculo de fondo gris tenue */}
             <CircularProgress variant="determinate"
-                value={100} size={size}
-                thickness={thickness}
+value={100} size={size} thickness={thickness}
                 sx={{color: 'rgba(255,255,255,0.12)', position: 'absolute' }}
             />
 
@@ -61,19 +54,12 @@ const PredictionCircle = ({ prediction }) => {
             />
 
             {/* Contenido central */}
-            <Box
-                sx={{
-                    position: 'absolute',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    color: 'white',
-                }}
-            >
+            <Box sx={{
+                position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white',
+            }}>
                 <Typography variant="h3" component="div" fontWeight="bold" sx={{ lineHeight: 1, color: '#E5E6EA' }}>
                     {probability}%
                 </Typography>
-
             </Box>
             <Box sx={{ mt: 26}}>
                 <Typography fontSize={16} textAlign="center"  >

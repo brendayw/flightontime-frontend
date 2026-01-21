@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDashboardSummary } from '../api/dashboard.api';
+import { getDashboardSummary } from '../../api/dashboard.api';
 
 /**
  * Custom hook para obtener el resumen del dashboard.

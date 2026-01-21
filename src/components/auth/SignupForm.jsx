@@ -1,9 +1,9 @@
 import { Box, Button, TextField,  } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import AppAlert from "../ui/AppAlert";
+import { AppAlert } from '../'; 
 import { validateSignup } from "../../utils/formatValidator";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/auth/useAuth";
 
 /**
  * SignupForm Component - Componente de formulario de registro de usuarios 

@@ -1,14 +1,12 @@
-import { useState } from 'react'; 
 import { useTheme, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
-import Header from '../components/ui/Header';
-import Menu from '../components/layout/Menu';
-import ProfileDetails from '../components/profile/ProfileDetails';
-import RecentPredictions from '../components/profile/RecentPredictions';
+import { Header, Menu, ProfileDetails, RecentFlights, RecentUsers } from '../components';
+import useAuth from '../hooks/auth/useAuth';
 
 const ProfilePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isAdmin } = useAuth();
 
   return (
     <section id='profile' style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,
@@ -38,7 +36,7 @@ const ProfilePage = () => {
           className="grid grid-cols-1 gap-2"
         >
           <ProfileDetails />
-          <RecentPredictions />
+          {isAdmin ? <RecentUsers /> : <RecentFlights />}
         </motion.div>
       </main>
     </section>

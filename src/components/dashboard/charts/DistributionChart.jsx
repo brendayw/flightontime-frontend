@@ -1,6 +1,6 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
-import AppAlert from '../../ui/AppAlert';
+import { AppAlert } from '../../'; 
 
 /**
  * Componente DistributionChart

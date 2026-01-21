@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { Button, TextField, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import AppAlert from "../ui/AppAlert";
+import { AppAlert } from '../'; 
 import { validateLogin } from "../../utils/formatValidator";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/auth/useAuth";
 import FlightOnTime from '../../assets/images/FlightOnTime!.png';
 
 /**
@@ -33,7 +33,7 @@ import FlightOnTime from '../../assets/images/FlightOnTime!.png';
  * <LoginForm />
  */
 
-const LoginForm = ({ onSwitch }) => {  
+const LoginForm = () => {  
   const { login } = useAuth();
   const navigate = useNavigate();
   const [localError, setLocalError] = useState("");

@@ -1,6 +1,7 @@
 import { Card, CardContent, Button } from "@mui/material";
 import { motion } from 'framer-motion';
-import useProfile from "../../hooks/useProfile";
+import useProfile from "../../hooks/profile/useProfile";
+import { AppAlert } from '../'; 
 
 /**
  * ProfileDetails Component
@@ -32,10 +33,30 @@ import useProfile from "../../hooks/useProfile";
  */
 
 const ProfileDetails = () => {
-    const { profile, error } = useProfile();
+    const { profile, loading, error } = useProfile();
+
+    if (loading) {
+        return (
+            <div>
+                <AppAlert severity="info">Cargando datos...</AppAlert>
+            </div>
+        )
+    }
     
-    if (error) return <p>{error}</p>; //aca modificar por Alert
-    if (!profile) return <p>No se encontró el perfil.</p>;
+    if (error) {
+        return (
+            <div className="px-4 py-4">
+                <AppAlert severity="error">Error al cargar datos.</AppAlert>
+            </div>
+        );
+    }
+    if (!profile) {
+        return (
+            <div className="px-4 py-4">
+                <AppAlert severity="error">No se encontró el perfil.</AppAlert>
+            </div>
+        );
+    };
 
     return (
         <motion.div

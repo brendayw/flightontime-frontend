@@ -1,4 +1,4 @@
-import { useTheme, useMediaQuery, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 /**
  * Footer Component

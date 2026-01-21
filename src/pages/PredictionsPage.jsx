@@ -1,23 +1,26 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme, useMediaQuery, Box, Container } from "@mui/material";
-import Header from '../components/ui/Header';
-import ResultsList from '../components/prediction/ResultsList';
-import PredictionActions from "../components/ui/PredictionActions";
-
-import Menu from '../components/layout/Menu';
+import { Header, Menu, ResultsList, PredictionActions } from '../components';
 
 const PredictionsPage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-    const location = useLocation();
-
-    const predictions = location.state?.predictions || [];
+    const { state } = useLocation();
+    const navigate = useNavigate();
+    const predictions = state?.predictions ?? [];
     const predicted = predictions.length > 0;
     const isBatch = predictions.length > 1;
+    const errors = state?.errors ?? [];
 
-    const resultsAnimation = isMobile
-        ? {
+    //fallback si entran directo a la URL
+    if (!state) {
+        navigate('/');
+        return null;
+    }
+    
+    const resultsAnimation = isMobile ? 
+        {
             initial: { opacity: 0, y: 0 },
             animate: { opacity: 1, y: -100 },
         }
@@ -33,9 +36,7 @@ const PredictionsPage = () => {
             `}}
             className='min-h-[100dvh] w-screen flex items-center justify-center relative overflow-hidden'
         >
-
             <Header  />
-
             <Menu />
 
             <Box sx={{ width: '100vw', pt: { xs: 12, md: 20 }, pb: { xs: 10, md: 16 } }}>

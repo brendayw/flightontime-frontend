@@ -7,7 +7,7 @@ import FileIcon from '../../assets/icons/file.png';
 import DataIcon from '../../assets/icons/data.png';
 import StatsIcon from '../../assets/icons/stats.png';
 import LogoutIcon from '../../assets/icons/logout.png';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/auth/useAuth';
 
 /**
  * Componente Menu

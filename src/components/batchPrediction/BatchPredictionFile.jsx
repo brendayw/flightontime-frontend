@@ -1,8 +1,9 @@
-import { useMediaQuery, useTheme, Stack, Card, CardContent, Button, Typography, Box, Alert } from '@mui/material'; 
+import { useMediaQuery, useTheme, Stack, CardContent, 
+    Button, Typography, Box, Alert } from '@mui/material'; 
 import { useNavigate  } from 'react-router-dom';
 import { useEffect } from 'react';
-import useBatchPrediction from '../../hooks/useBatchPrediction'; 
-import useAuth from '../../hooks/useAuth';
+import useBatchPrediction from '../../hooks/prediction/useBatchPrediction'; 
+import useAuth from '../../hooks/auth/useAuth';
 
 /**
  * Componente para subir un archivo CSV con predicciones de vuelos en batch.
@@ -102,7 +103,12 @@ const BatchPredictionFile = () => {
                                 
                                 <Button variant='outlined' component='label' disabled={loading} sx={{ mt: 2, color:'#e5e6ea9f', fontWeight: 600, borderColor: '#e5e6ea9f' }} > 
                                     Seleccionar archivo 
-                                    <input type='file' accept='.csv' hidden onChange={(e) => selectFile(e.target.files?.[0])} /> 
+                                    <input type='file' accept='.csv' hidden 
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) selectFile(file); //funcion asincrona para selecionar el archivo
+                                        }}  
+                                    /> 
                                 </Button> 
                             </Box> 
                             

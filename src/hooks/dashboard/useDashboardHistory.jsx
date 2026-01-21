@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getGlobalHistory } from '../api/dashboard.api';
-import { normalizePrevision } from '../utils/normalize';
+import { getGlobalHistory } from '../../api/dashboard.api';
+import { normalizePrevision } from '../../utils/normalize';
 
 /**
  * Custom hook para obtener y normalizar el historial global de vuelos.

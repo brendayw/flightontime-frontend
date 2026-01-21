@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { predictFlight } from '../api/prediction.api';
+import { predictFlight } from '../../api/prediction.api';
 
 /**
  * Hook para manejar predicciones de vuelos.
@@ -34,10 +34,16 @@ const usePrediction = () => {
     setError(null);
 
     try {
+
       const response = await predictFlight(formData);
       const data = response.data;
-      setResult(data);
-      return data;
+
+      const normalizedResult = Array.isArray(data) ? data : [data];
+      setResult(normalizedResult);
+
+      console.log(normalizedResult);
+      return Array.isArray(data) ? data[0] : data;
+      
     } catch (err) {
       setError("No se pudo obtener la predicción");
       return null;
@@ -46,9 +52,7 @@ const usePrediction = () => {
     }
   }, []);
 
-  /**
-   * Resetea el estado del hook
-   */
+  // Resetea el estado del hook
   const reset = useCallback(() => {
     setResult(null);
     setError(null);

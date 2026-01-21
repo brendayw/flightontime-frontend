@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Header from '../components/ui/Header';
-import LoginForm from '../components/auth/LoginForm';
-import useAuth from '../hooks/useAuth'
+import { Header, LoginForm } from '../components';
+import useAuth from '../hooks/auth/useAuth'
 
 const LoginPage = () => {
     const { isAuthenticated, loading } = useAuth();
@@ -15,7 +14,6 @@ const LoginPage = () => {
         }
     }, [isAuthenticated, loading]);
 
-    if (loading) return null;
     return (
         <section id='login' style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,
             rgba(254, 160, 98, 0.85) 50%,rgba(254, 171, 119, 0.85) 55%,

@@ -1,7 +1,5 @@
-import { Box, Typography, Stack, useTheme, useMediaQuery, Grid } from '@mui/material';
-import PredictionCard from './PredictionCard';
-import ResultsCount from './ResultsCount';
-import AppAlert from '../ui/AppAlert';
+import { Box, Stack, useTheme, useMediaQuery, Grid } from '@mui/material';
+import { AppAlert, PredictionCard, ResultsCount } from '../'; 
 
 /**
  * Componente que muestra un listado de predicciones.
@@ -25,7 +23,7 @@ const ResultsList = ({ predictions = [], loading = false, isBatch = false }) => 
 
         {!loading && predictions.length === 0 && (
           <Box sx={{ py: isMobile ? 2 : 4 }}>
-            <AppAlert severity="info">
+            <AppAlert severity="error">
               No hay predicciones disponibles.
             </AppAlert>
           </Box>

@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
-import AppAlert from '../../ui/AppAlert';
+import { AppAlert } from '../../'; 
 
 /**
  * Componente PerFlightChart

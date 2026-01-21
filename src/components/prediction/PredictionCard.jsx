@@ -1,10 +1,8 @@
 import { useTheme, useMediaQuery, Card, CardContent, Typography, Box, Stack } from '@mui/material';
+import { AppAlert, PredictionCircle } from '../'; 
 import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
-import PredictionCircle from './PredictionCircle.jsx';
-import AppAlert from '../ui/AppAlert.jsx';
-import { formatPrediction } from '../../utils/formatPrediction.jsx';
 
 /**
  * PredictionCard - Componente que muestra la predicción de un vuelo en un card estilizado.
@@ -23,22 +21,18 @@ function PredictionCard({ prediction }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Formatea la predicción para mostrarla en el card
-  const data = formatPrediction(prediction);
-  const { row, response, error } = prediction;
-
-  if (!data) {
+  if (!prediction) {
     return (
       <Card sx={{ borderRadius: '25px', p: 3, backgroundColor: 'rgba(65, 64, 64, 0.45)' }}>
-        <AppAlert severity="info">
+        <AppAlert severity="error">
           No hay predicciones disponibles.
         </AppAlert>
       </Card>
     );
   }
 
-  // Destructuring de los datos formateados
-  const { aerolinea, origen, destino, formattedDate, distancia } = data;
+  // Formatea la predicción para mostrarla en el card
+  const { aerolinea, origen, destino, formattedDate, distancia } = prediction;
 
   return (
     <Card sx={{

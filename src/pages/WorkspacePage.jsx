@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/ui/Header';
 import Menu from '../components/layout/Menu';
+import AppAlert from '../components/ui/AppAlert';
 import PredictionForm from '../components/prediction/PredictionForm';
-import NotifyToggle from '../components/ui/NotifyToggle';
-import usePrediction from '../hooks/usePrediction';
+import usePrediction from '../hooks/prediction/usePrediction';
+import { formatAnyPrediction } from '../utils/formatAnyPrediction';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,23 +20,23 @@ const itemVariants = {
 
 const WorkspacePage = () => {
     const navigate = useNavigate();
-    const { predict, loading, error } = usePrediction();
-
+    const { predict } = usePrediction();
+   
     const handlePredict = async (formData) => {
-        const result = await predict(formData);
+        const result = await predict(formData); 
         if (!result) return;
 
-        const predictionData = {
-            ...formData,
-            ...result
-        };
+        // Usar formatAnyPrediction igual que en Home
+        const predictions = formatAnyPrediction(result, formData);
 
         navigate('/predictions', {
             state: {
-                predictions: [predictionData]
+                predictions,
+                errors: result.errores || []
             }
         });
     };
+
 
     return (
         <section style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,
@@ -66,14 +67,8 @@ const WorkspacePage = () => {
                         <motion.div variants={itemVariants}>
                             <PredictionForm onPredict={handlePredict} />
                         </motion.div>
-      
-                        {/* NotifyToggle */}
-                        <motion.div variants={itemVariants} transition={{ type: "spring", stiffness: 300 }}
-                            style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}
-                        >
-                            <NotifyToggle />
-                        </motion.div>
-                        </Card>
+    
+                    </Card>
                 </Container>
             </Box>  
         </section>

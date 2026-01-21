@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useTheme, useMediaQuery, Box, Stack, 
+    TextField, Button, MenuItem, Select, } from '@mui/material';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Grid from '@mui/material/Grid';
-import { useTheme, useMediaQuery, Box, Stack, TextField, Button, MenuItem, Select, } from '@mui/material';
-import AppAlert from '../ui/AppAlert'; 
+import { AppAlert } from '../'; 
 import useAerolineas from'../../hooks/catalog/useAerolineas';
 import useAeropuertos from '../../hooks/catalog/useAeropuertos';
 import { prepareFlightFormData } from '../../services/formDataService';
@@ -44,42 +45,26 @@ const PredictionForm = ({ onPredict}) => {
     const [destino, setDestino] = useState('');
     const [fechaHora, setFechaHora] = useState('');
     const [distancia, setDistancia] = useState(null);
-        
-    useEffect(() => {
-        if (!origen || !destino) return;
-
-        const aeropuertoOrigen = aeropuertos.find(a => a.iata === origen);
-        const aeropuertoDestino = aeropuertos.find(a => a.iata === destino);
-
-        if (!aeropuertoOrigen || !aeropuertoDestino) return;
-
-        const fetchDistancia = async () => {
-            setDistancia(null);
-            const km = await calculateDistance(aeropuertoOrigen, aeropuertoDestino);
-            if (km !== null) setDistancia(Math.round(km));
-            else setLocalError("No se pudo calcular la distancia");
-        };
-
-        fetchDistancia();
-    }, [origen, destino, aeropuertos]);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
         setLocalError("");
 
-        // Prepara los datos para la predicción
-        distancia !== null ? distancia : '';
-        if (distancia === null) {
-            return setLocalError("Calculando distancia, espera un momento...");
-        }
-        const formData = prepareFlightFormData({ aerolinea, origen, destino, fechaHora, distancia });
-        if (!formData) return setLocalError("Datos del vuelo incompletos");
+        // Calculamos distancia si origen y destino están completos
+        const aeropuertoOrigen = aeropuertos.find(a => a.iata === origen);
+        const aeropuertoDestino = aeropuertos.find(a => a.iata === destino);
 
-        // Ejecuta la función de predicción pasada por props
-        if (onPredict) {
-        await onPredict(formData);
+        if (!aeropuertoOrigen || !aeropuertoDestino) {
+            return setLocalError("Selecciona aeropuerto de origen y destino");
         }
+
+        const km = await calculateDistance(aeropuertoOrigen, aeropuertoDestino);
+        if (km === null) return setLocalError("No se pudo calcular la distancia");
+
+        const formData = prepareFlightFormData({ aerolinea, origen, destino, fechaHora, distancia: Math.round(km) });
+        if (!formData) return setLocalError("Datos incompletos");
+
+        if (onPredict) await onPredict(formData);
     };
 
     return (
@@ -151,21 +136,6 @@ const PredictionForm = ({ onPredict}) => {
                             '& .MuiOutlinedInput-input': { padding: '10px 14px' }
                         }}
                     />
-
-                    {/* Distancia */}
-                    {/* Borrar luego de que este lo de lat / long */}
-                    {/* <TextField type="number" label="Distancia (km)" value={distancia}
-                        onChange={(e) => setDistancia(e.target.value)}
-                        fullWidth
-                        InputLabelProps={{ shrink: true, sx: { color: '#E5E6EA', '&.Mui-focused': { color: '#E5E6EA' }} }}
-                        sx={{
-                            '& .MuiOutlinedInput-root': { color: '#E5E6EA', borderRadius: 4, height: 45 }, 
-                            '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e5e6ea50' },
-                            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#e5e6ea50' },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                            '& .MuiOutlinedInput-input': { padding: '10px 14px' }
-                        }}
-                    /> */}
 
                     {/* Botón */}
                     <Button type="submit" variant="contained" fullWidth size="large"

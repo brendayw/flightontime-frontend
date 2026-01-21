@@ -1,9 +1,10 @@
+import { useTheme, useMediaQuery, Menu, MenuItem, IconButton, 
+    AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { useState } from 'react';
-import { useTheme, useMediaQuery, Menu, MenuItem, IconButton, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Logo from "/logo-flightontime.png"
-import { useNavigate } from "react-router-dom";
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/auth/useAuth';
 
 /**
  * Header Component

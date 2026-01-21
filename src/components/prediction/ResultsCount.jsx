@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTheme, useMediaQuery, Card, CardContent, Typography, Box } from '@mui/material';
-import AppAlert from '../ui/AppAlert';
+import { AppAlert } from '../'; 
 
 /**
  * Componente que muestra un Card con la cantidad de predicciones.
@@ -31,7 +31,7 @@ const ResultsCount = ({ total, loading = false, isBatch = false }) => {
             <CardContent sx={{ p: isMobile ? 1.5 : 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }} >
                 <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                     {/* Mensaje de error */}
-                    {localError && <AppAlert severity="warning">{localError}</AppAlert>}
+                    {localError && <AppAlert severity="error">{localError}</AppAlert>}
 
                     <Typography fontWeight={600} ml={2} color='#E5E6EA'> Predicciones </Typography>
 

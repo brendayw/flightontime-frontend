@@ -1,11 +1,9 @@
-import { useTheme, useMediaQuery } from '@mui/material';
-import useDashboardHistory from '../../hooks/useDashboardHistory';
-import Title from '../ui/Title';
-import AppAlert from '../ui/AppAlert';
+import { useTheme, useMediaQuery, Box, Typography } from '@mui/material';
+import useDashboardHistory from '../../hooks/dashboard/useDashboardHistory';
+import { AppAlert, Title, DashboardStats } from '../'; 
 import DistributionChart from './charts/DistributionChart';
 import EvolutionChart from './charts/EvolutionChart';
 import PerFlightChart from './charts/PerFlightChart';
-import DashboardStats from './DashboardStats';
 
 /**
  * Componente DashboardCharts
@@ -26,7 +24,15 @@ import DashboardStats from './DashboardStats';
 const DashboardCharts = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const { history } = useDashboardHistory();
+    const { history, loading } = useDashboardHistory();
+
+    if (loading) {
+        return (
+            <div>
+                <AppAlert severity="info">Cargando datos...</AppAlert>
+            </div>
+        )
+    }
             
     return (
         <div className={`w-full ${isMobile ? 'px-2 py-2' : 'px-6 py-6'} py-2 space-y-4 mb-14 bg-[#EAE8EC]/5 rounded-lg`}>

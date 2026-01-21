@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProfileRequest } from '../services/authService';
+import { getProfileRequest } from '../../services/authService';
 
 /**
  * Custom hook para obtener el perfil del usuario desde la API.

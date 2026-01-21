@@ -5,10 +5,10 @@
  * @param {string} params.origen
  * @param {string} params.destino
  * @param {string} params.fechaHora
+ * @param {string} params.distancia
  * @returns {Object|null} formData listo para enviar al backend o null si es inválido
  */
 export const prepareFlightFormData = ({ aerolinea, origen, destino, fechaHora, distancia }) => {
-  //if (!aerolinea || !origen || !destino || !fechaHora || !distancia) return null;
 
   if (!aerolinea) return setLocalError("Selecciona una aerolínea");
   if (!origen) return setLocalError("Selecciona aeropuerto de origen");

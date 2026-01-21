@@ -1,19 +1,12 @@
 // import { useLocation, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMediaQuery, useTheme, Box, Card, Container, Typography } from '@mui/material';
-import Header from '../components/ui/Header';
-import Menu from '../components/layout/Menu';
+import { Header, Menu } from '../components';
 import BatchPredicionFile from '../components/batchPrediction/BatchPredictionFile';
-import useAuth from '../hooks/useAuth';
 
 const BatchPredictionPage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-    const { loading, isAuthenticated, role } = useAuth();
-
-    //aca decide auth
-    if (loading) return null;
 
     return (
         <section id='batch' style={{backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%,rgba(74, 58, 87, 0.85) 45%,

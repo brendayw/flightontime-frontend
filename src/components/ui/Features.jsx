@@ -1,4 +1,4 @@
-import { useTheme, useMediaQuery, Typography, Container, Grid } from '@mui/material';
+import { Typography, Container, Grid } from '@mui/material';
 import BaseCard from '../ui/BaseCard';
 import SpeedIcon from '@mui/icons-material/Speed';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';

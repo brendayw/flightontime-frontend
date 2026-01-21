@@ -2,14 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Typography, Container, Box, Card, useMediaQuery, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/ui/Header';
-import PredictionForm from '../components/prediction/PredictionForm';
-import Features from '../components/ui/Features';
-import CTA from '../components/ui/CTA';
-import Footer from '../components/ui/Footer';
-import BatchPredictionFile from '../components/batchPrediction/BatchPredictionFile';
-// import useAuth from '../hooks/useAuth';
-import usePrediction from '../hooks/usePrediction';
+import { Header, PredictionForm, Features, CTA, Footer, BatchPredictionFile } from '../components';
+import { formatAnyPrediction } from "../utils/formatAnyPrediction";
+import usePrediction from '../hooks/prediction/usePrediction';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,20 +21,26 @@ const Home = () => {
     const [view, setView] = useState("hero"); //cambia entre form de predicción y el de batch
     const navigate = useNavigate();
     const { predict, loading, error } = usePrediction();
-    //const { isGuest, isUser, isAdmin } = useAuth(); 
 
+    // Único handlePredict para individual y batch
     const handlePredict = async (formData) => {
         const result = await predict(formData);
         if (!result) return;
 
-        const predictionData = {
-            ...formData,
-            ...result
-        };
+        // Para individual: formData es un objeto
+        // Para batch: formData es un array
+        const predictions = formatAnyPrediction(result, formData);
+
+        // Mostrar errores de batch si existen
+        if (result.errores && result.errores.length > 0) {
+            console.warn('Errores en predicción batch:', result.errores);
+            // Aquí podrías mostrar un toast/alert con los errores
+        }
 
         navigate('/predictions-guest', {
             state: {
-                predictions: [predictionData]
+                predictions,
+                errors: result.errores || []
             }
         });
     };
@@ -88,11 +89,12 @@ const Home = () => {
                                     </Typography>
                                 </motion.div>
 
+                                {/* Opcion para subir archivo csv */}
                                 <motion.div variants={itemVariants}>
                                     <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: 440, mx: 'auto', 
                                         p: { xs: 3, md: 2 }, borderRadius: 5 
                                     }}>
-                                        <BatchPredictionFile />
+                                        <BatchPredictionFile onPredict={handlePredict} />
                                     </Card>
                                 </motion.div>
                             </motion.div>    
