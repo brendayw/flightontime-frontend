@@ -1,6 +1,5 @@
 import apiPrivate from "../api/apiPrivate";
 
-
 /**
  * Obtiene el resumen general del dashboard.
  *

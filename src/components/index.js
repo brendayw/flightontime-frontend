@@ -33,5 +33,6 @@ export { default as CTA } from './ui/CTA';
 export { default as Features } from './ui/Features';
 export { default as Footer } from './ui/Footer';
 export { default as Header } from './ui/Header';
+export { default as Hero } from './ui/Hero';
 export { default as PredictionActions } from './ui/PredictionActions';
 export { default as Title } from './ui/Title';

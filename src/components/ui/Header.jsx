@@ -116,6 +116,7 @@ const Header = ({ onShowBatch }) => {
                                     anchorEl={anchorEl}
                                     open={open}
                                     onClose={handleMenuClose}
+                                    disableScrollLock
                                     anchorOrigin={{
                                         vertical: 'bottom',
                                         horizontal: 'right',

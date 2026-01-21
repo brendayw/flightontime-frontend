@@ -91,7 +91,7 @@ const PredictionForm = ({ onPredict}) => {
 
                     {/* Origen | Destino (MISMA FILA) */}
                     <Grid container gap={0.5}>
-                        <Grid item xs={6} width='49.5%'>
+                        <Grid item xs={6} width='49%'>
                             <Select value={origen} disabled={loadingAeropuertos} displayEmpty fullWidth
                                 onChange={(e) => setOrigen(e.target.value)}
                                 sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 
@@ -107,7 +107,7 @@ const PredictionForm = ({ onPredict}) => {
                             </Select>
                         </Grid>
 
-                        <Grid item xs={6} width='49.5%'>
+                        <Grid item xs={6} width='49%'>
                             <Select value={destino} disabled={loadingAeropuertos} displayEmpty fullWidth
                                 onChange={(e) => setDestino(e.target.value)}
                                 sx={{ color: '#E5E6EA', textAlign: 'start', borderRadius: 4, height: 45, 

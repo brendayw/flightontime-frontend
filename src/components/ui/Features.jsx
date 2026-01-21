@@ -43,7 +43,7 @@ import InsertEmoticonRoundedIcon from '@mui/icons-material/InsertEmoticonRounded
 
 const Features = () => {
     return (
-        
+
         <Container maxWidth="lg" sx={{ py: 10 }} background='transparent'>
             <Typography variant="h4" textAlign="center" gutterBottom color="#251A79" fontWeight="bold">
                 Por qué elegir Flight On Time

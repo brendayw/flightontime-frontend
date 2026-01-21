@@ -44,7 +44,7 @@ const CTA = () => {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{ color: 'white',py: 6, textAlign: 'center',
+        <Box sx={{ color: 'white', py: 6, textAlign: 'center',
             backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%, rgba(74, 58, 87, 0.85) 45%,
                 rgba(254, 160, 98, 0.85) 50%, rgba(254, 171, 119, 0.85) 55%,
                 rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%)
@@ -62,7 +62,7 @@ const CTA = () => {
                     </Button>
 
                     <Button variant="contained" style={{ background:"#FEA062"}} size="large" startIcon={<NotificationsActiveIcon />}>
-                        Seguir vuelos y recibir notificaciones
+                        Sign up
                     </Button>
                 </Stack>
             </Container>

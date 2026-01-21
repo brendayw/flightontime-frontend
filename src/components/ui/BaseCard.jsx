@@ -46,7 +46,7 @@ const BaseCard = ({ children, sx }) => {
             <Card sx={{
                 background: 'rgba(41, 36, 66, 0.5)',
                 color: '#EAE8EC',
-                width: isMobile ? 450 : 250,
+                width: isMobile ? 350 : 250,
                 height: isMobile ? 200 : 250,
                 alignContent: 'center',
                 borderRadius: 4,
