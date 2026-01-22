@@ -37,7 +37,9 @@ function PredictionCard({ prediction }) {
 
   // Formatea la predicción para mostrarla en el card
   const { aerolinea, origen, destino, formattedDate, distancia, explicabilidad } = prediction;
-  const factores = parseMainFactors(explicabilidad);
+
+  // Solo parseamos factores si hay explicabilidad (predicción individual)
+  const factores = explicabilidad ? parseMainFactors(explicabilidad) : [];
 
   return (
     <Card sx={{
@@ -46,7 +48,7 @@ function PredictionCard({ prediction }) {
         boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
         border: '0.5px solid #d9d9d954',
         width: isMobile ? '95%' : { sm: '80%', md: 450},
-        height: isMobile ? 'auto' : 460,
+        height: 'auto',
         mx: isMobile ? 'auto' : 0,
         overflow: 'hidden'
       }}
@@ -85,30 +87,33 @@ function PredictionCard({ prediction }) {
               </Typography>
             </Box>
 
-            <Box >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
-                <InsightsRoundedIcon sx={{ fontSize: 20, color: "#d9d9d9bb" }} />
-                <Typography
-                  fontSize={isMobile ? 14 : 15}
-                  fontWeight={600}
-                  color="#d9d9d9bb"
-                >
-                  Factores principales
-                </Typography>
-              </Box>
-              {/* Lista de factores */}
-              <Box sx={{ display: "flex", flexDirection: "column", textAlign: 'start', gap: 0., ml: isMobile ? 1 : 3.5}}>
-                {factores.map((factor, index) => (
+            {/* Mostrar factores solo si hay explicabilidad (predicción individual) */}
+            {explicabilidad && (
+              <Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
+                  <InsightsRoundedIcon sx={{ fontSize: 20, color: "#d9d9d9bb" }} />
                   <Typography
-                    key={index}
-                    fontSize={isMobile ? 12 : 14}
+                    fontSize={isMobile ? 14 : 15}
+                    fontWeight={600}
                     color="#d9d9d9bb"
                   >
-                    • <strong>{humanizeFactor(factor.feature)}</strong> → {getFactorImpactText(factor)}
+                    Factores principales
                   </Typography>
-                ))}
+                </Box>
+                {/* Lista de factores */}
+                <Box sx={{ display: "flex", flexDirection: "column", textAlign: 'start', gap: 0, ml: isMobile ? 1 : 3.5}}>
+                  {factores.map((factor, index) => (
+                    <Typography
+                      key={index}
+                      fontSize={isMobile ? 12 : 14}
+                      color="#d9d9d9bb"
+                    >
+                      • <strong>{humanizeFactor(factor.feature)}</strong> → {getFactorImpactText(factor)}
+                    </Typography>
+                  ))}
+                </Box>
               </Box>
-            </Box>
+            )}
           </Stack>
         </Box>
       </CardContent>
