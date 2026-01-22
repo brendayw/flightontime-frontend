@@ -34,7 +34,7 @@ const ResultsList = ({ predictions = [], loading = false, isBatch = false }) => 
           showGrid ? (
             <Grid container spacing={3} sx={{ maxWidth: 1200, px: { xs: 2, md: 0 }, justifyContent: 'center'}} >
               {predictions.map((prediction, index) => (
-                <Grid item key={`prediction-${index}-${prediction.id || ''}`} xs={6} sm={3} md={2} >
+                <Grid item width={isMobile ? '100%' : 'auto'} key={`prediction-${index}-${prediction.id || ''}`} xs={6} sm={3} md={2} >
                   <PredictionCard prediction={prediction} />
                 </Grid>
               ))}

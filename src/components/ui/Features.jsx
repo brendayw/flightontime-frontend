@@ -45,7 +45,8 @@ const Features = () => {
     return (
 
         <Container maxWidth="lg" sx={{ py: 10 }} background='transparent'>
-            <Typography variant="h4" textAlign="center" gutterBottom color="#251A79" fontWeight="bold">
+            <Typography variant="h4" textAlign="center" gutterBottom color="#251A79" fontWeight="bold"
+                sx={{ fontSize: { xs: 25, lg: 40 }, }}>
                 Por qué elegir Flight On Time
             </Typography>
 

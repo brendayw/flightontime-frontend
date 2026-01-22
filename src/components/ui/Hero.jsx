@@ -18,8 +18,7 @@ const Hero = ({ onPredict, view, setView }) => {
 
     return (
         <Box sx={{ width: '100%', textAlign: 'center', pt: { xs: 12, md: 20 }, pb: { xs: 10, md: 16 },
-            backgroundImage: `
-                linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%, rgba(74, 58, 87, 0.85) 45%,
+            backgroundImage: `linear-gradient(150deg, rgba(41, 36, 66, 0.85) 0%, rgba(74, 58, 87, 0.85) 45%,
                 rgba(254, 160, 98, 0.85) 50%, rgba(254, 171, 119, 0.85) 55%,
                 rgba(74, 58, 87, 0.85) 70%, rgba(41, 36, 66, 0.85) 100%) `
         }}>
@@ -45,17 +44,26 @@ const Hero = ({ onPredict, view, setView }) => {
                             </motion.div>
                         </motion.div> 
                     ) : (
-                        <motion.div key="batchForm" variants={containerVariants} initial="hidden" animate="visible" exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}>
+                        <motion.div key="batchForm" variants={containerVariants} initial="hidden" animate="visible" background='#000000' exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}>
                             <motion.div variants={itemVariants}>
-                                <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom>
+                                <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom
+                                    sx={{ fontSize: isMobile ? 28 : 36, mt: isMobile ? 2 : 0 }}
+                                >
                                     Predicciones en lote
                                 </Typography>
                             </motion.div>
 
                             {/* Opcion para subir archivo csv */}
-                            <motion.div variants={itemVariants}>
-                                <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: 440, mx: 'auto', 
-                                    p: { xs: 3, md: 2 }, borderRadius: 5 
+                            <motion.div variants={itemVariants} > 
+                                <Card sx={{ 
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    background: 'rgba(65, 64, 64, 0.45)', 
+                                    maxWidth: 650,
+                                    width: '100%',
+                                    maxHeight: isMobile ? 520 : 440,
+                                    p: { xs: 1, md: 2 }, borderRadius: 5, 
+                                    mx: 'auto',
                                 }}>
                                     <BatchPredictionFile onPredict={onPredict} />
                                 </Card>

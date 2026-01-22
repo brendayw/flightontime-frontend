@@ -11,7 +11,7 @@ const SingupPage = () => {
         >
             <Header />
 
-            <motion.div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-xl bg-[#F9F3F3]/30 rounded-2xl shadow-2xl px-8 py-10 mt-24 mb-8"
+            <motion.div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-xl bg-[#F9F3F3]/30 rounded-2xl shadow-2xl px-8 py-10 px-8 py-10 m-6 mt-24 mb-8"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}

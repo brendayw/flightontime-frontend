@@ -39,8 +39,8 @@ const PredictionsPage = () => {
             <Header  />
             <Menu />
 
-            <Box sx={{ width: '100vw', pt: { xs: 12, md: 20 }, pb: { xs: 10, md: 16 } }}>
-                <Container maxWidth="lg" sx={{ mt: -10 }}  >
+            <Box sx={{ width: '100vw', pt: { xs: 12, md: 20 }, pb: { xs: 2, md: 16 } }}>
+                <Container maxWidth="lg" sx={{ mt: isMobile ? 10 : -10 }}  >
                     <AnimatePresence mode="wait">
                         {predicted && (
                             <motion.div

@@ -1,16 +1,11 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography } from '@mui/material';
+import { useMediaQuery, Box, Typography, useTheme } from '@mui/material';
 import useUsersAdmin from '../../hooks/users/useUsersAdmin';
 import { AppAlert } from '../'; 
 
-const columns = [
-  { field: 'idUsuario', headerName: 'ID', width: 100 },
-  { field: 'username', headerName: 'Nombre de usuario', width: 350 },
-  { field: 'email', headerName: 'Email', width: 350 },
-  { field: 'rol', headerName: 'Rol asignado', width: 350 },
-];
-
 const AllUsersData = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { users, loading, error } = useUsersAdmin();
 
     if (loading) {
@@ -28,10 +23,19 @@ const AllUsersData = () => {
             </div>
         );
     }
+
+    const columns = [
+        { field: 'idUsuario', headerName: 'ID', width: isMobile ? 60 : 100 },
+        { field: 'username', headerName: 'Nombre de usuario', width: isMobile ? 180 : 350 },
+        { field: 'email', headerName: 'Email', width: isMobile ? 180 : 350 },
+        { field: 'rol', headerName: 'Rol asignado', width: isMobile ? 180 : 350 },
+    ];
     
     return (
-        <Box sx={{ height: 650, width: '100%', mb: 8 }} >
-            <Typography variant="h5" gutterBottom fontWeight="bold">
+        <Box sx={{ height: 650, width: '100%', mb: isMobile ? 12 : 8 }} >
+            <Typography variant="h5" gutterBottom fontWeight="bold"
+                sx={{ fontSize: isMobile ? 18 : 20, color:"#FEAB77"}}
+            >
                 Todos los usuarios registrados ({users.length})
             </Typography>
 

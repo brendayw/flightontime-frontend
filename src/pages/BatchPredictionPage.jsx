@@ -28,7 +28,9 @@ const BatchPredictionPage = () => {
                 <Container maxWidth="lg" sx={{ mt: isMobile ? -3 : -8 }}  >
                     
                     <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
-                        <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77">
+                        <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="#FEAB77"
+                            sx={{ mt: 2, mb: 2, fontSize: isMobile ? 28 : 'auto'}}
+                        >
                             Predicciones en lote
                         </Typography>
                     </motion.div>

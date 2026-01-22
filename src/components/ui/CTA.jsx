@@ -61,7 +61,7 @@ const CTA = () => {
                         Login
                     </Button>
 
-                    <Button variant="contained" style={{ background:"#FEA062"}} size="large" startIcon={<NotificationsActiveIcon />}>
+                    <Button onClick={() => navigate('/auth/signup')} variant="contained" style={{ background:"#FEA062"}} size="large" startIcon={<NotificationsActiveIcon />}>
                         Sign up
                     </Button>
                 </Stack>

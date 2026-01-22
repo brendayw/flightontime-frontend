@@ -46,7 +46,7 @@ const SavedFlights = () => {
                 boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
                 border: '0.5px solid #d9d9d954',
                 borderRadius: '25px',
-                p: 1
+                p: 1, mb: 8
             }}
         >
             <CardContent className="space-y-3">

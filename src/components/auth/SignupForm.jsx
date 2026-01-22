@@ -63,11 +63,11 @@ const SignupForm = () => {
         <Box>
             <Box className="text-center mb-8">
                 <div className="flex flex-col justify-center mb-6">
-                    <h1 className="text-3xl font-bold text-[#E5E6EA]">
-                        Create your account
+                    <h1 className="text-2xl font-bold text-[#222E60]">
+                        Crea tu cuenta
                     </h1>
                     <p className="text-sm text-[#F9F3F3]/70 mt-2">
-                        Start predicting flights on time
+                        Empezá a predecir tus vuelos a tiempo
                     </p>
                 </div>
             </Box>
@@ -157,7 +157,7 @@ const SignupForm = () => {
                             transition: "all 0.3s",
                         }}
                     >
-                        Create account
+                        Crea tu cuenta
                     </Button>
                 </Box>
             </form>

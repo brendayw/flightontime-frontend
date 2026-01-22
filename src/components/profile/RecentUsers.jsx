@@ -40,13 +40,13 @@ const RecentUsers = () => {
                     boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
                     border: '0.5px solid #d9d9d954',
                     borderRadius: '25px',
-                    p: 1
+                    p: 1, mb: 8
                 }}
             >
                 <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
-                            <h2 className="text-xl text-[#EAE8EC] font-semibold">Registro de usuarios</h2>
+                            <h2 className="text-lg md:text-xl text-[#EAE8EC] font-semibold">Usuarios registrados</h2>
                         </div>
 
                         <Button variant="outline" size="sm" onClick={() => navigate("/admin/history")}

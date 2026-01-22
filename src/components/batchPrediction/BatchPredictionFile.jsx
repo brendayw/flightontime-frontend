@@ -56,12 +56,13 @@ const BatchPredictionFile = () => {
     }, [result, predictions, loading, navigate, isAuthenticated]);
     
     return ( 
-        <Box>
-            <Stack spacing={1}>
-                <CardContent >
+        <Box sx={{ width: '100%' }}>
+            <Stack spacing={1} >
+                <CardContent>
                     {/* Instrucciones del formato esperado */} 
-                    <Alert severity="info" sx={{ mb: 0.8, fontSize: '0.8rem' }}>
-
+                    <Alert severity="info" sx={{ width: '100%', wordBreak: 'break-word', overflowWrap: 'anywhere', 
+                        px: { xs: 2, sm: 2 }, py: { xs: 1, sm: 1.5 }, boxSizing: 'border-box', mb: 2, fontSize: '0.8rem' 
+                    }}>
                         <Typography variant="caption" display="block" mb={0.5} textAlign="start"> 
                             <strong>Formato requerido:</strong> 
                         </Typography> 

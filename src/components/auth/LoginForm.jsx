@@ -72,7 +72,7 @@ const LoginForm = () => {
           />
         </div>
         <p className="text-sm text-[#F9F3F3]/70 mt-2">
-          Because every minute matters
+          Porque cada minuto cuenta
         </p>
       </Box>
 
@@ -130,7 +130,7 @@ const LoginForm = () => {
               transition: "all 0.3s",
             }}
           >
-            Sign in
+            Iniciar sesión
           </Button>
         </Box>
       </form>
