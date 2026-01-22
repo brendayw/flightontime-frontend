@@ -8,33 +8,48 @@ import useAuth from '../../hooks/auth/useAuth';
 
 /**
  * Header Component
- * 
+ *
  * Barra de navegación superior de la aplicación Flight On Time.
- * Utiliza Material UI AppBar y Toolbar, e incluye botones de acción según el rol del usuario.
- * 
+ * Se mantiene visible en todas las rutas y gestiona la navegación
+ * entre predicción individual, predicción en lote y autenticación.
+ *
+ * Responsabilidades principales:
+ * - Mostrar el logo y título de la aplicación
+ * - Mostrar acciones disponibles para usuarios guest
+ * - Adaptar la UI según el tamaño de pantalla (desktop / mobile)
+ * - Centralizar la navegación hacia el Home con el estado correcto
+ *
  * Props:
- * @param {function} onShowBatch - Función que se ejecuta al hacer click en "Predicciones en Lote"
- * 
- * Comportamiento:
- * - Muestra el icono de un avion (FlightTakeoff)
- * - Muestra el título "Flight On Time"
- * - Si el usuario es un guest (no autenticado):
- *    - Botón "Predicciones en Lote" → ejecuta la función `onShowBatch`
- *    - Botón "Login" → redirige a /auth/login
- *    - Botón "Sign Up" → redirige a /auth/signup
- * - Si el usuario está autenticado, no se muestran los botones de login/signup ni predicciones en lote.
- * 
+ * @param {Function} onShowBatch
+ *  Función que activa la vista de "Predicciones en Lote" cuando el
+ *  usuario ya se encuentra en el Home (/).
+ *
+ * @param {Function} onShowIndividual
+ *  Función que activa la vista de predicción individual cuando el
+ *  usuario ya se encuentra en el Home (/).
+ *
+ * Comportamiento de navegación:
+ * - Predicciones en Lote:
+ *   - Si el usuario ya está en "/", se ejecuta `onShowBatch`
+ *   - Si está en otra ruta, navega al Home pasando `state.showBatch = true`
+ *
+ * - Click en el logo:
+ *   - Si el usuario está en "/", vuelve a la predicción individual
+ *     limpiando el estado de navegación
+ *   - Si está en otra ruta, navega al Home con predicción individual
+ *
+ * Adaptación responsive:
+ * - Desktop:
+ *   - Botones visibles directamente en el AppBar
+ * - Mobile:
+ *   - Menú desplegable con ícono (MoreVert)
+ *
  * Hooks utilizados:
- * - useNavigate (react-router-dom) → navegación entre rutas
- * - useAuth (custom hook) → obtiene estado de autenticación y rol del usuario (isGuest)
- * 
- * Estilos:
- * - AppBar con gradiente lineal de azul oscuro a violeta claro
- * - Botón "Predicciones en Lote" con fondo oscuro y hover personalizado
- * - Botón "Log in" sin color de fondo pero con borde (#E5E6EA)
- * - Botón "Sign Up" con color naranja (#FEAB77)
+ * - useNavigate (react-router-dom): navegación entre rutas
+ * - useTheme / useMediaQuery (MUI): detección de tamaño de pantalla
+ * - useAuth (custom hook): determina si el usuario es guest
  */
-const Header = ({ onShowBatch }) => {
+const Header = ({ onShowBatch, onShowIndividual }) => {
     const theme = useTheme(); 
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
     const navigate = useNavigate();
@@ -50,12 +65,37 @@ const Header = ({ onShowBatch }) => {
         setAnchorEl(null);
     };
 
+    const handleBatchClick = () => {
+        // Si ya estamos en home, usa la función del prop
+        if (location.pathname === '/') {
+            onShowBatch();
+        } else {
+            // Si estamos en otra ruta, navega al home con state
+            navigate('/', { state: { showBatch: true } });
+        }
+    };
+
+    const handleLogoClick = () => {
+        // Si ya estamos en home, vuelve a predicción individual
+        if (location.pathname === '/') {
+            // Forzar recarga del estado navegando con replace y state limpio
+            navigate('/', { replace: true, state: { showBatch: false } });
+            // También llamar a la función si existe
+            if (onShowIndividual) {
+                onShowIndividual();
+            }
+        } else {
+            // Si estamos en otra ruta, navega al home (predicción individual por defecto)
+            navigate('/', { state: { showBatch: false } });
+        }
+    };
+
     return (
         <AppBar position="fixed" sx={{ background:'linear-gradient(to right, rgba(34, 46, 96, 0.92), rgba(37, 26, 121, 0.85), rgba(121, 137, 244, 0.73))'}} >
             <Toolbar>
                 
                 {/* logo */}
-                <Button onClick={() => navigate("/")} sx={{ mr: 2}}>
+                <Button onClick={handleLogoClick} sx={{ mr: 2}}>
                     <img src={Logo} alt="Logo" className='w-10 h-10'/>
                 </Button>
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
@@ -69,7 +109,7 @@ const Header = ({ onShowBatch }) => {
                         {!isMobile && (
                             <>
                                 <Button
-                                    onClick={onShowBatch}
+                                    onClick={handleBatchClick}
                                     variant="outlined"
                                     sx={{
                                         mr: 1,
@@ -138,7 +178,7 @@ const Header = ({ onShowBatch }) => {
                                     <MenuItem
                                         onClick={() => {
                                             handleMenuClose();    
-                                            onShowBatch();    
+                                            handleBatchClick();
                                         }}
                                         sx={{
                                             '&:hover': {

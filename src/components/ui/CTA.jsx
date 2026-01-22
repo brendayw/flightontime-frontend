@@ -53,7 +53,7 @@ const CTA = () => {
         >
             <Container maxWidth="md">
                 <Typography variant="h6" component="h1" gutterBottom  color='#EAE8EC' fontWeight="bold">
-                    ¿Quieres estar siempre informado?”
+                    ¿Quieres estar siempre informado?
                 </Typography>
 
                 <Stack direction={isMobile ? 'column' : 'row'} spacing={3} justifyContent="center" sx={{ mt: 4 }}>

@@ -3,6 +3,47 @@ import { useState } from "react";
 import { Typography, Container, Box, Card, useMediaQuery } from "@mui/material";
 import { PredictionForm, BatchPredictionFile } from '../';
 
+/**
+ * Hero Component
+ *
+ * Sección principal (hero) del Home de Flight On Time.
+ * Renderiza dinámicamente la vista de predicción individual o
+ * la vista de predicciones en lote, con animaciones de transición.
+ *
+ * Responsabilidades:
+ * - Mostrar el formulario de predicción individual
+ * - Mostrar la carga de archivo para predicciones en lote
+ * - Animar la transición entre vistas usando Framer Motion
+ * - Adaptar tamaños y márgenes según el dispositivo
+ *
+ * Props:
+ * @param {Function} onPredict
+ *  Callback que se ejecuta al enviar una predicción (individual o en lote).
+ *  Se delega a los componentes hijos (`PredictionForm` y `BatchPredictionFile`).
+ *
+ * @param {("hero"|"batch")} view
+ *  Estado que determina qué vista se renderiza:
+ *  - "hero": muestra el formulario de predicción individual
+ *  - "batch": muestra la vista de predicciones en lote
+ *
+ * @param {Function} setView
+ *  Setter del estado `view`, utilizado desde el componente padre
+ *  para alternar entre predicción individual y predicción en lote.
+ *
+ * Animaciones:
+ * - containerVariants:
+ *   - Maneja la opacidad general y el stagger entre hijos
+ * - itemVariants:
+ *   - Aplica animación de entrada vertical suave a cada elemento
+ *
+ * Responsive:
+ * - Ajusta tamaños de fuente, márgenes y alturas según `useMediaQuery`
+ *
+ * Librerías utilizadas:
+ * - Framer Motion: animaciones y transiciones entre vistas
+ * - Material UI: layout, tipografía y componentes visuales
+ */
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.15, duration: 0.6 } },
@@ -47,7 +88,7 @@ const Hero = ({ onPredict, view, setView }) => {
                         <motion.div key="batchForm" variants={containerVariants} initial="hidden" animate="visible" background='#000000' exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}>
                             <motion.div variants={itemVariants}>
                                 <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom
-                                    sx={{ fontSize: isMobile ? 28 : 36, mt: isMobile ? 2 : 0 }}
+                                    sx={{ fontSize: isMobile ? 28 : 36, mt: isMobile ? 2 : -10 }}
                                 >
                                     Predicciones en lote
                                 </Typography>

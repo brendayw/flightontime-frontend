@@ -1,14 +1,29 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Header, Features, CTA, Footer, Hero } from "../components";
 import { formatAnyPrediction } from "../utils/formatAnyPrediction";
 import usePrediction from "../hooks/prediction/usePrediction";
 
 const Home = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [view, setView] = useState("hero"); //cambia entre form de predicción y el de batch
     const { predict, loading, error } = usePrediction();
+
+    // cambiar entre hero y batch
+    useEffect(() => {
+        if (location.state?.showBatch === true) {
+            setView("batch");
+        } else if (location.state?.showBatch === false) {
+            setView("hero");
+        }
+        
+        // limpiar el state después de procesarlo para evitar que persista
+        if (location.state?.showBatch !== undefined) {
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location.state, navigate, location.pathname]);
 
     // Único handlePredict para individual y batch
     const handlePredict = async (formData) => {

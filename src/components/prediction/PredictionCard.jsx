@@ -7,6 +7,7 @@ import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded';
 import parseMainFactors from '../../utils/explainability/parseMainFactors';
 import humanizeFactor from '../../utils/explainability/humanizeFactor';
 import getFactorImpactText from '../../utils/explainability/getFactorImpactText';
+
 /**
  * PredictionCard - Componente que muestra la predicción de un vuelo en un card estilizado.
  *
