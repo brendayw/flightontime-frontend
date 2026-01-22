@@ -1,5 +1,5 @@
 import formatPrediction from './formatPrediction';
-import formatBatchPredictions from './formatBatchPrediction';
+import formatBatchPredictions from './formatBatchPredictions';
 
 export function formatAnyPrediction(data, formData = null) {
   // Caso 1: Predicción INDIVIDUAL

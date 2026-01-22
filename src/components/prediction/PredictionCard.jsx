@@ -3,7 +3,10 @@ import { AppAlert, PredictionCircle } from '../';
 import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
-
+import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded';
+import parseMainFactors from '../../utils/explainability/parseMainFactors';
+import humanizeFactor from '../../utils/explainability/humanizeFactor';
+import getFactorImpactText from '../../utils/explainability/getFactorImpactText';
 /**
  * PredictionCard - Componente que muestra la predicción de un vuelo en un card estilizado.
  *
@@ -32,7 +35,8 @@ function PredictionCard({ prediction }) {
   }
 
   // Formatea la predicción para mostrarla en el card
-  const { aerolinea, origen, destino, formattedDate, distancia } = prediction;
+  const { aerolinea, origen, destino, formattedDate, distancia, explicabilidad } = prediction;
+  const factores = parseMainFactors(explicabilidad);
 
   return (
     <Card sx={{
@@ -41,18 +45,20 @@ function PredictionCard({ prediction }) {
         boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
         border: '0.5px solid #d9d9d954',
         width: isMobile ? '95%' : { sm: '80%', md: 450},
-        height: isMobile ? 'auto' : 350,
+        height: isMobile ? 'auto' : 460,
         mx: isMobile ? 'auto' : 0,
         overflow: 'hidden'
       }}
     >
       <CardContent sx={{ p: 4 }}>
         {/* Porcentaje */}
-        <PredictionCircle prediction={prediction} />
+        <Box sx={{ mt: isMobile ? -5 : 0}}>
+          <PredictionCircle prediction={prediction} />
+        </Box>
 
         {/*Datos del vuelo*/}
-        <Box sx={{ mt: 4}}>
-          <Typography color='#E5E6EA' fontSize={isMobile ? 12 : 14} padding={1}>
+        <Box sx={{ mt: isMobile ? 2 : 6}}>
+          <Typography color='#E5E6EA' fontSize={isMobile ? 12: 14} marginBottom={1} textAlign={'start'}>
             Detalles de su vuelo
           </Typography>
 
@@ -76,6 +82,31 @@ function PredictionCard({ prediction }) {
               <Typography color='#d9d9d9bb' fontSize={isMobile ? 14 : 14}>
                 {distancia}
               </Typography>
+            </Box>
+
+            <Box >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
+                <InsightsRoundedIcon sx={{ fontSize: 20, color: "#d9d9d9bb" }} />
+                <Typography
+                  fontSize={isMobile ? 14 : 15}
+                  fontWeight={600}
+                  color="#d9d9d9bb"
+                >
+                  Factores principales
+                </Typography>
+              </Box>
+              {/* Lista de factores */}
+              <Box sx={{ display: "flex", flexDirection: "column", textAlign: 'start', gap: 0., ml: isMobile ? 1 : 3.5}}>
+                {factores.map((factor, index) => (
+                  <Typography
+                    key={index}
+                    fontSize={isMobile ? 12 : 14}
+                    color="#d9d9d9bb"
+                  >
+                    • <strong>{humanizeFactor(factor.feature)}</strong> → {getFactorImpactText(factor)}
+                  </Typography>
+                ))}
+              </Box>
             </Box>
           </Stack>
         </Box>

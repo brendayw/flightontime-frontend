@@ -1,10 +1,7 @@
 import { useTheme, useMediaQuery, Card, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Header from '../components/ui/Header';
-import Menu from '../components/layout/Menu';
-import AppAlert from '../components/ui/AppAlert';
-import PredictionForm from '../components/prediction/PredictionForm';
+import { Header, Menu, PredictionForm, } from '../components/'
 import usePrediction from '../hooks/prediction/usePrediction';
 import { formatAnyPrediction } from '../utils/formatAnyPrediction';
 

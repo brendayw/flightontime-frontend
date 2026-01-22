@@ -31,12 +31,11 @@ const PredictionCircle = ({ prediction }) => {
     const color = isDelayed ? '#FF854C' : '#4caf50';        //color
 
     return (
-        <Box sx={{ position: 'relative', width: 'full', height: {sm:100, md: 160}, display: 'flex', 
+        <Box sx={{ position: 'relative', width: 'full', height: {sm: 50, md: 160}, display: 'flex', 
             alignItems: 'center', justifyContent: 'center', margin: '0 auto'
         }}>
             {/* Círculo de fondo gris tenue */}
-            <CircularProgress variant="determinate"
-value={100} size={size} thickness={thickness}
+            <CircularProgress variant="determinate" value={100} size={size} thickness={thickness}
                 sx={{color: 'rgba(255,255,255,0.12)', position: 'absolute' }}
             />
 
