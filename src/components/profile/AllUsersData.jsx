@@ -30,6 +30,62 @@ const AllUsersData = () => {
         { field: 'email', headerName: 'Email', width: isMobile ? 180 : 350 },
         { field: 'rol', headerName: 'Rol asignado', width: isMobile ? 180 : 350 },
     ];
+
+    // Manejo de datos vacíos
+    if (!users || users.length === 0) {
+        return (
+            <Box sx={{ height: 400, width: '100%', mb: isMobile ? 12 : 8 }}>
+                <Typography variant="h5" gutterBottom fontWeight="bold"
+                    sx={{ fontSize: isMobile ? 18 : 20, color: "#FEAB77", mb: 3 }}
+                >
+                    Todos los usuarios registrados (0)
+                </Typography>
+                
+                <Box
+                    sx={{
+                        borderRadius: 4,
+                        background: 'rgba(65, 64, 64, 0.35)',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                        border: '0.5px solid #d9d9d954',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 4
+                    }}
+                >
+                    <PeopleOutlineRoundedIcon 
+                        sx={{ 
+                            fontSize: 64, 
+                            color: '#d9d9d954',
+                            mb: 2
+                        }} 
+                    />
+                    <Typography 
+                        variant="h6" 
+                        sx={{ 
+                            color: '#EAE8EC', 
+                            fontWeight: 500,
+                            mb: 1
+                        }}
+                    >
+                        No hay usuarios registrados
+                    </Typography>
+                    <Typography 
+                        variant="body2" 
+                        sx={{ 
+                            color: '#E5E6EA',
+                            opacity: 0.7,
+                            textAlign: 'center'
+                        }}
+                    >
+                        Los usuarios registrados en el sistema aparecerán aquí
+                    </Typography>
+                </Box>
+            </Box>
+        );
+    }
     
     return (
         <Box sx={{ height: 650, width: '100%', mb: isMobile ? 12 : 8 }} >

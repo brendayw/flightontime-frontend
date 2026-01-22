@@ -64,31 +64,46 @@ const RecentUsers = () => {
                         </Button>
                     </div>
 
-                    
+                    {!users || users.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-12 px-4">
+                            <PeopleOutlineRoundedIcon 
+                                sx={{ 
+                                    fontSize: 64, 
+                                    color: '#d9d9d954',
+                                    mb: 2
+                                }} 
+                            />
+                            <p className="text-[#EAE8EC] text-lg font-medium mb-1">
+                                No hay usuarios registrados
+                            </p>
+                            <p className="text-[#E5E6EA]/70 text-sm text-center">
+                                Los usuarios registrados en el sistema aparecerán aquí
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            {users.slice(0, 3).map((u, index) => (
+                                <div key={index} className="flex items-center justify-between p-4 rounded-xl border border-[#d9d9d954]/30 bg-[#FEFFFA]/10" >
+                                    <div>
+                                        <p className="flex items-center font-medium text-[#FEAB77]">
+                                            <AlternateEmailRoundedIcon className="w-4 h-4 mr-2" />
+                                            {u.username}
+                                        </p> 
 
-                    <div className="space-y-3">
-                        {users.slice(0, 3).map((u, index) => (
-                            <div key={index} className="flex items-center justify-between p-4 rounded-xl border border-[#d9d9d954]/30 bg-[#FEFFFA]/10" >
-                                <div>
-                                    
-                                    <p className="flex items-center font-medium text-[#FEAB77]">
-                                        <AlternateEmailRoundedIcon className="w-4 h-4 mr-2" />
-                                        {u.username}
-                                    </p> 
+                                        <p className="flex items-center text-[#83ff71]">
+                                            <MailOutlineRoundedIcon className="w-4 h-4 mr-2" />
+                                            {u.email}
+                                        </p>
 
-                                    <p className="flex items-center text-[#83ff71]">
-                                        <MailOutlineRoundedIcon className="w-4 h-4 mr-2" />
-                                        {u.email}
-                                    </p>
-
-                                    <p className="flex items-center text-sm text-[#E5E6EA] text-muted-foreground">
-                                        <PermIdentityRoundedIcon className="w-24 h-24 mr-2" />
-                                        {u.rol}
-                                    </p>
+                                        <p className="flex items-center text-sm text-[#E5E6EA] text-muted-foreground">
+                                            <PermIdentityRoundedIcon className="w-4 h-4 mr-2" />
+                                            {u.rol}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </CardContent>
             </Card>
         </motion.div>

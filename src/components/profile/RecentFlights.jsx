@@ -6,6 +6,7 @@ import useUsuarioVuelos from "../../hooks/users/useUsuarioVuelos";
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 
 const RecentFlights = () => {
     const navigate = useNavigate();
@@ -77,32 +78,46 @@ const RecentFlights = () => {
                         </Button>
                     </div>
 
-                    
+                    {!vuelos || vuelos.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-12 px-4">
+                            <FlightTakeoffRoundedIcon 
+                                sx={{ 
+                                    fontSize: 64, 
+                                    color: '#d9d9d954',
+                                    mb: 2
+                                }} 
+                            />
+                            <p className="text-[#EAE8EC] text-lg font-medium mb-1">
+                                No hay vuelos registrados
+                            </p>
+                            <p className="text-[#E5E6EA]/70 text-sm text-center">
+                                Tus predicciones de vuelo aparecerán aquí una vez que realices tu primera búsqueda
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            {vuelos.slice(0, 3).map((v, index) => (
+                                <div key={index} className="flex items-center justify-between p-4 rounded-xl border border-[#d9d9d954]/30 bg-[#FEFFFA]/10" >
+                                    <div>
+                                        <p className="flex items-center font-medium text-[#FEAB77]">
+                                            <ArrowUpwardRoundedIcon className="w-4 h-4 mr-2"/>
+                                            {v.origen}
+                                        </p> 
 
-                    <div className="space-y-3">
-                        {vuelos.slice(0, 3).map((v, index) => (
-                            <div key={index} className="flex items-center justify-between p-4 rounded-xl border border-[#d9d9d954]/30 bg-[#FEFFFA]/10" >
-                                <div>
-                                    
-                                    <p className="flex items-center font-medium text-[#FEAB77]">
-                                        <ArrowUpwardRoundedIcon className="w-4 h-4 mr-2"/>
-                                        {v.origen}
+                                        <p className="flex items-center text-[#83ff71]">
+                                            <ArrowDownwardRoundedIcon className="w-4 h-4 mr-2" />
+                                            {v.destino}
+                                        </p>
 
-                                    </p> 
-
-                                    <p className="flex items-center text-[#83ff71]">
-                                        <ArrowDownwardRoundedIcon className="w-4 h-4 mr-2" />
-                                        {v.destino}
-                                    </p>
-
-                                    <p className="flex items-center text-sm text-[#E5E6EA] text-muted-foreground">
-                                        <AccessTimeRoundedIcon className="w-4 h-4 mr-2"/>
-                                        {formatearFecha(v.fecha)}
-                                    </p>
+                                        <p className="flex items-center text-sm text-[#E5E6EA] text-muted-foreground">
+                                            <AccessTimeRoundedIcon className="w-4 h-4 mr-2"/>
+                                            {formatearFecha(v.fecha)}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </CardContent>
             </Card>
         </motion.div>
