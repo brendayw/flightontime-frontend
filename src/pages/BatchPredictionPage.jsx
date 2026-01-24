@@ -35,7 +35,7 @@ const BatchPredictionPage = () => {
                         </Typography>
                     </motion.div>
                     
-                    <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, maxHeight: {sm: 415, md: 420}, mx: 'auto', 
+                    <Card sx={{ background: 'rgba(65, 64, 64, 0.45)', maxWidth: 650, height: 'auto', mx: 'auto', 
                         p: { xs: 2, md: 2 }, borderRadius: 5 
                     }}>
                         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 gap-2">
