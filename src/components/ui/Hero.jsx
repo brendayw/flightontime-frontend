@@ -102,7 +102,9 @@ const Hero = ({ onPredict, view, setView }) => {
                                     background: 'rgba(65, 64, 64, 0.45)', 
                                     maxWidth: 650,
                                     width: '100%',
-                                    maxHeight: isMobile ? 520 : 440,
+                                    height: 'auto',
+                                    //maxHeight: isMobile ? 600 : 490,
+                                    
                                     p: { xs: 1, md: 2 }, borderRadius: 5, 
                                     mx: 'auto',
                                 }}>

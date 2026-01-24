@@ -3,6 +3,7 @@ import { useMediaQuery, useTheme, Stack, CardContent,
 import { useNavigate  } from 'react-router-dom';
 import { useEffect } from 'react';
 import useBatchPrediction from '../../hooks/prediction/useBatchPrediction'; 
+import formatBatchError from '../../utils/formatBatchError';
 import useAuth from '../../hooks/auth/useAuth';
 
 /**
@@ -23,8 +24,9 @@ const BatchPredictionFile = () => {
     const theme = useTheme(); 
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
     const navigate = useNavigate();
-    const { isAuthenticated, role } = useAuth();
-    const { file, loading, error, result, predictions, selectFile, upload, reset } = useBatchPrediction(); 
+    const { isAuthenticated } = useAuth();
+    const { file, loading, error, result, predictions, rowErrors, originalData, 
+        selectFile, upload, reset } = useBatchPrediction(); 
 
     /**
      * Función que ejecuta la subida y predicción del archivo.
@@ -39,17 +41,10 @@ const BatchPredictionFile = () => {
      * una vez que se procesan las predicciones.
      */
     useEffect(() => {
-        if (result && predictions && predictions.length > 0 && !loading) {
+        if (result && result.error === 0 && predictions && predictions.length > 0 && !loading) {
             const timer = setTimeout(() => {
                 const targetRoute = isAuthenticated ? '/predictions' : '/predictions-guest';
-
-                navigate(targetRoute, {
-                    state: {
-                        predictions,
-                        isBatch: true,
-                    }
-                });
-
+                navigate(targetRoute, { state: { predictions, isBatch: true } });
             }, 1000);
             return () => clearTimeout(timer);
         }
@@ -86,14 +81,69 @@ const BatchPredictionFile = () => {
                         </Typography> 
                     </Alert> 
 
-                    {result && ( 
-                        <Alert severity="success" sx={{ mb: 2 }}> 
+                    {/* Error general */}
+                    {error && (
+                        <Alert severity="error" sx={{ mb: 2 }}>
+                            {error}
+                        </Alert>
+                    )}
+
+                    {/* Mostrar archivo seleccionado */} 
+                    {file && !result && ( 
+                        <Alert severity="success" sx={{ display: 'flex', textAlign: 'start', bordBreak: 'break-word', overflowWrap: 'anywhere',   mb: 2 }}> 
+                            Archivo seleccionado: <strong>{file.name}</strong> 
+                        </Alert> 
+                    )} 
+
+
+                    {/* Alert de éxito solo si NO hay errores */}
+                    {result && result.error === 0 && (
+                        <Alert severity="success" sx={{ mb: 2 }}>
                             ✅ Procesados: {result.total} vuelos | ✓ Exitosos: {result.ok} | ✗ Errores: {result.error}
                             <Typography variant="caption" display="block" mt={1}>
                                 Redirigiendo a resultados...
                             </Typography>
-                        </Alert> 
-                    )} 
+                        </Alert>
+                    )}
+
+                    {/* Alert de warning si hay errores */}
+                    {result && result.error > 0 && (
+                        <Alert severity="warning" sx={{ textAlign: 'start', fontWeight:600, fontSize: '0.8rem', mb: 2 }}>
+                            Hubo errores en el archivo. No se procesaron todos los vuelos.
+                            <Typography variant="caption" display="block" textAlign={'start'} mt={1}>
+                                Revisá los errores listados abajo antes de intentar nuevamente.
+                            </Typography>
+                        </Alert>
+                    )}
+
+                    {/* Lista de errores detallada */}
+                    {rowErrors.length > 0 && (
+                        <Alert severity="error" sx={{ display: 'flex', textAlign: 'start', mb: 2 }}>
+                            <Typography variant="subtitle2" fontWeight={600} fontSize={12} textAlign={'start'} mb={1}>Errores encontrados:</Typography>
+                            <ul>
+                                {rowErrors.map((err, index) => (
+                                    <li key={index}>
+                                        <Typography variant="caption" sx={{ textAlign: 'start' }}>
+                                            {formatBatchError(err, originalData[index] || {})}
+                                        </Typography>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Alert>
+                    )}
+
+                    {result?.error > 0 && (
+                        <Box sx={{ mt: 2 }}>
+                            <Button 
+                                variant="outlined" 
+                                color="secondary" 
+                                onClick={reset} 
+                                sx={{ px: 4,backgroundColor: '#251A79', color: '#FEFFFA', fontWeight: 600, textTransform: "none", '&:hover': { backgroundColor: "#1d145f" } }}
+                            >
+                                Subir otro archivo
+                            </Button>
+                        </Box>
+                    )}
 
                     {!result && ( 
                         <> 

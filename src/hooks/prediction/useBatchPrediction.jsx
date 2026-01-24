@@ -6,6 +6,7 @@ const useBatchPrediction = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [rowErrors, setRowErrors] = useState([]);
   const [result, setResult] = useState(null);
   const [predictions, setPredictions] = useState([]);
   const [originalData, setOriginalData] = useState([]);
@@ -65,6 +66,7 @@ const useBatchPrediction = () => {
         ok: rawPredictions.length,
         error: errors.length,
       });
+      setRowErrors(errors);
 
       const combinedPredictions = rawPredictions.map((pred, index) => {
         const originalRow = originalData[index] || {};
@@ -95,10 +97,12 @@ const useBatchPrediction = () => {
     setResult(null);
     setPredictions([]);
     setError(null);
+    setRowErrors([]);
     setOriginalData([]);
   };
 
-  return { file, loading, error, result, predictions, selectFile, upload, reset };
+  return { file, loading, error, result, predictions, rowErrors, originalData,
+    selectFile, upload, reset };
 };
 
 export default useBatchPrediction;
