@@ -69,32 +69,33 @@ export const AuthProvider = ({ children }) => {
 
       const response = await loginRequest({ email, password });
       const token = response.token;
-      
       if (!token) throw new Error("No se recibió token del servidor");
-
       if (isTokenExpired(token)) throw new Error("El token recibido ya expiró");
 
       localStorage.setItem("jwt", token);
       const emailFromToken = getEmailFromToken(token);
       const roleFromToken = getRoleFromToken(token) || "INVITADO";
-
       const loggedUser = {
         email: emailFromToken || email,
         username: emailFromToken?.split("@")[0] || email.split("@")[0],
         rol: roleFromToken,
       };
-
       setUser(loggedUser);
-      console.log("Login exitoso:", loggedUser);
-
       navigate("/home");
       return true;
     } catch (err) {
       console.error("Error en login:", err);
-      setError(err.response?.data?.message || err.message || "Error en login");
+      let message = "Error al iniciar sesión";
+      if (err.response?.status === 401) {
+        message = "Email o contraseña incorrectos";
+      } else if (err.response?.data?.message) {
+        message = err.response.data.message;
+      }
+      setError(message);
       localStorage.removeItem("jwt");
       setUser({ email: null, username: "Invitado", rol: "INVITADO" });
       return false;
+
     } finally {
       setLoading(false);
     }

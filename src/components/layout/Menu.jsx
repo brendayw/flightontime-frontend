@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme, useMediaQuery, Button } from '@mui/material';
+import { useTheme, useMediaQuery, Button, Tooltip } from '@mui/material';
 import MenuIcon from '../../assets/icons/menu.png';
 import HomeIcon from '../../assets/icons/home.png';
 import ProfileIcon from '../../assets/icons/profile.png';
@@ -34,6 +34,7 @@ const Menu = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { isAdmin, logout } = useAuth();
     const navigate = useNavigate();
+    const tooltipPlacement = isMobile ? 'top' : 'right';
 
     const handleLogout = () => {
         logout();             // Borra token y limpia estado
@@ -51,34 +52,66 @@ const Menu = () => {
                     <img src={MenuIcon} alt='Menu' className='w-6 h-6' />
                 )}
 
-                <Link to='/home' className='flex items-center gap-2 md:mt-12'>
-                    <img src={HomeIcon} alt='Inicio' className='w-6 h-6' />
-                </Link>
-                
-                <Link to='/profile' className='flex items-center gap-2'>
-                    <img src={ProfileIcon} alt='Perfil' className='w-6 h-6' />
-                </Link>
+                <Tooltip title="Inicio" placement={tooltipPlacement} arrow componentsProps={{
+                    tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                    arrow: { sx: { color: '#EAE8EC' } },
+                }}>
+                      <Link to='/home' className='flex items-center gap-2 md:mt-12'>
+                        <img src={HomeIcon} className="w-6 h-6" />
+                    </Link>
+                </Tooltip>
 
-                <Link to='/batch' className='flex items-center gap-2'>
-                    <img src={FileIcon} alt='Archivo' className='w-6 h-6' />
-                </Link>
+                <Tooltip title="Perfil" placement={tooltipPlacement} arrow componentsProps={{
+                    tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                    arrow: { sx: { color: '#EAE8EC' } },
+                }}>
+                    <Link to='/profile' className='flex items-center gap-2'>
+                        <img src={ProfileIcon} alt='Perfil' className='w-6 h-6' />
+                    </Link>
+                </Tooltip>
+                
+                
+                <Tooltip title="Predicción por archivo" placement={tooltipPlacement} arrow componentsProps={{
+                    tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                    arrow: { sx: { color: '#EAE8EC' } },
+                }}>
+                    <Link to='/batch' className='flex items-center gap-2'>
+                        <img src={FileIcon} alt='Archivo' className='w-6 h-6' />
+                    </Link>
+                </Tooltip>
+                
                 
                 { isAdmin && (
                     <>
-                        <Link to='/admin/history' className='flex items-center gap-2'>
-                            <img src={DataIcon} alt='Base de datos' className='w-6 h-6' />
-                        </Link>
+                        <Tooltip title="Registro de usuarios" placement={tooltipPlacement} arrow componentsProps={{
+                            tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                            arrow: { sx: { color: '#EAE8EC' } },
+                        }}>
+                            <Link to='/admin/history' className='flex items-center gap-2'>
+                                <img src={DataIcon} alt='Base de datos' className='w-6 h-6' />
+                            </Link>
+                        </Tooltip>
 
-                        <Link to='/admin/dashboard' className='flex items-center gap-2'>
-                            <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />
-                        </Link>
+                        <Tooltip title="Dashboard" placement={tooltipPlacement} arrow componentsProps={{
+                            tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                            arrow: { sx: { color: '#EAE8EC' } },
+                        }}>
+                            <Link to='/admin/dashboard' className='flex items-center gap-2'>
+                                <img src={StatsIcon} alt='Estadisticas' className='w-6 h-6' />
+                            </Link>
+                        </Tooltip>
+                        
                     </>
                 )}
                 
-                <Button onClick={handleLogout} className='flex items-center gap-2'>
-                    <img src={LogoutIcon} alt='Cerrar sesión' className='w-6 h-6' />
-                </Button>
-                
+                <Tooltip title="Cerrar sesión" placement={tooltipPlacement} arrow componentsProps={{
+                    tooltip: { sx: { bgcolor: '#EAE8EC', color: '#292442', fontSize: 13, borderRadius: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } },
+                    arrow: { sx: { color: '#EAE8EC' } },
+                }}>
+                    <Button onClick={handleLogout} className='flex items-center gap-2'>
+                        <img src={LogoutIcon} alt='Cerrar sesión' className='w-6 h-6' />
+                    </Button>
+                </Tooltip>
             </ul>
         </nav>
     );

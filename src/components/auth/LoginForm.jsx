@@ -34,7 +34,7 @@ import FlightOnTime from '../../assets/images/FlightOnTime!.png';
  */
 
 const LoginForm = () => {  
-  const { login } = useAuth();
+  const { login, error: authError } = useAuth();
   const navigate = useNavigate();
   const [localError, setLocalError] = useState("");
   const [formErrors, setFormErrors] = useState({});
@@ -44,6 +44,10 @@ const LoginForm = () => {
     password: "",
   });
 
+  const handleChange = (field) => (e) => {
+    setForm({ ...form, [field]: e.target.value });
+    if (authError) clearError(); // función en useAuth
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -79,14 +83,16 @@ const LoginForm = () => {
       {/* Form */}
       <form onSubmit={handleLogin}>
         <Box className="space-y-5">
-          {/* Error general */}
-          {localError && (
-            <AppAlert severity="warning"> {localError} </AppAlert>
+          {/* Error general (login incorrecto) */}
+          {authError && (
+            <AppAlert severity="error">
+              {authError}
+            </AppAlert>
           )}
 
           {/* Email */}
           <TextField type="email" placeholder="Email" variant="outlined"
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={handleChange('email')}
             error={!!formErrors.email}
             helperText={formErrors.email}
             fullWidth
@@ -102,7 +108,7 @@ const LoginForm = () => {
 
           {/* Password */}
           <TextField type="password" placeholder="Password" variant="outlined"
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onChange={handleChange('password')}
             error={!!formErrors.password}
             helperText={formErrors.password}
             fullWidth

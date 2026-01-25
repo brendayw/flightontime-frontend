@@ -1,7 +1,7 @@
 import { useAuthContext } from "../../contexts/AuthProvider";
 
 const useAuth = () => {
-  const { user, logout, loading, login, signup } = useAuthContext();
+  const { user, logout, loading, login, signup, error } = useAuthContext();
 
   return {
     user,
@@ -9,6 +9,7 @@ const useAuth = () => {
     logout,
     login, 
     signup,
+    error,
     isAuthenticated: user?.rol !== "INVITADO",
     isAdmin: user?.rol === "ADMIN",
     isUser: user?.rol === "USER",
