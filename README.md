@@ -2,6 +2,11 @@
 
 Este es el frontend para la aplicación de predicción de puntualidad de vuelos, Flight On Time. Desarrollado en React, permite a los usuarios interactuar con formularios de predicción, subir archivos para predicciones masivas y visualizar resultados en gráficos y listas.
 
+## 🔗 Demo y Video
+
+- **Demo en vivo (deploy)**: [Ver aplicación en producción](https://flightontime-drab.vercel.app/)
+- **Video demostrativo**: [Ver video en YouTube](https://youtu.be/rUkILmz6EX4?si=U5Q9j3Ib3m9uZTji)
+
 ## Características principales
 
 - **Predicción Individual**: Formulario para ingresar los detalles de un vuelo y obtener una predicción instantánea.
@@ -9,10 +14,11 @@ Este es el frontend para la aplicación de predicción de puntualidad de vuelos,
 - **Dashboard de Administrador**: Visualización de métricas clave, como el total de predicciones, porcentajes de puntualidad y retrasos, a través de gráficos interactivos. Incluye:
     -   Distribución de predicciones (a tiempo vs. retraso).
     -   Evolución de probabilidades por vuelo a lo largo del tiempo.
+    -   Analísis de vuelo individual.
 - **Gestión de Perfil**: Espacio para que los usuarios vean sus datos y predicciones recientes con seguimiento.
 - **Seguimiento y Notificaciones**: Opción para que los usuarios sigan un vuelo y reciban notificaciones sobre su estado.
 - **Diseño Responsivo**: Interfaz adaptada para una correcta visualización en dispositivos de escritorio y móviles.
-- **Autenticación y Rutas Protegidas**: Sistema de login/signup con rutas diferenciadas para usuarios `GUEST`, `USER` y `ADMIN`.
+- **Autenticación y Rutas Protegidas**: Sistema de login/signup con rutas diferenciadas para usuarios `INVITADO`, `USER` y `ADMIN`.
 
 ## Tecnologías utilizadas
 
@@ -24,6 +30,12 @@ Este es el frontend para la aplicación de predicción de puntualidad de vuelos,
 - **Framer Motion** para animaciones fluidas.
 - **React Router** (para navegación entre páginas)
 - **@mui/x-charts** y **@mui/icons-material** para la visualización de datos en gráficos e íconos.
+
+## Requisitos previos
+
+- Node.js >= 18  
+- npm >= 9 o yarn >= 1  
+
 
 ## Instalación
 
@@ -42,6 +54,11 @@ Este es el frontend para la aplicación de predicción de puntualidad de vuelos,
     npm install
     ```
 
+4. **Ejecutar la aplicación en modo desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
 ## Configuración
 
 Para que la aplicación se conecte con el backend, es necesario configurar la variable de entorno.
@@ -50,9 +67,10 @@ Para que la aplicación se conecte con el backend, es necesario configurar la va
 2.  Añade la siguiente variable con la URL de tu API backend:
 
     ```env
-    VITE_API_URL=http://localhost:8080/api
+    VITE_API_URL=https://equipo27-prediction-backend-production.up.railway.app/
     ```
-    *Nota: Las llamadas a la API en el código actual utilizan `http://localhost:8080`. Asegúrate de que el backend se esté ejecutando en esa dirección o ajusta el código según sea necesario.*
+    *Nota: Las llamadas a la API en el código actual utilizan `https://equipo27-prediction-backend-production.up.railway.app/`. 
+    En caso de terminarse los créditos en Railway, se puede ejectuar el backend localmente descargando el repositorio y cambiando la URL a `http://localhost:8080`*
 
 ## Estructura del proyecto
 
@@ -79,7 +97,7 @@ El flujo de funcionamiento varía según el rol autenticado.
                                                     ¿Está autenticado?  
                                                     ↓               ↓ 
                                                     Sí              No  
-                                                    ↓                └──                        GUEST  
+                                                    ↓                └──———————————————————  INVITADO  
                                         Backend devuelve JWT con rol                             ↓  
                                                     ↓                               Acceso a rutas públicas  
                             Se inicializa el contexto de autenticación                            ↓  
@@ -120,31 +138,23 @@ El flujo de funcionamiento varía según el rol autenticado.
 
 - `POST /auth/login` – Autenticación de usuarios
 - `POST /auth/register` – Registro
-- `GET /aeropuertos` – Listado de aeropuertos
-- `GET /aerolíneas` – Listado de aerolineas
-- `GET /predictions` – Predicciones del usuario
-- `POST /predictions` – Predicción individual
-- `POST /predictions/batch` – Predicción por lote (CSV)
-- `POST /distancia` – Calcula la distancia entre aeropuertos a partir de la latitud y longitud
-- `GET /dashboard/history` – Historial temporal por vuelo
-- `GET /dashboard/summary` – Resumen de predicciones
-- `GET /dashboard/global-history` – Historial global por vuelo
+- `GET /api/aeropuertos` – Listado de aeropuertos
+- `GET /api/aerolíneas` – Listado de aerolineas
+- `GET /api/usuario/vuelos` – Predicciones del usuario  
+- `POST /api/predict` – Predicción individual
+- `POST /api/predict/csv` – Predicción por lote (CSV)
+- `POST /api/distancia` – Calcula la distancia entre aeropuertos a partir de la latitud y longitud
+- `GET /api/dashboard/history` – Historial temporal por vuelo
+- `GET /api/dashboard/summary` – Resumen de predicciones
+- `GET /api/dashboard/global-history` – Historial global por vuelo
+- `GET /api/admin/usuarioos` - Listado de todos los usuarios  
 
-## Scripts Disponibles
+## 📝 Scripts disponibles
 
-En el directorio del proyecto, puedes ejecutar los siguientes comandos:
-
--   `npm run dev`
-    Inicia la aplicación en modo de desarrollo. Abre [http://localhost:5173](http://localhost:5173) (o el puerto que indique Vite) para verla en tu navegador.
-
--   `npm run build`
-    Compila la aplicación para producción en la carpeta `dist`.
-
--   `npm run lint`
-    Ejecuta ESLint para analizar el código en busca de errores y problemas de estilo.
-
--   `npm run preview`
-    Inicia un servidor local para previsualizar el build de producción.
+- `npm run dev` → Inicia la app en modo desarrollo  
+- `npm run build` → Compila la app para producción en `dist/`  
+- `npm run lint` → Analiza el código con ESLint  
+- `npm run preview` → Previsualiza el build de producción 
 
 ## Autores
 H12-25-L-Equipo 27-Backend
